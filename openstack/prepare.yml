@@ -8,42 +8,41 @@
         path: "{{ osp.resource_path }}"
         state: directory
 
-    - name: subscribe host
-      redhat_subscription:
-        state: present
-        username: "{{ subscription.user }}"
-        password: "{{ subscription.password }}"
-        pool_ids: "{{ subscription.pool_ids }}"
-
-    - name: disable all repositories
-      shell: subscription-manager repos --disable=*
-
-    - name: enable repos
-      shell: subscription-manager repos --enable={{ item }}
-      with_items:
-        - rhel-7-server-rpms
-        - rhel-7-server-rh-common-rpms
-        - rhel-7-server-extras-rpms
-        - rhel-7-server-openstack-12-rpms
-        - rhel-7-server-openstack-12-devtools-rpms
-
-    - name: install packages
+    - name: install required packages
       yum:
         name: "{{ item }}"
         state: present
       with_items:
-        - python2-setuptools
-        - yum-utils
-        - openstack-utils
-        - openstack-packstack
-        - openstack-nova-migration
-        - bash-completion
-        - vim
+        - centos-release-openstack-queens
 
-    - name: upgrade all packages
+    - name: update openstack package
       yum:
         name: '*'
         state: latest
+        
+    - name: install extra packstack packages
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - openstack-packstack
+        - openstack-utils
+        - python-pip
+
+    - name: update packages
+      yum:
+        name: '*'
+        state: latest
+
+    - name: update python pip
+      shell: >
+        pip install --upgrade pip
+
+    - name: download images
+      get_url:
+        url: "{{ item.value.remote_path }}/{{ item.value.file_name }}"
+        dest: "{{ osp.resource_path }}/{{ item.value.file_name }}"
+      with_dict: "{{ osp.images }}"
 
     - name: disable network manager
       shell: >
@@ -54,3 +53,11 @@
         name: firewalld
         state: stopped
         enabled: no
+
+    - name: disable selinux
+      replace:
+        dest: /etc/selinux/config
+        regexp: 'SELINUX=enforcing'
+        replace: 'SELINUX=disabled'
+        backup: no
+

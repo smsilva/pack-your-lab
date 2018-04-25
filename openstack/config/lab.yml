@@ -2,8 +2,10 @@
 - hosts: osp
   remote_user: root
   name: Configure OpenStack Packed Lab
+
   tasks:
-    - name: create project
+
+    - name: create lab project
       shell: >
         source ~/keystonerc_admin && \
         openstack project create --enable lab && \
@@ -66,3 +68,4 @@
         source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
         openstack floating ip create --floating-ip-address {{ item }} public_network
       with_items: "{{ osp.lab.floating_ip }}"
+

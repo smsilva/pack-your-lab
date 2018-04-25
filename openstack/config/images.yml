@@ -2,14 +2,10 @@
 - hosts: osp
   remote_user: root
   name: Configure OpenStack Images
+  
   tasks:
-    - name: copy image file
-      copy:
-        src: "{{ item.value.local_path }}"
-        dest: "{{ osp.resource_path }}/{{ item.key }}.image"
-      with_dict: "{{ osp.images }}"
 
-    - name: create image
+    - name: create images
       shell: >
         source ~/keystonerc_admin && \
         openstack image create \
@@ -17,6 +13,7 @@
           --disk-format {{ item.value.disk_format }} \
           --min-disk {{ item.value.min_disk }} \
           --min-ram {{ item.value.min_ram }} \
-          --file {{ osp.resource_path }}/{{ item.key }}.image \
+          --file "{{ osp.resource_path }}/{{ item.value.file_name }}" \
           {{ item.key }}
       with_dict: "{{ osp.images }}"
+

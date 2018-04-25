@@ -2,6 +2,7 @@
 - hosts: osp
   remote_user: root
   name: Configure OpenStack Key Pair
+
   tasks:
     - name: send key
       copy:

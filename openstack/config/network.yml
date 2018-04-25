@@ -2,7 +2,9 @@
 - hosts: osp
   remote_user: root
   name: Configure OpenStack Network
+
   tasks:
+
     - name: create public network
       shell: >
         source ~/keystonerc_admin && \

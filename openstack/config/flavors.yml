@@ -2,7 +2,9 @@
 - hosts: osp
   remote_user: root
   name: Configure OpenStack Flavors
+  
   tasks:
+  
     - name: create flavor
       shell: >
         source ~/keystonerc_admin && \
