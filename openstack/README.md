@@ -1,12 +1,12 @@
 # OpenStack Packed Lab
 
-This is the playbook I'm using to deploy Red Hat OpenStack Platform on top of my Intel Nuc Skull
+This is the playbook I'm using to deploy OpenStack Queens on top of my Intel Nuc Skull
 Canyon.
+
+This project was originally created by Marcelo "Ataxexe" Guimarães.
 
 The playbook will:
 
-- Subscribe the host
-- Enable the required repositories
 - Install the required packages
 - Create and customize the packstack answer file
 - Invoke the packstack installer
@@ -23,21 +23,6 @@ Which means: at the end you'll have everything to play with OpenStack.
 
 Check the `hosts.example.yml` for a full working example (almost like mine). The variable
 sections are explained below.
-
-### Subscription Parameters
-
-```yaml
-    subscription:
-      user: some-user
-      password: some-password
-      pool_ids:
-        - some-pool-id
-```
-
-This section configures the subscription, it's pretty straightforward, just provide your Red Hat
-credentials and the pool id which gives you access to the Red Hat OpenStack Platform.
-
-You might want to query the available subscriptions using `subscription-manager list --available`.
 
 ### OpenStack Parameters
 
@@ -131,7 +116,8 @@ is specified below:
 ```yaml
       images:
         name:
-          local_path: path/to/the/image
+          file_name: remote file name to be download
+          remote_path: remote path where the image file is available
           disk_format: (ami, ari, aki, vhd, vmdk, raw, qcow2, vhdx, vdi, iso or ploop)
           min_disk: size in GB
           min_ram: size in MB
@@ -141,20 +127,15 @@ The `image_name` will be used as the name in the OpenStack. Below is an example:
 
 ```yaml
       images:
-        rhel:
-          local_path: ~/workspace/pack-your-lab/images/rhel-server-7.4-x86_64-kvm.qcow2
+        cirros:
+          file_name: cirros-0.4.0-x86_64-disk.img
+          remote_path: http://download.cirros-cloud.net/0.4.0
           disk_format: qcow2
-          min_disk: 10
-          min_ram: 256
-        rhel-atomic:
-          local_path: ~/workspace/pack-your-lab/images/rhel-atomic-cloud-7.4.3-8.x86_64.qcow2
-          disk_format: qcow2
-          min_disk: 10
+          min_disk: 1
           min_ram: 128
 ```
 
-This will create a `rhel` and a `rhel-atomic` image ready to be used. Remember that the paths should
-be local to the host executing the playbook.
+This will create a `cirros` image ready to be used.
 
 #### Flavors Configuration
 
@@ -213,8 +194,8 @@ can specify networks to create. Below is an example:
 ```yaml
       lab:
         floating_ip:
-          - 192.168.0.30
-          - 192.168.0.31
+          - 192.168.1.30
+          - 192.168.1.31
         networks:
           workshop:
             cidr: 10.0.0.0/24
@@ -238,3 +219,9 @@ you have lots of images to create.
 
 At the end you will have a nice and crispy OpenStack lab just waiting for you to launch your
 instances.
+
+```yaml
+
+ansible-playbook -v -i hosts.yml install.yml
+
+```
