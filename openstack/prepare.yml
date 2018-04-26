@@ -44,20 +44,17 @@
         dest: "{{ osp.resource_path }}/{{ item.value.file_name }}"
       with_dict: "{{ osp.images }}"
 
-    - name: disable NetworkManager
+    - name: disable NetworkManager and Firewall
       systemd:
-        name: NetworkManager
+        name: "{{ item }}"
         state: stopped
         enabled: no
+      with_items:
+        - NetworkManager
+        - firewalld
         
     - name: enable network service
       systemd:
         name: network
         state: started
         enabled: yes
-
-    - name: disable firewalld
-      systemd:
-        name: firewalld
-        state: stopped
-        enabled: no
