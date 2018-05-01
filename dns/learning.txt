@@ -1,0 +1,190 @@
+export OS_PROJECT_NAME=lab
+
+openstack security group create dns-security-group
+
+openstack security group rule create \
+	--ingress \
+	--protocol icmp \
+	dns-security-group
+	
+openstack security group rule create \
+    --ingress \
+    --protocol tcp \
+    --dst-port 22 \
+    dns-security-group
+
+for PROTO in udp tcp;
+do
+  openstack security group rule create \
+    --ingress \
+    --protocol $PROTO \
+    --dst-port 53 \
+    dns-security-group;
+done
+
+workshop_network_id=$(openstack network show workshop_network -f value -c id)
+
+openstack server create \
+  --nic net-id=$workshop_network_id \
+  --security-group=dns-security-group \
+  --flavor ocp.node \
+  --image centos \
+  --key-name server \
+  osp-dns.example.org
+
+openstack server add floating ip osp-dns.example.org 192.168.1.2
+
+ssh centos@192.168.1.2
+
+sudo hostnamectl set-hostname osp-dns.example.org
+
+sudo yum install -y vim firewalld python-firewall bind-utils bind
+
+sudo systemctl enable firewalld && sudo systemctl start firewalld
+
+sudo firewall-cmd --zone public --add-service dns
+
+sudo firewall-cmd --zone public --add-service dns --permanent
+
+sudo cp /etc/named.conf{,.orig}
+
+sudo vim /etc/named.conf
+
+//
+// named.conf
+//
+// Provided by Red Hat bind package to configure the ISC BIND named(8) DNS
+// server as a caching only nameserver (as a localhost DNS resolver only).
+//
+// See /usr/share/doc/bind*/sample/ for example named configuration files.
+
+options {
+        listen-on port 53 { any ; };
+        // listen-on-v6 port 53 { ::1; };
+        directory       "/var/named";
+        dump-file       "/var/named/data/cache_dump.db";
+        statistics-file "/var/named/data/named_stats.txt";
+        memstatistics-file "/var/named/data/named_mem_stats.txt";
+        allow-query     { any ; };
+
+        /*
+         - If you are building an AUTHORITATIVE DNS server, do NOT enable recursion.
+         - If you are building a RECURSIVE (caching) DNS server, you need to enable
+           recursion.
+         - If your recursive DNS server has a public IP address, you MUST enable access
+           control to limit queries to your legitimate users. Failing to do so will
+           cause your server to become part of large scale DNS amplification
+           attacks. Implementing BCP38 within your network would greatly
+           reduce such attack surface
+        */
+        // recursion yes;
+        forward only;
+        forwarders { 192.168.15.1 ; 8.8.8.8 ; };
+
+        // dnssec-enable yes;
+        // dnssec-validation yes;
+
+        /* Path to ISC DLV key */
+        // bindkeys-file "/etc/named.iscdlv.key";
+
+        managed-keys-directory "/var/named/dynamic";
+
+        pid-file "/run/named/named.pid";
+        session-keyfile "/run/named/session.key";
+
+        /* tickle slaves to pull updates */
+        notify yes;
+};
+
+logging {
+        channel default_debug {
+                file "data/named.run";
+                severity dynamic;
+        };
+};
+
+zone "." IN {
+        type hint;
+        file "named.ca";
+};
+
+include "/etc/named.rfc1912.zones";
+include "/etc/named.root.key";
+include "/etc/named/zones.conf";
+
+sudo vim /etc/named/zones.conf
+
+include "/etc/named/update.key" ;
+
+zone example.org {
+  type master ;
+  file "/var/named/dynamic/zone.db" ;
+  allow-update { key update-key ; } ;
+};
+
+sudo vim /var/named/dynamic/zone.db
+
+###########################################################[ DNS Example ]######################################
+
+; zone file fragment for example.com 
+$TTL 2d ; zone TTL default = 2 days or 172800 seconds
+$ORIGIN example.com.
+@      IN      SOA   ns.example.com. hostmaster.example.com. (
+               2003080800 ; serial number
+               1d12h      ; refresh =  1 day 12 hours
+               15M        ; update retry = 15 minutes
+               3W12h      ; expiry = 3 weeks + 12 hours
+               2h20M      ; minimum = 2 hours + 20 minutes
+               )
+       IN      NS  ns.example.com.
+       IN      NS  ns.example.net. ; out-of-zone 
+...
+; A record for ns.example.com. RR above
+ns     IN      A   192.168.2.1
+; the above could have been written as
+; ns.example.com. IN  A   192.168.2.1
+; ns.example.net is out-of-zone (or out-of-bailiwick)
+; an A RRs is not required (and will be rejected if present)
+###########################################################[ end of DNS example ] ##############################
+
+$TTL 5m ; 5 minutes
+$ORIGIN example.org.
+@       IN     SOA   ns.example.org. dnsadmin (
+               2018050100 ; serial
+               8h         ; refresh (8 hours)
+               1h         ; retry (1 hour)
+               1W         ; expire (1 week)
+               1d         ; minimum (1 day)
+               )
+        IN     NS    ns.example.org.
+        IN     NS    ns.example.net. ; out-of-zone
+
+ns             A     192.168.1.2
+dns            A     192.168.1.2
+bastion        A     192.168.1.31
+
+sudo rndc-confgen -a -c /etc/named/update.key -k update-key -r /dev/urandom
+
+sudo chown root.named /etc/named/update.key
+
+sudo chmod 640 /etc/named/update.key
+
+sudo systemctl enable named --now
+
+sudo systemctl status named
+
+dig @192.168.1.2 example.org axfr
+
+###################################[ test ] ########
+
+workshop_network_id=$(openstack network show workshop_network -f value -c id)
+
+openstack server create \
+  --nic net-id=$workshop_network_id \
+  --security-group=b4beaded-ec4a-428d-b2c9-5c50263ddcba \
+  --flavor ocp.node \
+  --image centos \
+  --key-name server \
+  myinstance
+
+openstack server add floating ip myinstance 192.168.1.31
