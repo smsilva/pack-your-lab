@@ -3,30 +3,8 @@
   name: Prepare System
 
   tasks:
-    - name: Subscribe host
-      redhat_subscription:
-        state: present
-        username: "{{ subscription.user }}"
-        password: "{{ subscription.password }}"
-        pool_ids: "{{ subscription.pool_ids }}"
-      retries: 10
-      delay: 5
-
-    - name: Disable all repositories
-      shell: subscription-manager repos --disable=*
-      retries: 10
-      delay: 5
-
-    - name: Enable repos
-      shell: subscription-manager repos --enable={{ item }}
-      with_items:
-        - rhel-7-server-rpms
-        - rhel-7-server-extras-rpms
-        - rhel-7-server-ose-3.9-rpms
-        - rhel-7-fast-datapath-rpms
-        - rhel-7-server-ansible-2.4-rpms
-      retries: 10
-      delay: 5
+    - name: Ensure openstack hostname
+      shell: hostname {{ inventory_hostname }} && echo "{{ inventory_hostname }}" > /etc/hostname
 
     - name: Install packages
       yum:
@@ -55,6 +33,3 @@
         state: latest
       retries: 10
       delay: 5
-
-    - name: Ensure openstack hostname
-      shell: hostname {{ inventory_hostname }} && echo "{{ inventory_hostname }}" > /etc/hostname
