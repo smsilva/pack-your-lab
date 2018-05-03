@@ -177,14 +177,19 @@ dig @192.168.1.2 example.org axfr
 
 ###################################[ test ] ########
 
-workshop_network_id=$(openstack network show workshop_network -f value -c id)
+openstack security group list --project lab -f value -c ID
+
+security-group_id=$(openstack security group list --project lab -f value -c ID)
+
+network_id=$(openstack network show lab_network -f value -c id)
 
 openstack server create \
-  --nic net-id=$workshop_network_id \
-  --security-group=b4beaded-ec4a-428d-b2c9-5c50263ddcba \
+  --nic net-id=$network_id \
+  --security-group=4dce116b-e51f-4ec2-ad49-6ad8a12b05cb \
   --flavor ocp.node \
   --image centos \
   --key-name server \
+  --wait \
   myinstance
 
 openstack server add floating ip myinstance 192.168.1.31

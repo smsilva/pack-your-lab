@@ -18,8 +18,8 @@
         openstack network create {{ item.key }}_network && \
         openstack subnet create --dhcp \
           --allocation-pool start={{ item.value.dhcp.start }},end={{ item.value.dhcp.end }} \
-          --dns-nameserver {{ ocp.lab.servers.dns.floating_ip }} \
           --dns-nameserver {{ osp.network.dns }} \
+          --dns-nameserver {{ osp.lab.servers.dns.floating_ip }} \
           --network {{ item.key }}_network \
           --subnet-range {{ item.value.cidr }} \
           {{ item.key }}_subnet

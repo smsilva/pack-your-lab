@@ -1,2 +1,3 @@
 ---
-- import_playbook: config/servers/dns.yml
+- import_playbook: servers/dns.yml
+- import_playbook: servers/dns-configuration.yml
