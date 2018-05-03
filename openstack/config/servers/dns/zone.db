@@ -1,0 +1,15 @@
+$TTL 5m ; 5 minutes
+$ORIGIN example.org.
+@       IN     SOA   ns.example.org. dnsadmin (
+               2018050100 ; serial
+               8h         ; refresh (8 hours)
+               1h         ; retry (1 hour)
+               1W         ; expire (1 week)
+               1d         ; minimum (1 day)
+               )
+        IN     NS    ns.example.org.
+        IN     NS    ns.example.net. ; out-of-zone
+
+ns             A     192.168.1.2
+dns            A     192.168.1.2
+bastion        A     192.168.1.31

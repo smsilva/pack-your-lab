@@ -4,3 +4,4 @@
 - import_playbook: config/flavors.yml
 - import_playbook: config/images.yml
 - import_playbook: config/lab.yml
+- import_playbook: config/lab-servers.yml

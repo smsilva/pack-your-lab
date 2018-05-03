@@ -1,0 +1,49 @@
+---
+- hosts: osp
+  name: Create DNS Server
+
+  tasks:
+
+    - name: create security group for dns with icmp/ssh rules
+      shell: >
+        source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+        openstack security group create {{ item.value.security_group }} && \
+        openstack security group rule create \
+          --ingress \
+          --protocol icmp \
+          {{ item.value.security_group }} && \
+        openstack security group rule create \
+          --ingress \
+          --protocol tcp \
+          --dst-port 22 \
+          {{ item.value.security_group }}
+      with_dict: "{{ osp.lab.servers }}"
+      when: item.key == "dns"
+            
+    - name: create rule for port 53 on tcp/udp protocols
+      shell: >
+        source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+        openstack security group rule create \
+          --ingress \
+          --protocol {{ item }} \
+          --dst-port 53 \
+          {{ osp.lab.servers.dns.security_group }}
+      with_items:
+        - udp
+        - tcp
+        
+    - name: create dns server
+      shell: >
+        source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+        eval network_id=$(openstack network show {{ item.value.network }}_network -f value -c id) && \
+        openstack server create \
+          --nic net-id=$network_id \
+          --security-group={{ item.value.security_group }} \
+          --flavor {{ item.value.flavor }} \
+          --image {{ item.value.image }} \
+          --key-name server \
+          --wait \
+          {{ item.key }} && \
+        openstack server add floating ip {{ item.key }} {{ item.value.floating_ip }}
+      with_dict: "{{ osp.lab.servers }}"
+      when: item.key == "dns"

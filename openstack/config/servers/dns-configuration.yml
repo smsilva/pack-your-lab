@@ -1,0 +1,53 @@
+---
+- hosts: dns
+  name: Configure DNS Server
+
+  tasks:
+
+    - name: hostname update
+      shell: hostnamectl set-hostname dns
+
+    - name: install required packages
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - vim
+        - firewalld
+        - python-firewall
+        - bind-utils
+        - bind
+
+    - name: firewall configuration
+      shell: >
+        systemctl enable firewalld && \
+        systemctl start firewalld && \
+        firewall-cmd --zone public --add-service dns && \
+        firewall-cmd --zone public --add-service dns --permanent
+        
+    - name: copy files
+      block:
+        - name: copy /etc/named.conf
+          copy:
+            src: "./dns/named.conf"
+            dest: "/etc/named.conf"
+            mode: 0644
+
+        - name: copy /etc/named/zones.conf
+          copy:
+            src: "./dns/zones.conf"
+            dest: "/etc/named/zones.conf"
+            mode: 0644
+        
+        - name: copy /var/named/dynamic/zone.db
+          copy:
+            src: "./dns/zone.db"
+            dest: "/var/named/dynamic/zone.db"
+            mode: 0644
+
+    - name: generate update key, configure and start the named service
+      shell: >
+        rndc-confgen -a -c /etc/named/update.key -k update-key -r /dev/urandom && \
+        chown root.named /etc/named/update.key && \
+        chmod 640 /etc/named/update.key && \
+        systemctl enable named --now
