@@ -29,19 +29,19 @@
       block:
         - name: copy /etc/named.conf
           copy:
-            src: "./dns/named.conf"
+            src: "named.conf"
             dest: "/etc/named.conf"
             mode: 0644
 
         - name: copy /etc/named/zones.conf
           copy:
-            src: "./dns/zones.conf"
+            src: "zones.conf"
             dest: "/etc/named/zones.conf"
             mode: 0644
         
         - name: copy /var/named/dynamic/zone.db
           copy:
-            src: "./dns/zone.db"
+            src: "zone.db"
             dest: "/var/named/dynamic/zone.db"
             mode: 0644
 

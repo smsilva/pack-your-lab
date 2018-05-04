@@ -1,0 +1,21 @@
+---
+- hosts: osp
+  name: Create Lab Servers Instances
+
+  tasks:
+  
+    - name: create servers instances
+      shell: >
+        source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+        network_id=$(openstack network show {{ item.value.network }}_network -f value -c id) && \
+        security_group_id=$(eval $(openstack project show lab -f shell -c id) && openstack security group list | grep $id | grep {{ item.value.security_group }} | cut -d' ' -f2) && \
+        openstack server create \
+          --nic net-id=$network_id \
+          --security-group=$security_group_id \
+          --flavor {{ item.value.flavor }} \
+          --image {{ item.value.image }} \
+          --key-name server \
+          --wait \
+          {{ item.key }} && \
+        openstack server add floating ip {{ item.key }} {{ item.value.floating_ip }}
+      with_dict: "{{ osp.lab.servers }}"

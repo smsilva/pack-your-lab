@@ -177,9 +177,11 @@ dig @192.168.1.2 example.org axfr
 
 ###################################[ test ] ########
 
-openstack security group list --project lab -f value -c ID
+lab_project_id=$(openstack project show lab -f value -c id)
 
-security-group_id=$(openstack security group list --project lab -f value -c ID)
+openstack security group list --project $lab_project_id -f value -c ID
+
+security_group_id=$(openstack security group list --project lab -f value -c ID)
 
 network_id=$(openstack network show lab_network -f value -c id)
 
