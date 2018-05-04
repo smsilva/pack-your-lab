@@ -1,0 +1,12 @@
+vim /etc/ansible/ansible.cfg
+
+callback_whitelist = profile_tasks, timer
+
+eval $(openstack server show dns -f shell -c id) && \ 
+openstack server delete $id --wait && \
+eval $(openstack server show ntp -f shell -c id) && \
+openstack server delete $id --wait && \
+openstack security group delete dns-security-group && \
+rm -rf ~/.ssh/known_hosts
+
+ansible-playbook -i hosts.yml ./config/lab-servers.yml

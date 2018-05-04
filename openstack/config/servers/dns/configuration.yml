@@ -3,7 +3,6 @@
   name: Configure DNS Server
 
   tasks:
-
     - name: hostname update
       shell: hostnamectl set-hostname dns
 

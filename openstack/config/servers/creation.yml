@@ -4,7 +4,7 @@
 
   tasks:
   
-    - name: create servers instances
+    - name: Create Servers Instances
       shell: >
         source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
         network_id=$(openstack network show {{ item.value.network }}_network -f value -c id) && \
@@ -19,3 +19,12 @@
           {{ item.key }} && \
         openstack server add floating ip {{ item.key }} {{ item.value.floating_ip }}
       with_dict: "{{ osp.lab.servers }}"
+
+    - name: Wait for SSH on the DNS Instance
+      command: >
+        ssh -oBatchMode=yes -oStrictHostKeyChecking=no
+        centos@{{osp.lab.servers.dns.floating_ip}} true
+      register: result
+      until: result|success
+      retries: 30
+      delay: 10
