@@ -1,0 +1,40 @@
+[nexus-os]
+name=Nexus Repository OS
+baseurl=http://192.168.15.18:8081/repository/yum-proxy/$releasever/os/$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+priority=1
+[nexus-extras]
+name=Nexus Repository Extras
+baseurl=http://192.168.15.18:8081/repository/yum-proxy/$releasever/extras/$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+priority=2
+[nexus-updates]
+name=Nexus Repository Updates
+baseurl=http://192.168.15.18:8081/repository/yum-proxy/$releasever/updates/$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+priority=3
+[nexus-centos-openstack-queens]
+name=Nexus OpenStack Queens
+baseurl=http://192.168.15.18:8081/repository/yum-proxy/$releasever/cloud/$basearch/openstack-queens/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Cloud
+exclude=sip,PyQt4
+[nexus-centos-ceph-luminous]
+name=Nexus Ceph Luminous
+baseurl=http://192.168.15.18:8081/repository/yum-proxy/$releasever/storage/$basearch/ceph-luminous/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
+[nexus-centos-qemu-ev]
+name=Nexus QEMU EV
+baseurl=http://192.168.15.18:8081/repository/yum-proxy/$releasever/virt/$basearch/kvm-common/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Virtualization

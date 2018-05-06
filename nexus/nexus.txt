@@ -1,0 +1,235 @@
+Recommended amount of ram: 4GB
+Used: 3GB
+
+1. Copy Installation Files
+
+Log in as user root.
+
+1.1. Oracle Java JDK
+
+jdk-8u172-linux-x64.rpm
+
+1.2. Nexus SonaType 3.11
+
+nexus-3.11.0-01-unix.tar.gz
+
+2. System Update
+
+yum -y update
+
+3. Install Java
+
+rpm -ivh jdk-8u172-linux-x64.rpm
+
+vim /etc/security/limits.conf
+
+nexus - nofile 65536
+
+useradd nexus && \
+gpasswd -a nexus wheel && \
+passwd nexus
+
+tar xvzf nexus-3.11.0-01-unix.tar.gz -C /opt
+
+ln -s /opt/nexus-3.11.0-01/ /opt/nexus
+
+chown -R nexus:nexus /opt/nexus
+chown -R nexus:nexus /opt/nexus-3.11.0-01
+chown -R nexus:nexus /opt/sonatype-work
+
+# not sure, try without
+vim /opt/nexus/bin/nexus.rc
+
+run_as_user="nexus"
+
+vim /etc/systemd/system/nexus.service
+
+[Unit]
+Description=Nexus Service
+After=network.target
+
+[Service]
+Type=forking
+LimitNOFILE=65536
+ExecStart=/opt/nexus/bin/nexus start
+ExecStop=/opt/nexus/bin/nexus stop
+User=nexus
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+
+sudo systemctl daemon-reload
+sudo systemctl enable nexus.service
+sudo systemctl start nexus.service
+sudo systemctl status nexus.service
+
+tail -f /opt/sonatype-work/nexus3/log/nexus.log
+
+curl -I http://localhost:8081/
+
+vim /opt/nexus/bin/nexus.vmoptions
+
+-Xms1200M
+-Xmx1200M
+-XX:MaxDirectMemorySize=2G
+-XX:+UnlockDiagnosticVMOptions
+-XX:+UnsyncloadClass
+-XX:+LogVMOutput
+-XX:LogFile=../sonatype-work/nexus3/log/jvm.log
+-XX:-OmitStackTraceInFastThrow
+-Djava.net.preferIPv4Stack=true
+-Dkaraf.home=.
+-Dkaraf.base=.
+-Dkaraf.etc=etc/karaf
+-Djava.util.logging.config.file=etc/karaf/java.util.logging.properties
+-Dkaraf.data=../sonatype-work/nexus3
+-Djava.io.tmpdir=../sonatype-work/nexus3/tmp
+-Dkaraf.startLocalConsole=false
+
+firewall-cmd --add-port=8081/tcp --zone=public --permanent
+
+firewall-cmd --reload
+
+192.168.15.18:8081
+
+/etc/pki/rpm-gpg/
+
+Client Yum Config
+
+[nexus-os]
+name=Nexus Repository OS
+baseurl=http://192.168.15.18:8081/repository/yum-proxy/$releasever/os/$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+priority=1
+[nexus-extras]
+name=Nexus Repository Extras
+baseurl=http://192.168.15.18:8081/repository/yum-proxy/$releasever/extras/$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+priority=2
+[nexus-updates]
+name=Nexus Repository Updates
+baseurl=http://192.168.15.18:8081/repository/yum-proxy/$releasever/updates/$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+priority=3
+[nexus-centos-openstack-queens]
+name=Nexus OpenStack Queens
+baseurl=http://192.168.15.18:8081/repository/yum-proxy/$releasever/cloud/$basearch/openstack-queens/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Cloud
+exclude=sip,PyQt4
+[nexus-centos-ceph-luminous]
+name=Nexus Ceph Luminous
+baseurl=http://192.168.15.18:8081/repository/yum-proxy/$releasever/storage/$basearch/ceph-luminous/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
+[nexus-centos-qemu-ev]
+name=Nexus QEMU EV
+baseurl=http://192.168.15.18:8081/repository/yum-proxy/$releasever/virt/$basearch/kvm-common/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Virtualization
+###################################################
+CentOS-Ceph-Luminous.repo
+
+[centos-ceph-luminous]
+name=CentOS-$releasever - Ceph Luminous
+baseurl=http://mirror.centos.org/centos/$releasever/storage/$basearch/ceph-luminous/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
+
+[centos-ceph-luminous-test]
+name=CentOS-$releasever - Ceph Luminous Testing
+baseurl=http://buildlogs.centos.org/centos/$releasever/storage/$basearch/ceph-luminous/
+gpgcheck=0
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
+
+[centos-ceph-luminous-debuginfo]
+name=CentOS-$releasever - Ceph Luminous DebugInfo
+baseurl=http://debuginfo.centos.org/centos/$releasever/storage/$basearch/ceph-luminous/
+gpgcheck=0
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
+
+[centos-ceph-luminous-source]
+name=CentOS-$releasever - Ceph Luminous Source
+baseurl=http://vault.centos.org/centos/$releasever/storage/Source/ceph-luminous/
+gpgcheck=0
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
+
+###################################################
+CentOS-OpenStack-queens.repo
+
+# CentOS-OpenStack-queens.repo
+#
+# Please see http://wiki.centos.org/SpecialInterestGroup/Cloud for more
+# information
+
+[centos-openstack-queens]
+name=CentOS-7 - OpenStack queens
+baseurl=http://mirror.centos.org/centos/7/cloud/$basearch/openstack-queens/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Cloud
+exclude=sip,PyQt4
+
+[centos-openstack-queens-test]
+name=CentOS-7 - OpenStack queens Testing
+baseurl=https://buildlogs.centos.org/centos/7/cloud/$basearch/openstack-queens/
+gpgcheck=0
+enabled=0
+exclude=sip,PyQt4
+
+[centos-openstack-queens-debuginfo]
+name=CentOS-7 - OpenStack queens - Debug
+baseurl=http://debuginfo.centos.org/centos/7/cloud/$basearch/
+gpgcheck=1
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Cloud
+exclude=sip,PyQt4
+
+[centos-openstack-queens-source]
+name=CentOS-7 - OpenStack queens - Source
+baseurl=http://vault.centos.org/centos/7/cloud/Source/openstack-queens/
+gpgcheck=1
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Cloud
+exclude=sip,PyQt4
+
+[rdo-trunk-queens-tested]
+name=OpenStack queens Trunk Tested
+baseurl=https://trunk.rdoproject.org/centos7-queens/current-passed-ci/
+gpgcheck=0
+enabled=0
+
+###################################################
+CentOS-QEMU-EV.repo
+
+# CentOS-QEMU-EV.repo
+#
+# Please see http://wiki.centos.org/SpecialInterestGroup/Virtualization for more
+# information
+
+[centos-qemu-ev]
+name=CentOS-$releasever - QEMU EV
+baseurl=http://mirror.centos.org/centos/$releasever/virt/$basearch/kvm-common/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Virtualization
+
+[centos-qemu-ev-test]
+name=CentOS-$releasever - QEMU EV Testing
+baseurl=http://buildlogs.centos.org/centos/$releasever/virt/$basearch/kvm-common/
+gpgcheck=0
+enabled=0
