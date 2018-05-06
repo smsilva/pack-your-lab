@@ -1,6 +1,7 @@
 ---
 - hosts: nexus
   name: Nexus Sonatype 3 Install
+
   tasks:
 
     - name: update packages
@@ -65,3 +66,16 @@
         enabled: yes
       with_items:
         - nexus
+    
+    - name: enable port 8081 on firewalld
+      firewalld:
+        port: 8081/tcp
+        permanent: true
+        state: enabled
+        zone: public
+
+    - name: restart firewalld service
+      systemd:
+        state: restarted
+        daemon_reload: yes
+        name: firewalld
