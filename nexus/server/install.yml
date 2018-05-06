@@ -1,0 +1,67 @@
+---
+- hosts: nexus
+  name: Nexus Sonatype 3 Install
+  tasks:
+
+    - name: update packages
+      yum:
+        name: '*'
+        state: latest
+
+    - name: copy install files
+      copy:
+        src: "./install/{{ item }}"
+        dest: "/root/{{ item }}"
+      with_items: "{{ nexus.files }}"
+
+    - name: install java
+      yum:
+        name: "{{ java_install }}"
+        state: present
+
+    - name: create nexus user
+      user:
+        name: nexus
+        password: "{{ nexus_password }}"
+
+    - name: untar nexus archive
+      unarchive:
+        remote_src: yes
+        src: "/root/{{ nexus_install }}"
+        dest: "/opt"
+
+    - name: create a symbolic link
+      file:
+        src: "/opt/nexus-{{ nexus_version }}/"
+        dest: "/opt/nexus"
+        state: link
+        
+    - name: change owner of /opt contents
+      file: 
+        dest: /opt
+        owner: nexus
+        group: nexus
+        mode: u=rwX,g=rX,o=rX 
+        recurse: yes
+
+    - name: change run_as_user parameter to nexus user
+      replace:
+        path: /opt/nexus/bin/nexus.rc
+        regexp: '#run_as_user=""'
+        replace: 'run_as_user="nexus"'
+        backup: yes
+
+    - name: copy nexus service files
+      copy:
+        src: "./install/{{ item }}"
+        dest: "/etc/systemd/system/{{ item }}"
+      with_items:
+        - nexus.service
+
+    - name: enabled nexus service
+      systemd:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      with_items:
+        - nexus
