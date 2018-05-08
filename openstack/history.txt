@@ -1,0 +1,305 @@
+[root@openstack openstack(keystone_admin)]# ansible-playbook -i hosts.yml ./config/lab-servers.yml
+
+PLAY [Create DNS Server] ***************************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+Tuesday 08 May 2018  11:21:57 -0300 (0:00:00.049)       0:00:00.049 ***********
+ok: [openstack.example.org]
+
+TASK [create security group for dns with icmp/ssh rules] *******************************************************************************************
+Tuesday 08 May 2018  11:21:59 -0300 (0:00:01.668)       0:00:01.717 ***********
+skipping: [openstack.example.org] => (item={'value': {u'security_group': u'default', u'flavor': u'ocp.node', u'floating_ip': u'192.168.1.3', u'image': u'centos', u'network': u'lab'}, 'key': u'ntp'})
+changed: [openstack.example.org] => (item={'value': {u'security_group': u'dns-security-group', u'flavor': u'ocp.node', u'floating_ip': u'192.168.1.2', u'image': u'centos', u'network': u'lab'}, 'key': u'dns'})
+
+TASK [create rule for port 53 on tcp/udp protocols] ************************************************************************************************
+Tuesday 08 May 2018  11:22:06 -0300 (0:00:07.868)       0:00:09.586 ***********
+changed: [openstack.example.org] => (item=udp)
+changed: [openstack.example.org] => (item=tcp)
+
+PLAY [Create Lab Servers Instances] ****************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+Tuesday 08 May 2018  11:22:12 -0300 (0:00:05.343)       0:00:14.929 ***********
+ok: [openstack.example.org]
+
+TASK [Create Servers Instances] ********************************************************************************************************************
+Tuesday 08 May 2018  11:22:13 -0300 (0:00:01.435)       0:00:16.365 ***********
+changed: [openstack.example.org] => (item={'value': {u'security_group': u'default', u'flavor': u'ocp.node', u'floating_ip': u'192.168.1.3', u'image': u'centos', u'network': u'lab'}, 'key': u'ntp'})
+changed: [openstack.example.org] => (item={'value': {u'security_group': u'dns-security-group', u'flavor': u'ocp.node', u'floating_ip': u'192.168.1.2', u'image': u'centos', u'network': u'lab'}, 'key': u'dns'})
+
+TASK [Wait for SSH on the DNS Instance] ************************************************************************************************************
+Tuesday 08 May 2018  11:22:55 -0300 (0:00:41.461)       0:00:57.826 ***********
+FAILED - RETRYING: Wait for SSH on the DNS Instance (30 retries left).
+FAILED - RETRYING: Wait for SSH on the DNS Instance (29 retries left).
+changed: [openstack.example.org]
+
+PLAY [Configure DNS Server] ************************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+Tuesday 08 May 2018  11:23:18 -0300 (0:00:23.670)       0:01:21.497 ***********
+ok: [dns]
+
+TASK [hostname update] *****************************************************************************************************************************
+Tuesday 08 May 2018  11:23:24 -0300 (0:00:05.937)       0:01:27.434 ***********
+changed: [dns]
+
+TASK [install required packages] *******************************************************************************************************************
+Tuesday 08 May 2018  11:23:25 -0300 (0:00:00.401)       0:01:27.836 ***********
+changed: [dns] => (item=[u'vim', u'firewalld', u'python-firewall', u'bind-utils', u'bind'])
+
+TASK [firewall configuration] **********************************************************************************************************************
+Tuesday 08 May 2018  11:25:15 -0300 (0:01:50.170)       0:03:18.007 ***********
+changed: [dns]
+
+TASK [copy /etc/named.conf] ************************************************************************************************************************
+Tuesday 08 May 2018  11:25:16 -0300 (0:00:01.412)       0:03:19.419 ***********
+changed: [dns]
+
+TASK [copy /etc/named/zones.conf] ******************************************************************************************************************
+Tuesday 08 May 2018  11:25:17 -0300 (0:00:00.620)       0:03:20.040 ***********
+changed: [dns]
+
+TASK [copy /var/named/dynamic/zone.db] *************************************************************************************************************
+Tuesday 08 May 2018  11:25:17 -0300 (0:00:00.415)       0:03:20.456 ***********
+changed: [dns]
+
+TASK [generate update key, configure and start the named service] **********************************************************************************
+Tuesday 08 May 2018  11:25:18 -0300 (0:00:00.415)       0:03:20.871 ***********
+changed: [dns]
+
+PLAY RECAP *****************************************************************************************************************************************
+dns                        : ok=8    changed=7    unreachable=0    failed=0
+openstack.example.org      : ok=6    changed=4    unreachable=0    failed=0
+
+Tuesday 08 May 2018  11:25:18 -0300 (0:00:00.378)       0:03:21.250 ***********
+===============================================================================
+install required packages ----------------------------------------------------------------------------------------------------------------- 110.17s
+Create Servers Instances ------------------------------------------------------------------------------------------------------------------- 41.46s
+Wait for SSH on the DNS Instance ----------------------------------------------------------------------------------------------------------- 23.67s
+create security group for dns with icmp/ssh rules ------------------------------------------------------------------------------------------- 7.87s
+Gathering Facts ----------------------------------------------------------------------------------------------------------------------------- 5.94s
+create rule for port 53 on tcp/udp protocols ------------------------------------------------------------------------------------------------ 5.34s
+Gathering Facts ----------------------------------------------------------------------------------------------------------------------------- 1.67s
+Gathering Facts ----------------------------------------------------------------------------------------------------------------------------- 1.44s
+firewall configuration ---------------------------------------------------------------------------------------------------------------------- 1.41s
+copy /etc/named.conf ------------------------------------------------------------------------------------------------------------------------ 0.62s
+copy /etc/named/zones.conf ------------------------------------------------------------------------------------------------------------------ 0.42s
+copy /var/named/dynamic/zone.db ------------------------------------------------------------------------------------------------------------- 0.42s
+hostname update ----------------------------------------------------------------------------------------------------------------------------- 0.40s
+generate update key, configure and start the named service ---------------------------------------------------------------------------------- 0.38s
+Playbook run took 0 days, 0 hours, 3 minutes, 21 seconds
+[root@openstack openstack(keystone_admin)]#
+
+############################
+
+[root@openstack openstack]# ansible-playbook -i hosts.yml install.yml
+
+PLAY [Prepare OpenStack Installation] **************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+Tuesday 08 May 2018  15:25:37 -0300 (0:00:00.030)       0:00:00.030 ***********
+ok: [openstack.example.org]
+
+TASK [create resource folder] **********************************************************************************************************************
+Tuesday 08 May 2018  15:25:37 -0300 (0:00:00.489)       0:00:00.519 ***********
+ok: [openstack.example.org]
+
+TASK [install extra packstack packages] ************************************************************************************************************
+Tuesday 08 May 2018  15:25:38 -0300 (0:00:00.198)       0:00:00.718 ***********
+changed: [openstack.example.org] => (item=[u'openstack-packstack', u'openstack-utils', u'python-pip'])
+
+TASK [update packages] *****************************************************************************************************************************
+Tuesday 08 May 2018  15:25:54 -0300 (0:00:16.870)       0:00:17.589 ***********
+ok: [openstack.example.org]
+
+TASK [update python pip] ***************************************************************************************************************************
+Tuesday 08 May 2018  15:25:55 -0300 (0:00:00.589)       0:00:18.178 ***********
+changed: [openstack.example.org]
+
+TASK [download images] *****************************************************************************************************************************
+Tuesday 08 May 2018  15:26:03 -0300 (0:00:07.814)       0:00:25.993 ***********
+ok: [openstack.example.org] => (item={'value': {u'min_disk': 1, u'file_name': u'cirros-0.4.0-x86_64-disk.img', u'min_ram': 128, u'disk_format': u'qcow2', u'remote_path': u'http://download.cirros-cloud.net/0.4.0'}, 'key': u'cirros'})
+ok: [openstack.example.org] => (item={'value': {u'min_disk': 15, u'file_name': u'CentOS-7-x86_64-GenericCloud.qcow2', u'min_ram': 512, u'disk_format': u'qcow2', u'remote_path': u'http://cloud.centos.org/centos/7/images'}, 'key': u'centos'})
+
+TASK [disable NetworkManager and Firewall] *********************************************************************************************************
+Tuesday 08 May 2018  15:26:03 -0300 (0:00:00.357)       0:00:26.350 ***********
+changed: [openstack.example.org] => (item=NetworkManager)
+changed: [openstack.example.org] => (item=firewalld)
+
+TASK [enable network service] **********************************************************************************************************************
+Tuesday 08 May 2018  15:26:05 -0300 (0:00:01.507)       0:00:27.857 ***********
+ok: [openstack.example.org]
+
+PLAY [Install OpenStack using Packstack] ***********************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+Tuesday 08 May 2018  15:26:05 -0300 (0:00:00.135)       0:00:27.993 ***********
+ok: [openstack.example.org]
+
+TASK [generate packstack config file] **************************************************************************************************************
+Tuesday 08 May 2018  15:26:06 -0300 (0:00:01.246)       0:00:29.240 ***********
+changed: [openstack.example.org]
+
+TASK [command] *************************************************************************************************************************************
+Tuesday 08 May 2018  15:26:07 -0300 (0:00:00.662)       0:00:29.902 ***********
+changed: [openstack.example.org] => (item={'value': u'br-ex:eno1', 'key': u'CONFIG_NEUTRON_OVS_BRIDGE_IFACES'})
+
+TASK [command] *************************************************************************************************************************************
+Tuesday 08 May 2018  15:26:07 -0300 (0:00:00.177)       0:00:30.079 ***********
+changed: [openstack.example.org] => (item={'value': u'openstack', 'key': u'CONFIG_DEFAULT_PASSWORD'})
+changed: [openstack.example.org] => (item={'value': 2, 'key': u'CONFIG_SERVICE_WORKERS'})
+changed: [openstack.example.org] => (item={'value': u'y', 'key': u'CONFIG_HEAT_INSTALL'})
+changed: [openstack.example.org] => (item={'value': u'n', 'key': u'CONFIG_PROVISION_DEMO'})
+changed: [openstack.example.org] => (item={'value': u'openstack', 'key': u'CONFIG_KEYSTONE_ADMIN_PW'})
+changed: [openstack.example.org] => (item={'value': u'300G', 'key': u'CONFIG_CINDER_VOLUMES_SIZE'})
+changed: [openstack.example.org] => (item={'value': u'n', 'key': u'CONFIG_CEILOMETER_INSTALL'})
+changed: [openstack.example.org] => (item={'value': u'pool.ntp.org', 'key': u'CONFIG_NTP_SERVERS'})
+changed: [openstack.example.org] => (item={'value': u'physnet1:br-ex', 'key': u'CONFIG_NEUTRON_OVS_BRIDGE_MAPPINGS'})
+
+TASK [packstack] ***********************************************************************************************************************************
+Tuesday 08 May 2018  15:26:08 -0300 (0:00:01.454)       0:00:31.534 ***********
+changed: [openstack.example.org]
+
+PLAY [Configure OpenStack Key Pair] ****************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+Tuesday 08 May 2018  15:49:50 -0300 (0:23:41.481)       0:24:13.015 ***********
+ok: [openstack.example.org]
+
+TASK [send key] ************************************************************************************************************************************
+Tuesday 08 May 2018  15:49:52 -0300 (0:00:02.369)       0:24:15.385 ***********
+changed: [openstack.example.org] => (item={'value': u'~/.ssh/id_rsa.pub', 'key': u'server'})
+
+TASK [add key] *************************************************************************************************************************************
+Tuesday 08 May 2018  15:49:53 -0300 (0:00:00.426)       0:24:15.811 ***********
+changed: [openstack.example.org] => (item={'value': u'~/.ssh/id_rsa.pub', 'key': u'server'})
+
+PLAY [Configure OpenStack Network] *****************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+Tuesday 08 May 2018  15:49:55 -0300 (0:00:02.576)       0:24:18.387 ***********
+ok: [openstack.example.org]
+
+TASK [create public network] ***********************************************************************************************************************
+Tuesday 08 May 2018  15:49:57 -0300 (0:00:01.451)       0:24:19.839 ***********
+changed: [openstack.example.org]
+
+PLAY [Configure OpenStack Flavors] *****************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+Tuesday 08 May 2018  15:50:06 -0300 (0:00:09.367)       0:24:29.207 ***********
+ok: [openstack.example.org]
+
+TASK [create flavor] *******************************************************************************************************************************
+Tuesday 08 May 2018  15:50:07 -0300 (0:00:01.435)       0:24:30.642 ***********
+changed: [openstack.example.org] => (item={'value': {u'vcpus': 1, u'disk': 1, u'ephemeral': 0, u'ram': 256, u'swap': 0}, 'key': u'm1.micro'})
+changed: [openstack.example.org] => (item={'value': {u'vcpus': 1, u'disk': 1, u'ephemeral': 0, u'ram': 128, u'swap': 0}, 'key': u'm1.nano'})
+changed: [openstack.example.org] => (item={'value': {u'vcpus': 1, u'disk': 15, u'ephemeral': 0, u'ram': 1024, u'swap': 0}, 'key': u'ocp.infra'})
+changed: [openstack.example.org] => (item={'value': {u'vcpus': 1, u'disk': 15, u'ephemeral': 0, u'ram': 2048, u'swap': 0}, 'key': u'ocp.master'})
+changed: [openstack.example.org] => (item={'value': {u'vcpus': 1, u'disk': 15, u'ephemeral': 0, u'ram': 2048, u'swap': 0}, 'key': u'ocp.node'})
+
+PLAY [Configure OpenStack Images] ******************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+Tuesday 08 May 2018  15:50:21 -0300 (0:00:13.097)       0:24:43.740 ***********
+ok: [openstack.example.org]
+
+TASK [create images] *******************************************************************************************************************************
+Tuesday 08 May 2018  15:50:22 -0300 (0:00:01.427)       0:24:45.167 ***********
+changed: [openstack.example.org] => (item={'value': {u'min_disk': 1, u'file_name': u'cirros-0.4.0-x86_64-disk.img', u'min_ram': 128, u'disk_format': u'qcow2', u'remote_path': u'http://download.cirros-cloud.net/0.4.0'}, 'key': u'cirros'})
+changed: [openstack.example.org] => (item={'value': {u'min_disk': 15, u'file_name': u'CentOS-7-x86_64-GenericCloud.qcow2', u'min_ram': 512, u'disk_format': u'qcow2', u'remote_path': u'http://cloud.centos.org/centos/7/images'}, 'key': u'centos'})
+
+PLAY [Configure OpenStack Packed Lab] **************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+Tuesday 08 May 2018  15:50:31 -0300 (0:00:08.599)       0:24:53.767 ***********
+ok: [openstack.example.org]
+
+TASK [create lab project] **************************************************************************************************************************
+Tuesday 08 May 2018  15:50:32 -0300 (0:00:01.452)       0:24:55.220 ***********
+changed: [openstack.example.org]
+
+TASK [configure lab network] ***********************************************************************************************************************
+Tuesday 08 May 2018  15:50:40 -0300 (0:00:08.295)       0:25:03.516 ***********
+changed: [openstack.example.org] => (item={'value': {u'dhcp': {u'start': u'10.0.0.10', u'end': u'10.0.0.100'}, u'cidr': u'10.0.0.0/24'}, 'key': u'lab'})
+
+TASK [create router] *******************************************************************************************************************************
+Tuesday 08 May 2018  15:50:46 -0300 (0:00:05.702)       0:25:09.219 ***********
+changed: [openstack.example.org]
+
+TASK [add lab subnet to router] ********************************************************************************************************************
+Tuesday 08 May 2018  15:50:52 -0300 (0:00:06.405)       0:25:15.624 ***********
+changed: [openstack.example.org] => (item={'value': {u'dhcp': {u'start': u'10.0.0.10', u'end': u'10.0.0.100'}, u'cidr': u'10.0.0.0/24'}, 'key': u'lab'})
+
+TASK [get default security group id] ***************************************************************************************************************
+Tuesday 08 May 2018  15:50:57 -0300 (0:00:04.602)       0:25:20.226 ***********
+changed: [openstack.example.org]
+
+TASK [configure default security group] ************************************************************************************************************
+Tuesday 08 May 2018  15:51:02 -0300 (0:00:04.945)       0:25:25.172 ***********
+changed: [openstack.example.org]
+
+TASK [create floating ip] **************************************************************************************************************************
+Tuesday 08 May 2018  15:51:10 -0300 (0:00:07.712)       0:25:32.885 ***********
+changed: [openstack.example.org] => (item=192.168.1.2)
+changed: [openstack.example.org] => (item=192.168.1.3)
+changed: [openstack.example.org] => (item=192.168.1.31)
+changed: [openstack.example.org] => (item=192.168.1.32)
+changed: [openstack.example.org] => (item=192.168.1.33)
+changed: [openstack.example.org] => (item=192.168.1.34)
+changed: [openstack.example.org] => (item=192.168.1.35)
+
+PLAY [Create DNS Server] ***************************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+Tuesday 08 May 2018  15:51:35 -0300 (0:00:25.456)       0:25:58.342 ***********
+ok: [openstack.example.org]
+
+TASK [create security group for dns with icmp/ssh rules] *******************************************************************************************
+Tuesday 08 May 2018  15:51:37 -0300 (0:00:01.446)       0:25:59.788 ***********
+skipping: [openstack.example.org] => (item={'value': {u'security_group': u'default', u'flavor': u'ocp.node', u'floating_ip': u'192.168.1.3', u'image': u'centos', u'network': u'lab'}, 'key': u'ntp'})
+changed: [openstack.example.org] => (item={'value': {u'security_group': u'dns-security-group', u'flavor': u'ocp.node', u'floating_ip': u'192.168.1.2', u'image': u'centos', u'network': u'lab'}, 'key': u'dns'})
+
+TASK [create rule for port 53 on tcp/udp protocols] ************************************************************************************************
+Tuesday 08 May 2018  15:51:44 -0300 (0:00:07.719)       0:26:07.507 ***********
+changed: [openstack.example.org] => (item=udp)
+changed: [openstack.example.org] => (item=tcp)
+
+PLAY [Create Lab Servers Instances] ****************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+Tuesday 08 May 2018  15:51:50 -0300 (0:00:05.309)       0:26:12.817 ***********
+ok: [openstack.example.org]
+
+TASK [create server instances] *********************************************************************************************************************
+Tuesday 08 May 2018  15:51:51 -0300 (0:00:01.431)       0:26:14.249 ***********
+failed: [openstack.example.org] (item={'value': {u'security_group': u'default', u'flavor': u'ocp.node', u'floating_ip': u'192.168.1.3', u'image': u'centos', u'network': u'lab'}, 'key': u'ntp'}) => {"changed": true, "cmd": "source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && network_id=$(openstack network show lab_network -f value -c id) && security_group_id=$(eval $(openstack project show lab -f shell -c id) && openstack security group list | grep $id | grep default | cut -d' ' -f2) && openstack server create --nic net-id=$network_id --security-group=$security_group_id --flavor ocp.node --image centos --key-name server --wait ntp && openstack server add floating ip ntp 192.168.1.3", "delta": "0:00:45.231341", "end": "2018-05-08 15:52:36.923633", "failed": true, "item": {"key": "ntp", "value": {"flavor": "ocp.node", "floating_ip": "192.168.1.3", "image": "centos", "network": "lab", "security_group": "default"}}, "msg": "non-zero return code", "rc": 1, "start": "2018-05-08 15:51:51.692292", "stderr": "Error creating server: ntp\nInstance network is not ready yet (HTTP 400) (Request-ID: req-0b66da75-9bf7-4d43-9824-7952acf3c4b1)", "stderr_lines": ["Error creating server: ntp", "Instance network is not ready yet (HTTP 400) (Request-ID: req-0b66da75-9bf7-4d43-9824-7952acf3c4b1)"], "stdout": "Error creating server", "stdout_lines": ["Error creating server"]}
+failed: [openstack.example.org] (item={'value': {u'security_group': u'dns-security-group', u'flavor': u'ocp.node', u'floating_ip': u'192.168.1.2', u'image': u'centos', u'network': u'lab'}, 'key': u'dns'}) => {"changed": true, "cmd": "source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && network_id=$(openstack network show lab_network -f value -c id) && security_group_id=$(eval $(openstack project show lab -f shell -c id) && openstack security group list | grep $id | grep dns-security-group | cut -d' ' -f2) && openstack server create --nic net-id=$network_id --security-group=$security_group_id --flavor ocp.node --image centos --key-name server --wait dns && openstack server add floating ip dns 192.168.1.2", "delta": "0:00:29.241194", "end": "2018-05-08 15:53:06.295198", "failed": true, "item": {"key": "dns", "value": {"flavor": "ocp.node", "floating_ip": "192.168.1.2", "image": "centos", "network": "lab", "security_group": "dns-security-group"}}, "msg": "non-zero return code", "rc": 1, "start": "2018-05-08 15:52:37.054004", "stderr": "Error creating server: dns\nInstance network is not ready yet (HTTP 400) (Request-ID: req-1b763886-e1f2-413c-8032-cf02dbdcb655)", "stderr_lines": ["Error creating server: dns", "Instance network is not ready yet (HTTP 400) (Request-ID: req-1b763886-e1f2-413c-8032-cf02dbdcb655)"], "stdout": "Error creating server", "stdout_lines": ["Error creating server"]}
+        to retry, use: --limit @/root/pack-your-lab/openstack/install.retry
+
+PLAY RECAP *****************************************************************************************************************************************
+openstack.example.org      : ok=34   changed=21   unreachable=0    failed=1
+
+Tuesday 08 May 2018  15:53:06 -0300 (0:01:14.742)       0:27:28.991 ***********
+===============================================================================
+packstack -------------------------------------------------------------------------------------------------------------------------------- 1421.48s
+create server instances -------------------------------------------------------------------------------------------------------------------- 74.74s
+create floating ip ------------------------------------------------------------------------------------------------------------------------- 25.46s
+install extra packstack packages ----------------------------------------------------------------------------------------------------------- 16.87s
+create flavor ------------------------------------------------------------------------------------------------------------------------------ 13.10s
+create public network ----------------------------------------------------------------------------------------------------------------------- 9.37s
+create images ------------------------------------------------------------------------------------------------------------------------------- 8.60s
+create lab project -------------------------------------------------------------------------------------------------------------------------- 8.30s
+update python pip --------------------------------------------------------------------------------------------------------------------------- 7.81s
+create security group for dns with icmp/ssh rules ------------------------------------------------------------------------------------------- 7.72s
+configure default security group ------------------------------------------------------------------------------------------------------------ 7.71s
+create router ------------------------------------------------------------------------------------------------------------------------------- 6.41s
+configure lab network ----------------------------------------------------------------------------------------------------------------------- 5.70s
+create rule for port 53 on tcp/udp protocols ------------------------------------------------------------------------------------------------ 5.31s
+get default security group id --------------------------------------------------------------------------------------------------------------- 4.95s
+add lab subnet to router -------------------------------------------------------------------------------------------------------------------- 4.60s
+add key ------------------------------------------------------------------------------------------------------------------------------------- 2.58s
+Gathering Facts ----------------------------------------------------------------------------------------------------------------------------- 2.37s
+disable NetworkManager and Firewall --------------------------------------------------------------------------------------------------------- 1.51s
+command ------------------------------------------------------------------------------------------------------------------------------------- 1.45s
+Playbook run took 0 days, 0 hours, 27 minutes, 28 seconds

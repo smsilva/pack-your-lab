@@ -1,0 +1,17 @@
+---
+- hosts: osp
+  remote_user: root
+  name: DNS Subnet Config
+
+  tasks:
+  
+    - name: change lab subnets adding DNS IP address
+      shell: >
+        source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+        openstack subnet set \
+          --no-dns-nameservers \
+          --dns-nameserver {{ osp.network.dns }} \
+          --dns-nameserver {{ osp.lab.servers.dns.floating_ip }} \
+          --dns-nameserver 8.8.8.8 \
+          {{ item.key }}_subnet
+      with_dict: "{{ osp.lab.networks }}"
