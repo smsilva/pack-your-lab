@@ -3,6 +3,9 @@
   name: Prepare OpenStack Installation
 
   tasks:
+  
+    - import_tasks: ~/pack-your-lab/nexus/client/configuration.yml
+
     - name: create resource folder
       file:
         path: "{{ osp.resource_path }}"

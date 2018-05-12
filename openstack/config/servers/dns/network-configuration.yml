@@ -10,8 +10,8 @@
         source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
         openstack subnet set \
           --no-dns-nameservers \
+          --dns-nameserver {{ servers.dns.floating_ip }} \
           --dns-nameserver {{ osp.network.dns }} \
-          --dns-nameserver {{ osp.lab.servers.dns.floating_ip }} \
           --dns-nameserver 8.8.8.8 \
           {{ item.key }}_subnet
       with_dict: "{{ osp.lab.networks }}"

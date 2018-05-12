@@ -13,9 +13,11 @@
           --provider-network-type flat \
           --provider-physical-network physnet1 \
           public_network && \
-        openstack subnet create --dhcp \
+        openstack subnet create \
+          --dhcp \
           --allocation-pool start={{ osp.network.dhcp.start }},end={{ osp.network.dhcp.end }} \
           --dns-nameserver {{ osp.network.dns }} \
+          --dns-nameserver {{ servers.dns.floating_ip }}
           --network public_network \
           --subnet-range {{ osp.network.cidr }} \
           public_subnet

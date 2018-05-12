@@ -1,0 +1,11 @@
+---
+- hosts: osp
+  name: Restart Lab Servers Instances
+
+  tasks:
+  
+    - name: reboot instances
+      shell: >
+        source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+        openstack server reboot {{ item.key }}
+      with_dict: "{{ osp.lab.servers }}"

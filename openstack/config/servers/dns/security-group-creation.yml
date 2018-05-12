@@ -1,24 +1,22 @@
 ---
 - hosts: osp
-  name: Create DNS Server
+  name: Create DNS Security Group (dns-security-group)
 
   tasks:
 
     - name: create security group for dns with icmp/ssh rules
       shell: >
         source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
-        openstack security group create {{ item.value.security_group }} && \
+        openstack security group create dns-security-group && \
         openstack security group rule create \
           --ingress \
           --protocol icmp \
-          {{ item.value.security_group }} && \
+          dns-security-group && \
         openstack security group rule create \
           --ingress \
           --protocol tcp \
           --dst-port 22 \
-          {{ item.value.security_group }}
-      with_dict: "{{ osp.lab.servers }}"
-      when: item.key == "dns"
+          dns-security-group
             
     - name: create rule for port 53 on tcp/udp protocols
       shell: >
@@ -27,7 +25,7 @@
           --ingress \
           --protocol {{ item }} \
           --dst-port 53 \
-          {{ osp.lab.servers.dns.security_group }}
+          dns-security-group
       with_items:
         - udp
         - tcp

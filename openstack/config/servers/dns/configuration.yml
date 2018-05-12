@@ -11,19 +11,9 @@
         name: "{{ item }}"
         state: present
       with_items:
-        - vim
-        - firewalld
-        - python-firewall
         - bind-utils
         - bind
 
-    - name: firewall configuration
-      shell: >
-        systemctl enable firewalld && \
-        systemctl start firewalld && \
-        firewall-cmd --zone public --add-service dns && \
-        firewall-cmd --zone public --add-service dns --permanent
-        
     - name: copy files
       block:
         - name: copy /etc/named.conf

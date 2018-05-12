@@ -4,3 +4,4 @@
 - import_playbook: servers/prepare.yml
 - import_playbook: servers/dns/configuration.yml
 - import_playbook: servers/dns/network-configuration.yml
+- import_playbook: servers/reboot.yml

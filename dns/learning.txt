@@ -22,7 +22,7 @@ do
     dns-security-group;
 done
 
-workshop_network_id=$(openstack network show workshop_network -f value -c id)
+network_id=$(openstack network show lab_network -f value -c id)
 
 openstack server create \
   --nic net-id=$workshop_network_id \
@@ -177,21 +177,24 @@ dig @192.168.1.2 example.org axfr
 
 ###################################[ test ] ########
 
-lab_project_id=$(openstack project show lab -f value -c id)
+project_id=$(openstack project show lab -f value -c id)
 
-openstack security group list --project $lab_project_id -f value -c ID
-
-security_group_id=$(openstack security group list --project lab -f value -c ID)
-
-network_id=$(openstack network show lab_network -f value -c id)
-
+security_group_id=$(openstack security group list --project lab | grep "Default security group" | cut -d"|" -f 2 | cut -d" " -f 2) && \
+network_id=$(openstack network show lab_network -f value -c id) && \
 openstack server create \
   --nic net-id=$network_id \
-  --security-group=4dce116b-e51f-4ec2-ad49-6ad8a12b05cb \
+  --security-group=$security_group_id \
   --flavor ocp.node \
   --image centos \
   --key-name server \
   --wait \
-  myinstance
+  app-02
 
 openstack server add floating ip myinstance 192.168.1.31
+
+openstack subnet set \
+  --no-dns-nameservers \
+  --dns-nameserver 192.168.1.2 \
+  --dns-nameserver 192.168.1.1 \
+  --dns-nameserver 8.8.8.8 \
+  lab_subnet
