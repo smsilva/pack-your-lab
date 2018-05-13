@@ -5,7 +5,7 @@
   
   tasks:
   
-    - name: create flavor
+    - name: create flavors
       shell: >
         source ~/keystonerc_admin && \
         openstack flavor create \

@@ -1,0 +1,32 @@
+---
+- hosts: osp
+  name: Create HAPRoxy Security Group
+
+  tasks:
+
+    - name: create security group / icmp rule
+      shell: >
+        source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+        security_group_name={{ servers.haproxy.security_group }} && \
+        openstack security group create \
+          --description "HAProxy Security Group" \
+          $security_group_name && \
+        openstack security group rule create \
+          --ingress \
+          --protocol icmp \
+          $security_group_name
+            
+    - name: create rules for ports 22, 80, 443, 8443
+      shell: >
+        source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+        security_group_name={{ servers.haproxy.security_group }} && \
+        openstack security group rule create \
+          --ingress \
+          --protocol tcp \
+          --dst-port {{ item }} \
+          $security_group_name
+      with_items:
+        - 22
+        - 80
+        - 443
+        - 8443

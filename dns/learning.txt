@@ -182,7 +182,7 @@ project_id=$(openstack project show lab -f value -c id)
 security_group_id=$(openstack security group list --project lab | grep "Default security group" | cut -d"|" -f 2 | cut -d" " -f 2) && \
 network_id=$(openstack network show lab_network -f value -c id) && \
 openstack server create \
-  --nic net-id=$network_id \
+  --nic net-id=$network_id,v4-fixed-ip=10.0.0.100 \
   --security-group=$security_group_id \
   --flavor ocp.node \
   --image centos \

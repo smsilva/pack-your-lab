@@ -9,4 +9,144 @@ openstack server delete $id --wait && \
 openstack security group delete dns-security-group && \
 rm -rf ~/.ssh/known_hosts
 
-ansible-playbook -i hosts.yml ./config/lab-servers.yml
+ansible-playbook -i hosts.yml config/lab-servers.yml
+
+yum install bash-completion bash-completion-extras
+
+yum install python-openstackclient
+
+#workaround if openstack complete doesn't work
+sudo ln -s /usr/lib/python2.7/site-packages/magnumclient /usr/lib/python2.7/site-packages/magclient
+
+openstack complete | sudo tee /etc/bash_completion.d/osc.bash_completion > /dev/null
+
+dns-sg
+
+<domain> = example.org
+<haproxy-sg-name> = haproxy-sg
+
+$ openstack security group create haproxy-sg
+$ for PORT in 22 80 443 8443;
+do
+openstack security group rule create \
+  --ingress \
+  --protocol tcp \
+  --dst-port $PORT \
+  haproxy-sg;
+done
+
+network_id=$(openstack network show lab_network -f value -c id) && \
+openstack server create \
+  --nic net-id=$network_id \
+  --flavor m1.small \
+  --image centos \
+  --key-name server \
+  --security-group haproxy-sg \
+  --wait \
+  haproxy
+
+openstack floating ip create --floating-ip-address 192.168.1.5 public_network
+
+openstack server add floating ip haproxy 192.168.1.5
+
+sudo yum update -y
+
+sudo yum -y install haproxy firewalld
+sudo systemctl enable firewalld
+sudo systemctl start firewalld
+sudo systemctl enable haproxy
+sudo systemctl start haproxy
+
+sudo firewall-cmd --zone public --add-service http
+sudo firewall-cmd --zone public --add-service https
+sudo firewall-cmd --zone public --add-port=8443/tcp
+sudo firewall-cmd --zone public --add-service http --permanent
+sudo firewall-cmd --zone public --add-service https --permanent
+sudo firewall-cmd --zone public --add-port=8443/tcp --permanent
+
+/etc/haproxy/haproxy.cfg
+
+sudo vim /etc/haproxy/haproxy.cfg
+
+#---------------------------------------------------------------------
+# Global settings
+#---------------------------------------------------------------------
+global
+	log 127.0.0.1 local2
+	chroot /var/lib/haproxy
+	pidfile /var/run/haproxy.pid
+	maxconn 4000
+	user haproxy
+	group haproxy
+	daemon
+	# turn on stats unix socket
+	stats socket /var/lib/haproxy/stats
+
+defaults
+	log global
+	option httplog
+	option dontlognull
+	option http-server-close
+	option redispatch
+	retries 3
+	timeout http-request 10s
+	timeout queue 1m
+	timeout connect 10s
+	timeout client 1m
+	timeout server 1m
+	timeout http-keep-alive 10s
+	timeout check 10s
+	maxconn 3000
+listen stats :9000
+	stats enable
+	stats realm Haproxy\ Statistics
+	stats uri /haproxy_stats
+	stats auth admin:password
+	stats refresh 30
+	mode http
+
+frontend main *:80
+	default_backend router80
+
+backend router80
+	balance source
+	mode tcp
+	# INFRA_80
+	server infra-node-0.internal.ocp3.example.org <IP>:80 check
+	server infra-node-1.internal.ocp3.example.org <IP>:80 check
+	server infra-node-2.internal.ocp3.example.org <IP>:80 check
+
+frontend main *:443
+	default_backend router443
+
+backend router443
+	balance source
+	mode tcp
+	# INFRA_443
+	server infra-node-0.internal.ocp3.example.org <IP>:443 check
+	server infra-node-1.internal.ocp3.example.org <IP>:443 check
+	server infra-node-2.internal.ocp3.example.org <IP>:443 check
+
+frontend main *:8443
+	default_backend mgmt8443
+
+backend mgmt8443
+	balance source
+	mode tcp
+	# MASTERS 8443
+	server master-0.internal.ocp3.example.org <IP>:8443 check
+	server master-1.internal.ocp3.example.org <IP>:8443 check
+	server master-2.internal.ocp3.example.org <IP>:8443 check
+
+$ sudo systemctl restart haproxy.service
+
+for i in 0 1 2
+do
+	curl -v http://infra-node-$i.internal.ocp3.example.org
+	curl -v -k https://infra-node-$i.internal.ocp3.example.org
+	curl -v -k https://master-$i.internal.ocp3.example.org:8443
+done
+
+$ curl -v http://localhost
+$ curl -v -k http://localhost:443
+$ curl -v -k http://localhost:8443

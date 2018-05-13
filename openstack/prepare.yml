@@ -31,6 +31,9 @@
         - openstack-packstack
         - openstack-utils
         - python-pip
+        - python-openstackclient
+        - bash-completion
+        - bash-completion-extras
 
     - name: update packages
       yum:
@@ -40,6 +43,10 @@
     - name: update python pip
       shell: >
         pip install --upgrade pip
+        
+    - name: configure bash completion for openstack commands
+      shell: >
+        openstack complete | sudo tee /etc/bash_completion.d/osc.bash_completion > /dev/null
 
     - name: download images
       get_url:
