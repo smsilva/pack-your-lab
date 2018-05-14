@@ -150,3 +150,16 @@ done
 $ curl -v http://localhost
 $ curl -v -k http://localhost:443
 $ curl -v -k http://localhost:8443
+
+########################3
+
+security_group_id=$(openstack security group list --project lab | grep "Default security group" | cut -d " " -f 2) && \
+netid=$(openstack network show lab_network -f value -c id) && \
+openstack server create \
+ --image centos \
+ --flavor m1.small \
+ --key-name server \
+ --nic net-id=$netid \
+ --security-group $security_group_id \
+ --wait \
+ master-1
