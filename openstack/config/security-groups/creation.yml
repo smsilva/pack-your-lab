@@ -1,0 +1,13 @@
+---
+- hosts: osp
+  name: Create Security Groups
+
+  tasks:
+
+    - name: create security groups
+      shell: >
+        source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+        openstack security group create \
+          --description "{{ item.value }} Security Group" \
+          {{ item.key }}-sg
+      with_dict: "{{ osp.lab.security_groups }}"

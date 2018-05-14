@@ -10,7 +10,7 @@
         network_id=$(openstack network show {{ item.value.network }}_network -f value -c id) && \
         security_group_id=$(eval $(openstack project show lab -f shell -c id) && openstack security group list | grep $id | grep {{ item.value.security_group }} | cut -d' ' -f2) && \
         openstack server create \
-          --nic net-id=$network_id \
+          --nic net-id=$network_id,v4-fixed-ip={{ item.value.ip_address }} \
           --security-group=$security_group_id \
           --flavor {{ item.value.flavor }} \
           --image {{ item.value.image }} \

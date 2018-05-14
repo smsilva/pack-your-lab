@@ -1,0 +1,18 @@
+---
+- hosts: osp
+  name: Create Bastion Security Group
+
+  tasks:
+
+    - name: create icmp rule and 22/tcp
+      shell: >
+        source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+        openstack security group rule create \
+          --ingress \
+          --protocol icmp \
+          bastion-sg && \
+        openstack security group rule create \
+          --ingress \
+          --protocol tcp \
+          --dst-port 22 \
+          bastion-sg

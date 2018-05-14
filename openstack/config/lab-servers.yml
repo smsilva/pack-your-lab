@@ -1,6 +1,4 @@
 ---
-- import_playbook: servers/security-groups/dns-creation.yml
-- import_playbook: servers/security-groups/haproxy-creation.yml
 - import_playbook: servers/creation.yml
 - import_playbook: servers/prepare.yml
 - import_playbook: servers/dns/configuration.yml

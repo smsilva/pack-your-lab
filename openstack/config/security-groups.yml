@@ -1,0 +1,8 @@
+---
+- import_playbook: security-groups/creation.yml
+- import_playbook: security-groups/rules/dns.yml
+- import_playbook: security-groups/rules/haproxy.yml
+- import_playbook: security-groups/rules/bastion.yml
+- import_playbook: security-groups/rules/master.yml
+- import_playbook: security-groups/rules/infra.yml
+- import_playbook: security-groups/rules/node.yml

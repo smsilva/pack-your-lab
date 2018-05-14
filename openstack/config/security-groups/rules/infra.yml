@@ -1,0 +1,19 @@
+---
+- hosts: osp
+  name: Create Infrastructure Security Group
+
+  tasks:
+
+    - name: create rules for 80/tcp, 443/tcp, 9200/tcp and 9300/tcp ports
+      shell: >
+        source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+        openstack security group rule create \
+          --ingress \
+          --protocol tcp \
+          --dst-port {{ item }} \
+          infra-sg
+      with_items:
+        - 80
+        - 443
+        - 9200
+        - 9300

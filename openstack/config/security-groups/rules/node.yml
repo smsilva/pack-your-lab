@@ -1,0 +1,42 @@
+---
+- hosts: osp
+  name: Create Node Security Group
+
+  tasks:
+
+    - name: create rule for icmp
+      shell: >
+        source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+        openstack security group rule create \
+          --ingress \
+          --protocol icmp \
+          node-sg
+
+    - name: port 22/tcp from bastion-sg and node-sg groups
+      shell: >
+        source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+        openstack security group rule create \
+          --ingress \
+          --protocol tcp \
+          --dst-port 22 \
+          --remote-group {{ item }} \
+          node-sg
+      with_items:
+        - bastion-sg
+        - node-sg
+
+    - name: port 10250/tcp from node-sg and 4789/udp from node-sg
+      shell: >
+        source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+        openstack security group rule create \
+          --ingress \
+          --protocol tcp \
+          --dst-port 10250 \
+          --remote-group node-sg \
+          node-sg && \
+        openstack security group rule create \
+          --ingress \
+          --protocol udp \
+          --dst-port 4789 \
+          --remote-group node-sg \
+          node-sg

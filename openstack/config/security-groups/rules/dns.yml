@@ -4,32 +4,27 @@
 
   tasks:
 
-    - name: create security group / icmp/ssh rules
+    - name: create icmp and 22/tcp rules
       shell: >
         source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
-        security_group_name={{ servers.dns.security_group }} && \
-        openstack security group create \
-          --description "DNS Security Group" \
-          $security_group_name && \
         openstack security group rule create \
           --ingress \
           --protocol icmp \
-          $security_group_name && \
+          dns-sg && \
         openstack security group rule create \
           --ingress \
           --protocol tcp \
           --dst-port 22 \
-          $security_group_name
+          dns-sg
             
-    - name: create rule for port 53 on tcp/udp protocols
+    - name: create rule for port 53/tcp and 53/udp
       shell: >
         source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
-        security_group_name={{ servers.dns.security_group }} && \
         openstack security group rule create \
           --ingress \
           --protocol {{ item }} \
           --dst-port 53 \
-          $security_group_name
+          dns-sg
       with_items:
         - udp
         - tcp

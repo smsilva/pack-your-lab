@@ -1,0 +1,50 @@
+---
+- hosts: osp
+  name: Create Master Security Group
+
+  tasks:
+
+    - name: create rule for 2379:2380 tcp ports
+      shell: >
+        source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+        openstack security group rule create \
+          --ingress \
+          --protocol tcp \
+          --dst-port 2379:2380 \
+          --remote-group master-sg \
+          master-sg
+
+    - name: create rules for 8053/tcp and 24224/tcp ports
+      shell: >
+        source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+        openstack security group rule create \
+          --ingress \
+          --protocol tcp \
+          --dst-port {{ item }} \
+          --remote-group node-sg \
+          master-sg
+      with_items:
+        - 8053
+        - 24224
+
+    - name: create rules for 8053/udp 24224/udp ports
+      shell: >
+        source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+        openstack security group rule create \
+          --ingress \
+          --protocol udp \
+          --dst-port {{ item }} \
+          --remote-group node-sg \
+          master-sg
+      with_items:
+        - 8053
+        - 24224
+
+    - name: create rule for 8443/tcp
+      shell: >
+        source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+        openstack security group rule create \
+          --ingress \
+          --protocol tcp \
+          --dst-port 8443 \
+          master-sg
