@@ -1,0 +1,11 @@
+---
+- hosts: osp
+  remote_user: root
+  name: OpenStack Volume Creation
+  
+  tasks:
+  
+    - name: create openshift-registry volume
+      shell: >
+        source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+        openstack volume create --size 30 openshift-registry

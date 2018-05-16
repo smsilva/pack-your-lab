@@ -1,3 +1,5 @@
+lsblk
+
 vim /etc/ansible/ansible.cfg
 
 callback_whitelist = profile_tasks, timer
@@ -36,10 +38,84 @@ $ curl -v -k http://localhost:8443
 security_group_id=$(openstack security group list --project lab | grep "Default security group" | cut -d " " -f 2) && \
 netid=$(openstack network show lab_network -f value -c id) && \
 openstack server create \
- --image centos \
- --flavor m1.small \
- --key-name server \
- --nic net-id=$netid \
- --security-group $security_group_id \
- --wait \
- master-1
+  --image centos \
+  --flavor m1.small \
+  --key-name server \
+  --nic net-id=$netid \
+  --security-group $security_group_id \
+  --wait \
+  master-1
+
+#######################[ master ]
+ 
+openstack volume create --size 15 master-0-docker-volume
+10970dba-4219-4b2d-a7e3-d8061e52d232
+
+openstack volume create --size 30 master-0-openshiftlocal-volume
+3cc40aa8-05af-44e7-88a9-1583cd81cb22
+
+openstack volume create --size 25 master-0-etcd-volume
+6f09491c-4842-41ff-be47-9eae7ee0898c
+
+domain=internal.ocp3.example.org && \
+lab_network_id=$(openstack network show lab_network -f value -c id) && \
+openstack server create \
+  --nic net-id=$lab_network_id \
+  --flavor ocp.master \
+  --image centos \
+  --key-name server \
+  --security-group master-sg \
+  --security-group node-sg \
+  --user-data=./config/servers/cloud-init/master-0.yml \
+  --block-device-mapping vdb=10970dba-4219-4b2d-a7e3-d8061e52d232:volume:15:false \
+  --block-device-mapping vdc=3cc40aa8-05af-44e7-88a9-1583cd81cb22:volume:30:false \
+  --block-device-mapping vdd=6f09491c-4842-41ff-be47-9eae7ee0898c:volume:25:false \
+  --wait \
+  master-0.$domain
+  
+#########################[ infra ]
+
+openstack volume create --size 15 infra-node-0-docker-volume
+545aa4d8-8f1c-412c-9cb4-c61c38b5e980
+
+openstack volume create --size 30 infra-node-0-openshiftlocal-volume
+70ccaa90-dcf1-48d2-8718-88fec89ce81f
+
+domain=internal.ocp3.example.org && \
+lab_network_id=$(openstack network show lab_network -f value -c id) && \
+openstack server create \
+  --nic net-id=$lab_network_id \
+  --flavor ocp.node \
+  --image centos \
+  --key-name server \
+  --security-group 1bc19031-2a23-40c0-9cb0-fd5ca75d7d4d \
+  --security-group infra-sg \
+  --security-group node-sg \
+  --user-data=./config/servers/cloud-init/infra-node-0.yml \
+  --block-device-mapping vdb=545aa4d8-8f1c-412c-9cb4-c61c38b5e980:volume:15:false \
+  --block-device-mapping vdc=70ccaa90-dcf1-48d2-8718-88fec89ce81f:volume:30:false \
+  --wait \
+  infra-node-0.$domain
+
+#########################[ app ]
+
+openstack volume create --size 15 app-node-0-docker-volume
+6d409971-e117-4f8a-9ee3-e8bfb58933cb
+
+openstack volume create --size 30 app-node-0-openshiftlocal-volume
+93c953a6-fd40-4467-bbca-ef6e06596344
+
+domain=internal.ocp3.example.org && \
+lab_network_id=$(openstack network show lab_network -f value -c id) && \
+openstack server create \
+  --nic net-id=$lab_network_id \
+  --flavor ocp.node \
+  --image centos \
+  --key-name server \
+  --security-group 1bc19031-2a23-40c0-9cb0-fd5ca75d7d4d \
+  --security-group node-sg \
+  --user-data=./config/servers/cloud-init/app-node-0.yml \
+  --block-device-mapping vdb=6d409971-e117-4f8a-9ee3-e8bfb58933cb:volume:15:false \
+  --block-device-mapping vdc=93c953a6-fd40-4467-bbca-ef6e06596344:volume:30:false \
+  --wait \
+  app-node-0.$domain

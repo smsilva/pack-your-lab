@@ -33,7 +33,6 @@
         - python-pip
         - python-openstackclient
         - bash-completion
-        - bash-completion-extras
 
     - name: update packages
       yum:
