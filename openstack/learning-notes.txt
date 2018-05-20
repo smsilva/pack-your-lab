@@ -119,3 +119,305 @@ openstack server create \
   --block-device-mapping vdc=93c953a6-fd40-4467-bbca-ef6e06596344:volume:30:false \
   --wait \
   app-node-0.$domain
+
+floating ip
+
+192.168.1.31
+192.168.1.32
+192.168.1.33
+
+m1.small
+
+network_id=$(openstack network show lab_network -f value -c id) && \
+security_group_id=$(openstack security group list --project lab | grep "Default security group" | cut -d " " -f 2)
+
+for instance in ldap ansible nginx-{0..1};
+do
+  openstack server create \
+    --image centos \
+    --flavor m1.small \
+    --key-name server \
+    --nic net-id=$network_id \
+    --security-group=$security_group_id \
+    $instance;
+done
+
+network_id=$(openstack network show lab_network -f value -c id) && \
+security_group_id=$(openstack security group list --project lab | grep "Default security group" | cut -d " " -f 2) && \
+openstack server create \
+  --image centos \
+  --flavor m1.small \
+  --key-name server \
+  --nic net-id=$network_id \
+  --security-group=$security_group_id \
+  ldap
+
+1. Install OpenLDAP Server / Enable Service
+
+yum -y install openldap-servers openldap-clients
+cp /usr/share/openldap-servers/DB_CONFIG.example /var/lib/ldap/DB_CONFIG
+chown ldap. /var/lib/ldap/DB_CONFIG
+systemctl start slapd
+systemctl enable slapd
+
+2. Set OpenLDAP admin password.
+
+# generate encrypted password:
+
+slappasswd
+
+{SSHA}SbxbugMpYCHhK8YAwQVegpTqxPbO3XbW (51270300)
+
+vi chrootpw.ldif
+
+# specify the password generated above for "olcRootPW" section
+dn: olcDatabase={0}config,cn=config
+changetype: modify
+add: olcRootPW
+olcRootPW: {SSHA}SbxbugMpYCHhK8YAwQVegpTqxPbO3XbW
+
+ldapadd -Y EXTERNAL -H ldapi:/// -f chrootpw.ldif
+
+	SASL/EXTERNAL authentication started
+	SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
+	SASL SSF: 0
+	modifying entry "olcDatabase={0}config,cn=config"
+
+3. Import basic Schemas.
+
+ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/cosine.ldif
+
+	SASL/EXTERNAL authentication started
+	SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
+	SASL SSF: 0
+	adding new entry "cn=cosine,cn=schema,cn=config"
+
+ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/nis.ldif
+
+	SASL/EXTERNAL authentication started
+	SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
+	SASL SSF: 0
+	adding new entry "cn=nis,cn=schema,cn=config"
+
+ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/inetorgperson.ldif
+
+	SASL/EXTERNAL authentication started
+	SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
+	SASL SSF: 0
+	adding new entry "cn=inetorgperson,cn=schema,cn=config"
+
+4. Set your domain name on LDAP DB.
+
+# generate directory manager's password
+
+slappasswd
+
+	New password: 76970300
+	Re-enter new password:
+	{SSHA}rRTqFcQD3g7cJ+5j4dELZRMdjIkd3QsU
+	
+vi chdomain.ldif
+
+# replace to your own domain name for "dc=***,dc=***" section
+# specify the password generated above for "olcRootPW" section 
+dn: olcDatabase={1}monitor,cn=config
+changetype: modify
+replace: olcAccess
+olcAccess: {0}to * by dn.base="gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth" read by dn.base="cn=Manager,dc=srv,dc=world" read by * none
+
+dn: olcDatabase={2}hdb,cn=config
+changetype: modify
+replace: olcSuffix
+olcSuffix: dc=srv,dc=world
+
+dn: olcDatabase={2}hdb,cn=config
+changetype: modify
+replace: olcRootDN
+olcRootDN: cn=Manager,dc=srv,dc=world
+
+dn: olcDatabase={2}hdb,cn=config
+changetype: modify
+add: olcRootPW
+olcRootPW: {SSHA}rRTqFcQD3g7cJ+5j4dELZRMdjIkd3QsU
+
+dn: olcDatabase={2}hdb,cn=config
+changetype: modify
+add: olcAccess
+olcAccess: {0}to attrs=userPassword,shadowLastChange by dn="cn=Manager,dc=srv,dc=world" write by anonymous auth by self write by * none
+olcAccess: {1}to dn.base="" by * read
+olcAccess: {2}to * by dn="cn=Manager,dc=srv,dc=world" write by * read
+
+ldapmodify -Y EXTERNAL -H ldapi:/// -f chdomain.ldif
+
+	SASL/EXTERNAL authentication started
+	SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
+	SASL SSF: 0
+	modifying entry "olcDatabase={1}monitor,cn=config"
+
+	modifying entry "olcDatabase={2}hdb,cn=config"
+
+	modifying entry "olcDatabase={2}hdb,cn=config"
+
+	modifying entry "olcDatabase={2}hdb,cn=config"
+
+vi basedomain.ldif
+
+# replace to your own domain name for "dc=***,dc=***" section 
+dn: dc=srv,dc=world
+objectClass: top
+objectClass: dcObject
+objectclass: organization
+o: Server World
+dc: srv
+
+dn: cn=Manager,dc=srv,dc=world
+objectClass: organizationalRole
+cn: Manager
+description: Directory Manager
+
+dn: ou=People,dc=srv,dc=world
+objectClass: organizationalUnit
+ou: People
+
+dn: ou=Group,dc=srv,dc=world
+objectClass: organizationalUnit
+ou: Group
+
+ldapadd -x -D cn=Manager,dc=srv,dc=world -W -f basedomain.ldif
+
+	Enter LDAP Password: # directory manager's password
+	
+	adding new entry "dc=srv,dc=world"
+
+	adding new entry "cn=Manager,dc=srv,dc=world"
+
+	adding new entry "ou=People,dc=srv,dc=world"
+
+	adding new entry "ou=Group,dc=srv,dc=world"
+	
+5. If Firewalld is running, allow LDAP service. LDAP uses 389/TCP.
+
+firewall-cmd --add-service=ldap --permanent 
+
+firewall-cmd --reload
+
+##########################
+
+slappasswd
+
+New User
+
+rm -rf adam.ldif
+
+vim adam.ldif
+
+dn: uid=adam,ou=People,dc=srv,dc=world
+objectClass: top
+objectClass: account
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: adam
+uid: adam
+uidNumber: 16859
+gidNumber: 100
+homeDirectory: /home/adam
+loginShell: /bin/bash
+gecos: adam
+userPassword: {crypt}x
+shadowLastChange: 0
+shadowMax: -1
+shadowWarning: 0
+
+ldapadd -x -W -D "cn=Manager,dc=srv,dc=world" -f adam.ldif
+ldapadd -x -W -D "cn=Manager,dc=srv,dc=world" -f adam.ldif
+
+ldappasswd -s teste123 -W -D "cn=Manager,dc=srv,dc=world" -x "uid=adam,ou=People,dc=srv,dc=world"
+
+ldapsearch -x -W -D "cn=Manager,dc=srv,dc=world" -b "uid=adam,ou=People,dc=srv,dc=world" "(objectclass=*)"
+
+vim adam-modify.ldif
+
+dn: uid=adam,ou=People,dc=srv,dc=world
+changetype: modify
+replace: shadowMax
+shadowMax: -1
+
+ldapmodify -x -W -D "cn=Manager,dc=srv,dc=world" -H ldap:// -f adam-modify.ldif
+
+##########################
+
+LDAP Client
+
+1. Install OpenLDAP Client
+
+yum -y install openldap-clients nss-pam-ldapd
+
+# ldapserver=(LDAP server's hostname or IP address)
+# ldapbasedn="dc=(your own domain name)"
+
+authconfig --enableldap \
+--enableldapauth \
+--ldapserver=dlp.srv.world \
+--ldapbasedn="dc=srv,dc=world" \
+--enablemkhomedir \
+--update
+
+authconfig --enableldap \
+--enableldapauth \
+--ldapserver=192.168.1.32 \
+--ldapbasedn="dc=srv,dc=world" \
+--enablemkhomedir \
+--update
+
+exit 
+logout
+CentOS Linux 7 (Core)
+Kernel 3.10.0-123.20.1.el7.x86_64 on an x86_64
+www login: redhat # LDAP user
+Password:# password
+Creating directory '/home/redhat'.
+[redhat@www ~]$ # logined normally [redhat@www ~]$ passwd# try to change the LDAP password
+Changing password for user redhat.
+Enter login(LDAP) password: # current password
+New password: # new password
+Retype new password:
+LDAP password information changed for redhat
+passwd: all authentication tokens updated successfully.
+[2]	If SELinux is enabled, it needs to add a rule to allow creating home directories automatically by mkhomedir.
+[root@www ~]# vi mkhomedir.te
+# create new
+module mkhomedir 1.0;
+
+require {
+        type unconfined_t;
+        type oddjob_mkhomedir_exec_t;
+        class file entrypoint;
+}
+
+#============= unconfined_t ==============
+allow unconfined_t oddjob_mkhomedir_exec_t:file entrypoint;
+
+[root@www ~]# checkmodule -m -M -o mkhomedir.mod mkhomedir.te 
+checkmodule: loading policy configuration from mkhomedir.te
+checkmodule: policy configuration loaded
+checkmodule: writing binary representation (version 17) to mkhomedir.mod
+[root@www ~]# semodule_package --outfile mkhomedir.pp --module mkhomedir.mod 
+[root@www ~]# semodule -i mkhomedir.pp 
+
+##########################
+
+It is very easy to convert a VirtualBox .vdi disk images to KVM qcow2 file. You have to use the RAW file format as an intermediate.
+
+1 – Make sure the VirtualBox machine is shutdown.
+
+2 – Convert the vdi to a raw disk images. Note: vdi are compressed and raw images are not and so you will need to leave enough disk space for entire uncompressed disk.
+
+C:\Program Files\Oracle\VirtualBox
+
+VBoxManage clonehd --format RAW c:\temp\vbox\centos7.vdi c:\temp\vbox\centos7.img
+
+3 – Then on your KVM host:
+
+qemu-img convert -f raw vm.img -O qcow2 vm.qcow2
+Hope this is helpful.
+

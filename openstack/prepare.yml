@@ -14,7 +14,7 @@
     - name: install required packages
       yum:
         name: "{{ item }}"
-        state: present
+        state: latest
       with_items:
         - centos-release-openstack-queens
 
@@ -26,13 +26,14 @@
     - name: install extra packstack packages
       yum:
         name: "{{ item }}"
-        state: present
+        state: latest
       with_items:
         - openstack-packstack
         - openstack-utils
         - python-pip
         - python-openstackclient
         - bash-completion
+        - bash-completion-extras
 
     - name: update packages
       yum:
