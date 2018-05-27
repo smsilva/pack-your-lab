@@ -4,7 +4,7 @@ cloud_config_modules:
 - mounts
 
 hostname: app-node-0
-fqdn: app-node-0.internal.ocp3.example.org
+fqdn: app-node-0.internal.ocp.example.org
 
 write_files:
   - path: "/etc/sysconfig/docker-storage-setup"
