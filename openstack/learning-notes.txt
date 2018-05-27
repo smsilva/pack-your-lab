@@ -1,17 +1,6 @@
-lsblk
-
 vim /etc/ansible/ansible.cfg
 
 callback_whitelist = profile_tasks, timer
-
-eval $(openstack server show dns -f shell -c id) && \ 
-openstack server delete $id --wait && \
-eval $(openstack server show ntp -f shell -c id) && \
-openstack server delete $id --wait && \
-openstack security group delete dns-security-group && \
-rm -rf ~/.ssh/known_hosts
-
-ansible-playbook -i hosts.yml config/lab-servers.yml
 
 yum install bash-completion bash-completion-extras
 
@@ -22,33 +11,9 @@ sudo ln -s /usr/lib/python2.7/site-packages/magnumclient /usr/lib/python2.7/site
 
 openstack complete | sudo tee /etc/bash_completion.d/osc.bash_completion > /dev/null
 
-for i in 0 1 2
-do
-	curl -v http://infra-node-$i.internal.ocp3.example.org
-	curl -v -k https://infra-node-$i.internal.ocp3.example.org
-	curl -v -k https://master-$i.internal.ocp3.example.org:8443
-done
-
-$ curl -v http://localhost
-$ curl -v -k http://localhost:443
-$ curl -v -k http://localhost:8443
-
 ########################
-
-security_group_id=$(openstack security group list --project lab | grep "Default security group" | cut -d " " -f 2) && \
-netid=$(openstack network show lab_network -f value -c id) && \
-openstack server create \
-  --image centos \
-  --flavor m1.small \
-  --key-name server \
-  --nic net-id=$netid \
-  --security-group $security_group_id \
-  --wait \
-  master-1
-
-#######################[ master ]
  
-openstack volume create --size 15 master-0-docker-volume
+docker_volume_id=$(openstack volume create --size 15 master-0-docker-volume)
 10970dba-4219-4b2d-a7e3-d8061e52d232
 
 openstack volume create --size 30 master-0-openshiftlocal-volume
@@ -131,10 +96,10 @@ m1.small
 network_id=$(openstack network show lab_network -f value -c id) && \
 security_group_id=$(openstack security group list --project lab | grep "Default security group" | cut -d " " -f 2)
 
-for instance in ldap ansible nginx-{0..1};
+for instance in ldap ansible;
 do
   openstack server create \
-    --image centos \
+    --image centos7 \
     --flavor m1.small \
     --key-name server \
     --nic net-id=$network_id \
@@ -142,19 +107,9 @@ do
     $instance;
 done
 
-network_id=$(openstack network show lab_network -f value -c id) && \
-security_group_id=$(openstack security group list --project lab | grep "Default security group" | cut -d " " -f 2) && \
-openstack server create \
-  --image centos \
-  --flavor m1.small \
-  --key-name server \
-  --nic net-id=$network_id \
-  --security-group=$security_group_id \
-  ldap
-
 1. Install OpenLDAP Server / Enable Service
 
-yum -y install openldap-servers openldap-clients
+yum -y install vim openldap-servers openldap-clients
 cp /usr/share/openldap-servers/DB_CONFIG.example /var/lib/ldap/DB_CONFIG
 chown ldap. /var/lib/ldap/DB_CONFIG
 systemctl start slapd
@@ -166,15 +121,16 @@ systemctl enable slapd
 
 slappasswd
 
-{SSHA}SbxbugMpYCHhK8YAwQVegpTqxPbO3XbW (51270300)
+51270300
+{SSHA}xhnp96neG73bbadYDnZBrdTobWRm8kDt
 
-vi chrootpw.ldif
+vim chrootpw.ldif
 
 # specify the password generated above for "olcRootPW" section
 dn: olcDatabase={0}config,cn=config
 changetype: modify
 add: olcRootPW
-olcRootPW: {SSHA}SbxbugMpYCHhK8YAwQVegpTqxPbO3XbW
+olcRootPW: {SSHA}xhnp96neG73bbadYDnZBrdTobWRm8kDt
 
 ldapadd -Y EXTERNAL -H ldapi:/// -f chrootpw.ldif
 
@@ -214,9 +170,10 @@ slappasswd
 
 	New password: 76970300
 	Re-enter new password:
-	{SSHA}rRTqFcQD3g7cJ+5j4dELZRMdjIkd3QsU
 	
-vi chdomain.ldif
+	{SSHA}+3dRA+Gr0TIdSDFRBY6zUy55iXDUgrm+
+	
+vim chdomain.ldif
 
 # replace to your own domain name for "dc=***,dc=***" section
 # specify the password generated above for "olcRootPW" section 
@@ -238,7 +195,7 @@ olcRootDN: cn=Manager,dc=srv,dc=world
 dn: olcDatabase={2}hdb,cn=config
 changetype: modify
 add: olcRootPW
-olcRootPW: {SSHA}rRTqFcQD3g7cJ+5j4dELZRMdjIkd3QsU
+olcRootPW: {SSHA}+3dRA+Gr0TIdSDFRBY6zUy55iXDUgrm+
 
 dn: olcDatabase={2}hdb,cn=config
 changetype: modify
@@ -260,7 +217,7 @@ ldapmodify -Y EXTERNAL -H ldapi:/// -f chdomain.ldif
 
 	modifying entry "olcDatabase={2}hdb,cn=config"
 
-vi basedomain.ldif
+vim basedomain.ldif
 
 # replace to your own domain name for "dc=***,dc=***" section 
 dn: dc=srv,dc=world
@@ -303,46 +260,41 @@ firewall-cmd --reload
 
 ##########################
 
-slappasswd
-
 New User
 
-rm -rf adam.ldif
+vim monica.ldif
 
-vim adam.ldif
-
-dn: uid=adam,ou=People,dc=srv,dc=world
+dn: uid=monica,ou=People,dc=srv,dc=world
 objectClass: top
 objectClass: account
 objectClass: posixAccount
 objectClass: shadowAccount
-cn: adam
-uid: adam
+cn: monica
+uid: monica
 uidNumber: 16859
 gidNumber: 100
-homeDirectory: /home/adam
+homeDirectory: /home/monica
 loginShell: /bin/bash
-gecos: adam
+gecos: monica
 userPassword: {crypt}x
 shadowLastChange: 0
-shadowMax: -1
+shadowMax: 0
 shadowWarning: 0
 
-ldapadd -x -W -D "cn=Manager,dc=srv,dc=world" -f adam.ldif
-ldapadd -x -W -D "cn=Manager,dc=srv,dc=world" -f adam.ldif
+ldapadd -x -W -D "cn=Manager,dc=srv,dc=world" -f monica.ldif
 
-ldappasswd -s teste123 -W -D "cn=Manager,dc=srv,dc=world" -x "uid=adam,ou=People,dc=srv,dc=world"
+ldappasswd -s teste123 -W -D "cn=Manager,dc=srv,dc=world" -x "uid=monica,ou=People,dc=srv,dc=world"
 
-ldapsearch -x -W -D "cn=Manager,dc=srv,dc=world" -b "uid=adam,ou=People,dc=srv,dc=world" "(objectclass=*)"
+ldapsearch -x -W -D "cn=Manager,dc=srv,dc=world" -b "uid=monica,ou=People,dc=srv,dc=world" "(objectclass=*)"
 
-vim adam-modify.ldif
+vim monica-modify.ldif
 
-dn: uid=adam,ou=People,dc=srv,dc=world
+dn: uid=monica,ou=People,dc=srv,dc=world
 changetype: modify
 replace: shadowMax
 shadowMax: -1
 
-ldapmodify -x -W -D "cn=Manager,dc=srv,dc=world" -H ldap:// -f adam-modify.ldif
+ldapmodify -x -W -D "cn=Manager,dc=srv,dc=world" -H ldap:// -f monica-modify.ldif
 
 ##########################
 
@@ -350,7 +302,10 @@ LDAP Client
 
 1. Install OpenLDAP Client
 
-yum -y install openldap-clients nss-pam-ldapd
+yum -y install \
+ vim \
+ openldap-clients \
+ nss-pam-ldapd
 
 # ldapserver=(LDAP server's hostname or IP address)
 # ldapbasedn="dc=(your own domain name)"
@@ -364,28 +319,23 @@ authconfig --enableldap \
 
 authconfig --enableldap \
 --enableldapauth \
---ldapserver=192.168.1.32 \
+--ldapserver=192.168.1.40 \
 --ldapbasedn="dc=srv,dc=world" \
 --enablemkhomedir \
 --update
 
-exit 
-logout
-CentOS Linux 7 (Core)
-Kernel 3.10.0-123.20.1.el7.x86_64 on an x86_64
-www login: redhat # LDAP user
-Password:# password
-Creating directory '/home/redhat'.
-[redhat@www ~]$ # logined normally [redhat@www ~]$ passwd# try to change the LDAP password
-Changing password for user redhat.
-Enter login(LDAP) password: # current password
-New password: # new password
-Retype new password:
-LDAP password information changed for redhat
-passwd: all authentication tokens updated successfully.
-[2]	If SELinux is enabled, it needs to add a rule to allow creating home directories automatically by mkhomedir.
-[root@www ~]# vi mkhomedir.te
+vim /etc/ssh/sshd_config
+
+PasswordAuthentication yes
+
+reboot
+
+2. If SELinux is enabled, it needs to add a rule to allow creating home directories automatically by mkhomedir.
+
+vi mkhomedir.te
+
 # create new
+
 module mkhomedir 1.0;
 
 require {
@@ -401,23 +351,127 @@ allow unconfined_t oddjob_mkhomedir_exec_t:file entrypoint;
 checkmodule: loading policy configuration from mkhomedir.te
 checkmodule: policy configuration loaded
 checkmodule: writing binary representation (version 17) to mkhomedir.mod
+
 [root@www ~]# semodule_package --outfile mkhomedir.pp --module mkhomedir.mod 
+
 [root@www ~]# semodule -i mkhomedir.pp 
 
-##########################
+########################################################################################################
 
-It is very easy to convert a VirtualBox .vdi disk images to KVM qcow2 file. You have to use the RAW file format as an intermediate.
+1. Create a VirtualBox Machine
 
-1 – Make sure the VirtualBox machine is shutdown.
+CPU............: 2
+Memory.........: 4 GB
+Disk (VDI).....: 15 GB
+ISO............: CentOS-7-x86_64-Minimal-1804.iso
+Network Bridge.: Internet Access
 
-2 – Convert the vdi to a raw disk images. Note: vdi are compressed and raw images are not and so you will need to leave enough disk space for entire uncompressed disk.
+yum -y update && \
+yum -y install acpid && \
+systemctl enable acpid && \
+yum -y install cloud-init && \
+yum -y install cloud-utils-growpart && \
+systemctl stop firewalld && \
+systemctl disable firewalld && \
+echo "NOZEROCONF=yes" >> /etc/sysconfig/network && \
+sed -i 's/rhgb quiet/console=tty0 console=ttyS0,115200n8/g' /etc/default/grub && \
+grub2-mkconfig -o /boot/grub2/grub.cfg && \
+sed -i '/^UUID/d' /etc/sysconfig/network-scripts/ifcfg-enp0s3 && \
+yum clean all && \
+rm -rf /var/cache/yum
 
-C:\Program Files\Oracle\VirtualBox
+poweroff
 
-VBoxManage clonehd --format RAW c:\temp\vbox\centos7.vdi c:\temp\vbox\centos7.img
+#copy to nuc
 
-3 – Then on your KVM host:
+qemu-img convert -f vdi centos7.vdi -O qcow2 centos7.qcow2
 
-qemu-img convert -f raw vm.img -O qcow2 vm.qcow2
-Hope this is helpful.
+openstack image create \
+  --public \
+  --disk-format qcow2 \
+  --min-disk 15 \
+  --min-ram 512 \
+  --file centos7.qcow2 \
+  centos7
+  
+rm -rf ~/.ssh/known_hosts
 
+openstack server delete sftp
+  
+network_id=$(openstack network show lab_network -f value -c id) && \
+security_group_id=$(openstack security group list --project lab | grep "Default security group" | cut -d " " -f 2) && \
+openstack server create \
+  --image centos7 \
+  --flavor m1.small \
+  --key-name server \
+  --nic net-id=$network_id \
+  --security-group=$security_group_id \
+  --wait \
+  sftp
+
+openstack server add floating ip sftp 192.168.1.40
+
+##########################################
+
+vim keystonerc_admin
+
+export OS_USERNAME=admin
+export OS_TENANT_NAME=admin
+export OS_PASSWORD=xxxxxxxxxx
+export OS_AUTH_URL=http://192.168.1.127:5000/v2.0/
+export PS1='[\u@\h \W(keystone_admin)]\$ '
+
+export OS_USER_DOMAIN_NAME=Default
+export OS_PROJECT_DOMAIN_NAME=Default
+export OS_PROJECT_NAME=lab
+export OS_IDENTITY_API_VERSION=3
+export OS_USERNAME=admin
+export OS_PASSWORD=openstack
+export OS_AUTH_URL=http://192.168.1.101:5000/v3
+export PS1='[\u@\h \W(admin)]\$ '
+
+sftp-creation.yml
+---
+- hosts: openstack
+
+  tasks:
+
+  - name: remove known_hosts
+    file: 
+      path: ~/.ssh/known_hosts
+      state: absent
+  
+  - name: creating instance
+    shell: >
+      source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+      network_id=$(openstack network show lab_network -f value -c id) && \
+      security_group_id=$(openstack security group list --project lab | grep "Default security group" | cut -d " " -f 2) && \
+      openstack server create \
+        --image centos7 \
+        --flavor m1.small \
+        --key-name server \
+        --nic net-id=$network_id \
+        --security-group=$security_group_id \
+        --wait \
+        sftp && \    
+      openstack server add floating ip sftp 192.168.1.40
+  
+  - name: wait for SSH on each created instance
+    command: >
+      ssh -oBatchMode=yes -oStrictHostKeyChecking=no
+      centos@192.168.1.40 true
+    register: result
+    until: result|success
+    retries: 30
+    delay: 10
+
+sftp-role.yml
+---
+- hosts: lab
+  roles:
+    - role: sftp
+	
+sftp.yml
+---
+- import_playbook: sftp-creation.yml
+- import_playbook: sftp-role.yml

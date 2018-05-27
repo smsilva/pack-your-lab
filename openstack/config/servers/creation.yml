@@ -3,12 +3,18 @@
   name: Create Lab Servers Instances
 
   tasks:
+    
+    - name: remove known_hosts to prevent invalid host keys for ssh connections
+      file:
+        path: ~/.ssh/known_hosts
+        state: absent
   
     - name: create server instances
       shell: >
         source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
         network_id=$(openstack network show {{ item.value.network }}_network -f value -c id) && \
-        security_group_id=$(eval $(openstack project show lab -f shell -c id) && openstack security group list | grep $id | grep {{ item.value.security_group }} | cut -d' ' -f2) && \
+        lab_project_id=$(openstack project show $OS_PROJECT_NAME -c id -f value) && \
+        security_group_id=$(openstack security group list --project $lab_project_id -f csv --quote none | grep {{ item.value.security_group }} | cut -d "," -f 1) && \
         openstack server create \
           --nic net-id=$network_id,v4-fixed-ip={{ item.value.ip_address }} \
           --security-group=$security_group_id \
