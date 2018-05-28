@@ -17,6 +17,7 @@ master-0            A        10.0.0.30
 infra-node-0        A        10.0.0.40
 infra-node-1        A        10.0.0.41
 app-node-0          A        10.0.0.50
+app-node-1          A        10.0.0.51
 
 $ORIGIN ocp.example.org.
 ns                  A        192.168.1.2
@@ -24,4 +25,6 @@ dns                 A        192.168.1.2
 nexus               A        192.168.1.3
 ntp                 A        192.168.1.4
 haproxy             A        192.168.1.5
+lb                  A        192.168.1.5
 bastion             A        192.168.1.6
+console             A        192.168.1.5

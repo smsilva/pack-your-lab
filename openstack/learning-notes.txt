@@ -63,25 +63,108 @@ do
     $instance;
 done
 
-instance_name=app-node && instance_sequence=0 && instance_ip=10.0.0.50 && \
-instance=$instance_name-$instance_sequence && \
-domain=internal.ocp.example.org && \
-openstack volume create --size 15 $instance-docker-volume && \
-docker_volume_id=$(openstack volume show $instance-docker-volume -c id -f value) && \
-openstack volume create --size 30 $instance-openshiftlocal-volume && \
-openshiftlocal_volume_id=$(openstack volume show $instance-openshiftlocal-volume -c id -f value) && \
-lab_network_id=$(openstack network show lab_network -f value -c id) && \
-openstack server create \
-  --nic net-id=$lab_network_id,v4-fixed-ip=$instance_ip \
-  --flavor ocp.node \
-  --image centos7 \
-  --key-name server \
-  --security-group node-sg \
-  --user-data=./config/servers/cloud-init/$instance.yml \
-  --block-device-mapping vdb=$docker_volume_id:volume:15:false \
-  --block-device-mapping vdc=$openshiftlocal_volume_id:volume:30:false \
-  --wait \
-  $instance
+for instance_number in {0..1};
+do
+  instance_name=app-node && instance_sequence=$instance_number && instance_ip=10.0.0.5$instance_number && \
+  instance=$instance_name-$instance_sequence && \
+  domain=internal.ocp.example.org && \
+  openstack volume create --size 15 $instance-docker-volume && \
+  docker_volume_id=$(openstack volume show $instance-docker-volume -c id -f value) && \
+  openstack volume create --size 30 $instance-openshiftlocal-volume && \
+  openshiftlocal_volume_id=$(openstack volume show $instance-openshiftlocal-volume -c id -f value) && \
+  lab_network_id=$(openstack network show lab_network -f value -c id) && \
+  openstack server create \
+    --nic net-id=$lab_network_id,v4-fixed-ip=$instance_ip \
+    --flavor ocp.node \
+    --image centos7 \
+    --key-name server \
+    --security-group node-sg \
+    --user-data=./config/servers/cloud-init/$instance.yml \
+    --block-device-mapping vdb=$docker_volume_id:volume:15:false \
+    --block-device-mapping vdc=$openshiftlocal_volume_id:volume:30:false \
+    --wait \
+    $instance;
+done
+
+git clone https://github.com/openshift/openshift-ansible
+
+example hosts file
+
+[OSEv3:children]
+masters
+nodes
+etcd
+
+[OSEv3:vars]
+ansible_user=centos
+
+ansible_become=true
+
+openshift_deployment_type=origin
+
+openshift_release="3.9"
+
+openshift_master_cluster_hostname=master-0.internal.ocp.example.org
+openshift_master_cluster_public_hostname=console.ocp.example.org
+openshift_master_default_subdomain=apps.ocp.example.org
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/openshift/openshift-passwd'}]
+
+openshift_cloudprovider_kind=openstack
+openshift_cloudprovider_openstack_auth_url=http://192.168.1.101:5000/v3
+openshift_cloudprovider_openstack_username=admin
+openshift_cloudprovider_openstack_password=openstack
+openshift_cloudprovider_openstack_domain_name=Default
+openshift_cloudprovider_openstack_tenant_name=lab
+
+os_sdn_network_plugin_name='redhat/openshift-ovs-networkpolicy'
+osm_use_cockpit=true
+
+#registry
+openshift_hosted_registry_storage_kind=openstack
+openshift_hosted_registry_storage_access_modes=['ReadWriteOnce']
+openshift_hosted_registry_storage_openstack_filesystem=ext4
+openshift_hosted_registry_storage_openstack_volumeID=899cc4c8-ee0e-4f04-ad56-ce904c14a206
+openshift_hosted_registry_storage_volume_size=15Gi
+openshift_public_hostname=console.ocp.example.org
+
+debug_level=2
+
+openshift_disable_check=memory_availability,docker_image_availability
+
+[masters]
+master-0.internal.ocp.example.org
+
+[etcd]
+master-0.internal.ocp.example.org
+
+[nodes]
+master-0.internal.ocp.example.org
+app-node-0.internal.ocp.example.org openshift_node_labels="{'region': 'primary', 'zone': 'east'}"
+app-node-1.internal.ocp.example.org openshift_node_labels="{'region': 'primary', 'zone': 'west'}"
+infra-node-0.internal.ocp.example.org openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
+infra-node-1.internal.ocp.example.org openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
+
+cd ~
+git clone https://github.com/openshift/openshift-ansible
+cd openshift-ansible
+git checkout release-3.9
+
+docker.yml
+---
+- hosts: all
+  name: Docker pull docker.io/openshift/origin-node
+
+  tasks:
+
+  - name: Docker Pull
+    shell: >
+      sudo docker pull docker.io/openshift/origin-node
+
+ansible-playbook -i hosts ~/openshift-ansible/playbooks/prerequisites.yml
+
+ansible-playbook -i hosts ~/openshift-ansible/playbooks/deploy_cluster.yml
+
+###################################### OpenLDAP
 
 network_id=$(openstack network show lab_network -f value -c id) && \
 security_group_id=$(openstack security group list --project lab | grep "Default security group" | cut -d " " -f 2)
