@@ -12,9 +12,19 @@
         --dns-nameserver 8.8.8.8 \
         lab_subnet
 
+
+# | grep -v dns | grep -v haproxy | grep -v bastion
+
   - name: Delete Servers
     shell: >
       for server in $(openstack server list -c Name -f value);
       do
-        openstack server delete $server;
+        openstack server delete --wait $server;
+      done;
+
+  - name: Delete Volumes
+    shell: >
+      for volume in $(openstack volume list -c Name -f value);
+      do
+        openstack volume delete $volume;
       done;

@@ -2,7 +2,7 @@
 - import_playbook: servers/undeploy.yml
 
 - hosts: openstack
-  name: Deploy Base Servers for OpenShift Cluster (DNS, Bastion and HAProxy)
+  name: Deploy Instances for OpenShift Cluster
 
   tasks:
 

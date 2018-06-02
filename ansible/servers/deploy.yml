@@ -13,3 +13,79 @@
     - dns
     - haproxy
     - bastion
+
+- name: Deploy Masters
+  shell: >
+    for instance_number in {0..2};
+    do
+      instance_name=master && instance_sequence=$instance_number && \
+      private_ip=10.0.0.3$instance_number && \
+      floating_ip=192.168.1.3$instance_number && \
+      instance=$instance_name$instance_sequence && \
+      openstack volume create --size 15 $instance-docker-volume && \
+      docker_volume_id=$(openstack volume show $instance-docker-volume -c id -f value) && \
+      openstack volume create --size 30 $instance-openshiftlocal-volume && \
+      openshiftlocal_volume_id=$(openstack volume show $instance-openshiftlocal-volume -c id -f value) && \
+      openstack volume create --size 25 $instance-etcd-volume && \
+      etcd_volume_id=$(openstack volume show $instance-etcd-volume -c id -f value) && \
+      openstack server create \
+        --nic port-id=$instance-port \
+        --flavor ocp.master-tiny \
+        --image centos \
+        --key-name server \
+        --security-group {{ openstack_default_security_group_id }} \
+        --user-data=./servers/cloud-init/$instance.yml \
+        --block-device-mapping vdb=$docker_volume_id:volume:15:false \
+        --block-device-mapping vdc=$openshiftlocal_volume_id:volume:30:false \
+        --block-device-mapping vdd=$etcd_volume_id:volume:25:false \
+        --wait \
+        $instance.{{ openshift_domain }};
+    done
+
+- name: Deploy Infra Instances
+  shell: >
+    for instance_number in {0..0};
+    do
+      instance_name=infra && instance_sequence=$instance_number && \
+      instance=$instance_name$instance_sequence && \
+      openstack volume create --size 15 $instance-docker-volume && \
+      docker_volume_id=$(openstack volume show $instance-docker-volume -c id -f value) && \
+      openstack volume create --size 30 $instance-openshiftlocal-volume && \
+      openshiftlocal_volume_id=$(openstack volume show $instance-openshiftlocal-volume -c id -f value) && \
+      lab_network_id=$(openstack network show lab_network -f value -c id) && \
+      openstack server create \
+        --nic port-id=$instance-port \
+        --flavor ocp.node \
+        --image centos \
+        --key-name server \
+        --security-group {{ openstack_default_security_group_id }} \
+        --user-data=./servers/cloud-init/$instance.yml \
+        --block-device-mapping vdb=$docker_volume_id:volume:15:false \
+        --block-device-mapping vdc=$openshiftlocal_volume_id:volume:30:false \
+        --wait \
+        $instance.{{ openshift_domain }};
+    done
+
+- name: Deploy App Instances
+  shell: >
+    for instance_number in {0..0};
+    do
+      instance_name=app && instance_sequence=$instance_number && \
+      instance=$instance_name$instance_sequence && \
+      openstack volume create --size 15 $instance-docker-volume && \
+      docker_volume_id=$(openstack volume show $instance-docker-volume -c id -f value) && \
+      openstack volume create --size 30 $instance-openshiftlocal-volume && \
+      openshiftlocal_volume_id=$(openstack volume show $instance-openshiftlocal-volume -c id -f value) && \
+      lab_network_id=$(openstack network show lab_network -f value -c id) && \
+      openstack server create \
+        --nic port-id=$instance-port \
+        --flavor ocp.node \
+        --image centos \
+        --key-name server \
+        --security-group {{ openstack_default_security_group_id }} \
+        --user-data=./servers/cloud-init/$instance.yml \
+        --block-device-mapping vdb=$docker_volume_id:volume:15:false \
+        --block-device-mapping vdc=$openshiftlocal_volume_id:volume:30:false \
+        --wait \
+        $instance.{{ openshift_domain }};
+    done
