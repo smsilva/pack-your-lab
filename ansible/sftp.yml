@@ -1,0 +1,4 @@
+---
+- import_playbook: sftp-creation.yml
+- import_playbook: sftp-role.yml
+

@@ -12,7 +12,7 @@
           --protocol icmp \
           haproxy-sg
             
-    - name: create rules for ports 22/tcp, 80/tcp, 443/tcp and 8443/tcp ports
+    - name: create rules for ports 22/tcp, 80/tcp, 443/tcp, 8443/tcp and 9000/tcp ports
       shell: >
         source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
         openstack security group rule create \
@@ -25,3 +25,4 @@
         - 80
         - 443
         - 8443
+        - 9000

@@ -1,0 +1,40 @@
+---
+- name: hostname
+  shell: >
+    hostnamectl set-hostname "{{ dns_server_hostname }}"
+
+- name: install required packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - bind-utils
+    - bind
+
+- name: copy files
+  block:
+    - name: copy /etc/named.conf
+      copy:
+        src: "named.conf"
+        dest: "/etc/named.conf"
+        mode: 0644
+
+    - name: copy /etc/named/zones.conf
+      copy:
+        src: "zones.conf"
+        dest: "/etc/named/zones.conf"
+        mode: 0644
+    
+    - name: copy /var/named/dynamic/zone.db
+      copy:
+        src: "zone.db"
+        dest: "/var/named/dynamic/zone.db"
+        mode: 0644
+
+- name: generate update key, configure and start the named service
+  shell: >
+    rndc-confgen -a -c /etc/named/update.key -k update-key -r /dev/urandom && \
+    chown root.named /etc/named/update.key && \
+    chmod 640 /etc/named/update.key && \
+    systemctl enable named --now
+

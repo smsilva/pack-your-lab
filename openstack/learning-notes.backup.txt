@@ -13,176 +13,77 @@ openstack complete | sudo tee /etc/bash_completion.d/osc.bash_completion > /dev/
 
 ########################
 
-openstack flavor create ocp.test \
-  --id auto \
-  --ram 1024 \
-  --disk 20 \
-  --vcpus 1
-  
-openstack flavor create ocp.master-tiny \
-  --id auto \
-  --ram 6144 \
-  --disk 20 \
-  --vcpus 2
-  
-for server in app0.example.com infra0.example.com master0.example.com master1.example.com master2.example.com;
+for volume in $(openstack volume list -c Name -f value);
 do
-  openstack server delete $server;
+  openstack volume delete $volume;
 done
 
+cd ~/pack-your-lab/openstack/
+
 domain=example.com && \
-public_network_id=$(openstack network show public_network -f value -c id) && \
-public_subnet_id=$(openstack subnet show public_subnet -c id -f value) && \
 lab_network_id=$(openstack network show lab_network -f value -c id) && \
-lab_subnet_id=$(openstack subnet show lab_subnet -c id -f value) && \
 default_security_group_id=$(openstack security group list --project lab | grep "Default security group" | cut -d " " -f 2)
 
-vim /etc/neutron/plugins/ml2/ml2_conf.ini
-
-# add
-extension_drivers=port_security
-
-openstack subnet show lab_subnet -c dns_nameservers
-
-openstack subnet set \
-  --no-dns-nameservers \
-  --dns-nameserver 192.168.1.1 \
-  --dns-nameserver 8.8.8.8 \
-  lab_subnet
-
-openstack port list -c ID -c Name -c Status -c "Fixed IP Addresses" --sort-column "Fixed IP Addresses"
-
-openstack port create \
-  --no-security-group \
-  --disable-port-security \
-  --fixed-ip subnet=$lab_subnet_id,ip-address=10.0.0.2 \
-  --network $lab_network_id \
-  dns-port
-  
-openstack floating ip create \
-  --port=dns-port \
-  --floating-ip-address=192.168.1.2 \
-  public_network
-  
 openstack server create \
-  --nic port-id=dns-port \
-  --flavor ocp.test \
+  --nic net-id=$lab_network_id \
+  --flavor m1.small \
   --image centos7 \
   --key-name server \
   --security-group $default_security_group_id \
   --wait \
   dns.$domain
   
-openstack subnet set \
-  --no-dns-nameservers \
-  --dns-nameserver 192.168.1.2 \
-  lab_subnet
-
-openstack port create \
-  --no-security-group \
-  --disable-port-security \
-  --fixed-ip subnet=$lab_subnet_id,ip-address=10.0.0.6 \
-  --network $lab_network_id \
-  bastion-port
-  
-openstack floating ip create \
-  --port=bastion-port \
-  --floating-ip-address=192.168.1.6 \
-  public_network
+openstack server add floating ip dns.example.com 192.168.1.2
 
 openstack server create \
-  --nic port-id=bastion-port \
-  --flavor ocp.test \
-  --image centos \
-  --key-name server \
-  --security-group $default_security_group_id \
-  --wait \
-  bastion.$domain
-  
-openstack port create \
-  --no-security-group \
-  --disable-port-security \
-  --fixed-ip subnet=$lab_subnet_id,ip-address=10.0.0.5 \
-  --network $lab_network_id \
-  haproxy-port
-  
-openstack floating ip create \
-  --port=haproxy-port \
-  --floating-ip-address=192.168.1.5 \
-  public_network
-
-openstack server create \
-  --nic port-id=haproxy-port \
-  --flavor ocp.test \
+  --nic net-id=$lab_network_id,v4-fixed-ip=10.0.0.6 \
+  --flavor m1.small \
   --image centos7 \
   --key-name server \
   --security-group $default_security_group_id \
   --wait \
-  haproxy.$domain
+  bastion.$domain
 
-for volume in $(openstack volume list -c Name -f value);
-do
-  openstack volume delete $volume;
-done
-
-openstack volume list
-
-cd ~/pack-your-lab/openstack/
-
-  openstack port create \
-    --no-security-group \
-    --disable-port-security \
-    --fixed-ip subnet=$lab_subnet_id,ip-address=$private_ip \
-    --network $lab_network_id \
-    $instance-port && \
-  openstack floating ip create \
-    --port=$instance-port \
-    --floating-ip-address=$floating_ip \
-    public_network && \
-
-for instance_number in {0..2};
-do
-  instance_name=master && instance_sequence=$instance_number && \
-  private_ip=10.0.0.3$instance_number && \
-  floating_ip=192.168.1.3$instance_number && \
-  instance=$instance_name$instance_sequence && \
-  openstack volume create --size 15 $instance-docker-volume && \
-  docker_volume_id=$(openstack volume show $instance-docker-volume -c id -f value) && \
-  openstack volume create --size 30 $instance-openshiftlocal-volume && \
-  openshiftlocal_volume_id=$(openstack volume show $instance-openshiftlocal-volume -c id -f value) && \
-  openstack volume create --size 25 $instance-etcd-volume && \
-  etcd_volume_id=$(openstack volume show $instance-etcd-volume -c id -f value) && \
-  openstack server create \
-    --nic port-id=$instance-port \
-    --flavor ocp.master-tiny \
-    --image centos7 \
-    --key-name server \
-    --security-group $default_security_group_id \
-    --user-data=./config/servers/cloud-init/$instance.yml \
-    --block-device-mapping vdb=$docker_volume_id:volume:15:false \
-    --block-device-mapping vdc=$openshiftlocal_volume_id:volume:30:false \
-    --block-device-mapping vdd=$etcd_volume_id:volume:25:false \
-    --wait \
-    $instance.$domain;
-done
+openstack server add floating ip bastion.example.com 192.168.1.6
+  
+instance_name=master && instance_sequence=0 && instance_ip=10.0.0.30 && \
+instance=$instance_name-$instance_sequence && \
+openstack volume create --size 15 $instance-docker-volume && \
+docker_volume_id=$(openstack volume show $instance-docker-volume -c id -f value) && \
+openstack volume create --size 30 $instance-openshiftlocal-volume && \
+openshiftlocal_volume_id=$(openstack volume show $instance-openshiftlocal-volume -c id -f value) && \
+openstack volume create --size 25 $instance-etcd-volume && \
+etcd_volume_id=$(openstack volume show $instance-etcd-volume -c id -f value) && \
+openstack server create \
+  --nic net-id=$lab_network_id,v4-fixed-ip=$instance_ip \
+  --flavor ocp.master \
+  --image centos7 \
+  --key-name server \
+  --security-group $instance_name-sg \
+  --security-group node-sg \
+  --user-data=./config/servers/cloud-init/$instance.yml \
+  --block-device-mapping vdb=$docker_volume_id:volume:15:false \
+  --block-device-mapping vdc=$openshiftlocal_volume_id:volume:30:false \
+  --block-device-mapping vdd=$etcd_volume_id:volume:25:false \
+  --wait \
+  $instance.$domain
 
 for instance_number in {0..0};
 do
-  instance_name=infra && instance_sequence=$instance_number && \
-  private_ip=10.0.0.4$instance_number && \
-  floating_ip=192.168.1.4$instance_number && \
-  instance=$instance_name$instance_sequence && \
+  instance_name=infra-node && instance_sequence=$instance_number && instance_ip=10.0.0.4$instance_number && \
+  instance=$instance_name-$instance_sequence && \
   openstack volume create --size 15 $instance-docker-volume && \
   docker_volume_id=$(openstack volume show $instance-docker-volume -c id -f value) && \
   openstack volume create --size 30 $instance-openshiftlocal-volume && \
   openshiftlocal_volume_id=$(openstack volume show $instance-openshiftlocal-volume -c id -f value) && \
   lab_network_id=$(openstack network show lab_network -f value -c id) && \
   openstack server create \
-    --nic port-id=$instance-port \
+    --nic net-id=$lab_network_id,v4-fixed-ip=$instance_ip \
     --flavor ocp.node \
     --image centos7 \
     --key-name server \
-    --security-group $default_security_group_id \
+    --security-group infra-sg \
+    --security-group node-sg \
     --user-data=./config/servers/cloud-init/$instance.yml \
     --block-device-mapping vdb=$docker_volume_id:volume:15:false \
     --block-device-mapping vdc=$openshiftlocal_volume_id:volume:30:false \
@@ -192,167 +93,78 @@ done
 
 for instance_number in {0..0};
 do
-  instance_name=app && instance_sequence=$instance_number && \
-  private_ip=10.0.0.5$instance_number && \
-  floating_ip=192.168.1.5$instance_number && \
-  instance=$instance_name$instance_sequence && \
+  instance_name=app-node && instance_sequence=$instance_number && instance_ip=10.0.0.5$instance_number && \
+  instance=$instance_name-$instance_sequence && \
   openstack volume create --size 15 $instance-docker-volume && \
   docker_volume_id=$(openstack volume show $instance-docker-volume -c id -f value) && \
   openstack volume create --size 30 $instance-openshiftlocal-volume && \
   openshiftlocal_volume_id=$(openstack volume show $instance-openshiftlocal-volume -c id -f value) && \
   lab_network_id=$(openstack network show lab_network -f value -c id) && \
   openstack server create \
-    --nic port-id=$instance-port \
+    --nic net-id=$lab_network_id,v4-fixed-ip=$instance_ip \
     --flavor ocp.node \
     --image centos7 \
     --key-name server \
-    --security-group $default_security_group_id \
+    --security-group node-sg \
     --user-data=./config/servers/cloud-init/$instance.yml \
     --block-device-mapping vdb=$docker_volume_id:volume:15:false \
     --block-device-mapping vdc=$openshiftlocal_volume_id:volume:30:false \
     --wait \
     $instance.$domain;
 done
-
-cd ~
-
-openstack server list -c Networks -f value | cut -d " " -f 2 | sort > hosts
 
 openstack volume create --size 50 openshift-registry && \
 openstack volume show openshift-registry -c id -f value
 
-2267b103-9fb1-4567-a6ac-a550063d7f37
-
-#DNS
-
-ssh centos@192.168.1.2
-
-vim /etc/sysconfig/network-scripts/ifcfg-eth0
-
-PEERDNS=no
-DNS1=192.168.1.2
-
 # Connect to the Bastion Instance
-
-exec ssh-agent bash
-
-ssh-add ~/.ssh/id_rsa
-
-vim ~/.ssh/sshd_config
-
-Host bastion
-    HostName 192.168.1.6
-    User centos
-    IdentityFile ~/.ssh/id_rsa
-    FowardAgent yes
-
-scp ~/.ssh/id* centos@192.168.1.6:/tmp/
-	
-ssh -A centos@192.168.1.6
+ssh centos@192.168.1.6
 
 sudo su -
-
-mv /tmp/id* ~/.ssh/
-
-vim ~/ansible.cfg
-
-[defaults]
-forks = 20
-host_key_checking = False
-remote_user = centos
-private_key_file = $HOME/.ssh/id_rsa
-roles_path = roles/
-gathering = smart
-fact_caching = jsonfile
-fact_caching_connection = $HOME/ansible/facts
-fact_caching_timeout = 600
-log_path = $HOME/ansible.log
-nocows = 1
-callback_whitelist = profile_tasks, timer
-
-[ssh_connection]
-ssh_args = -o ControlMaster=auto -o ControlPersist=600s -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=false
-control_path = %(directory)s/%%h-%%r`
-pipelining = True
-timeout = 10
-
-[persistent_connection]
-connect_timeout = 30
-connect_retries = 30
-connect_interval = 1
-
-vim hosts
-
-app0.example.com
-infra0.example.com
-master2.example.com
-master1.example.com
-master0.example.com
-haproxy.example.com
-
-ansible all -b -i ~/hosts -m ping
-
-ansible all -b -i ~/hosts -m command -a "yum repolist"
-
-ansible all -b -i ~/hosts -m command -a "yum update -y"
-
-ansible all -b -i ~/hosts -m yum -a "name=* state=latest"
-
-ansible all -b -i ~/hosts -m command -a "yum install -y epel-release"
-
-ansible all -b -i ~/hosts -m command -a "yum install -y vim telnet bind-utils"
-
-ansible all -b -i ~/hosts -m systemd -a "name=firewalld state=stopped enabled=no"
-
-ansible all -b -i ~/hosts -m shell -a "hostname"
-
-ansible 192.168.1.2 -b -i ~/hosts -m shell -a "hostnamectl set-hostname dns.example.com"
-
-ansible 192.168.1.5 -b -i ~/hosts -m shell -a "hostnamectl set-hostname haproxy.example.com"
-
-ansible 192.168.1.6 -b -i ~/hosts -m shell -a "hostnamectl set-hostname bastion.example.com"
-
-ansible all -b -i ~/hosts -m shell -a "hostname"
-
-ansible 192.168.1.5 -b -i ~/hosts -m shell -a "yum install -y haproxy"
-ansible 192.168.1.5 -b -i ~/hosts -m yum -a "name=haproxy state=latest"
-
-ansible all -b -i ~/hosts -m shell -a "ping master0.example.com -c 1"
-ansible all -b -i ~/hosts -m shell -a "ping master1.example.com -c 1"
-ansible all -b -i ~/hosts -m shell -a "ping master2.example.com -c 1"
-ansible all -b -i ~/hosts -m shell -a "ping app0.example.com -c 1"
-ansible all -b -i ~/hosts -m shell -a "ping infra0.example.com -c 1"
-ansible all -b -i ~/hosts -m shell -a "ping haproxy.example.com -c 1"
-
-ansible all -b -i ~/hosts -m shell -a "ping linux.com -c 1"
 
 vim hosts.cfg
 
 # copy hosts.tests.ini
 
+rm -rf ~/.ssh/known_hosts
+
+ansible all -i hosts.cfg -m ping
+
 cd ~
-
 git clone https://github.com/openshift/openshift-ansible
-
 cd openshift-ansible
 
+git checkout tags/openshift-ansible-3.9.29-1 -b 3.9
 git checkout release-3.9
 
-cd ~
+firewalld.yml
+---
+- hosts: nodes
+  name: Nodes Preparation
+  
+  tasks:
 
-ansible all -b -i ~/hosts.cfg -m ping
+  - name: Disable Firewalld
+    systemd:
+      name: firewalld
+      state: stopped
+      enabled: no
 
-ansible all -b -i ~/hosts.cfg -m command -a "reboot"
+ansible-playbook -i hosts.cfg firewalld.yml
+	  
+docker.yml
+---
+- hosts: nodes
+  name: Docker pull docker.io/openshift/origin-node
+
+  tasks:
+
+  - name: Docker Pull
+    shell: >
+      sudo docker pull docker.io/openshift/origin-node
 
 ansible-playbook -i hosts.cfg ~/openshift-ansible/playbooks/prerequisites.yml
 
-ansible all -b -i ~/hosts.cfg -m ping
-
 ansible-playbook -i hosts.cfg ~/openshift-ansible/playbooks/deploy_cluster.yml
-
-ansible-playbook -i hosts.cfg ~/openshift-ansible/playbooks/adhoc/uninstall.yml
-
-journalctl -b -u origin-node
 
 ###################################### OpenLDAP
 
@@ -630,7 +442,6 @@ ISO............: CentOS-7-x86_64-Minimal-1804.iso
 Network Bridge.: Internet Access
 
 yum -y update && \
-yum -y install vim telnet bind-utils && \
 yum -y install acpid && \
 systemctl enable acpid && \
 yum -y install cloud-init && \
@@ -656,7 +467,7 @@ openstack image create \
   --min-disk 15 \
   --min-ram 512 \
   --file centos7.qcow2 \
-  centos
+  centos7
   
 rm -rf ~/.ssh/known_hosts
 

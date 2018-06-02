@@ -1,0 +1,19 @@
+- name: copy gpg files
+  copy:
+    src: "rpm-gpg/"
+    dest: "/etc/pki/rpm-gpg/"
+
+- name: add nexus-server ip to /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    regexp: "{{ servers.nexus.name }}"
+    line: "{{ servers.nexus.ip_address }} {{ servers.nexus.name }}"
+
+- import_tasks: nexus-config-repos.yml
+
+- name: Update Yum Packages
+  yum:
+    pkg: "*"
+    state: latest
+
+- import_tasks: nexus-config-repos.yml

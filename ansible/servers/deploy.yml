@@ -1,0 +1,15 @@
+---
+- name: Deploy base instances (DNS, HAProxy and Bastion)
+  shell: >
+    openstack server create \
+      --nic port-id={{ item }}-port \
+      --flavor ocp.test \
+      --image centos \
+      --key-name server \
+      --security-group {{ openstack_default_security_group_id }} \
+      --wait \
+      {{ item }}.{{ openshift_domain }}
+  with_items:
+    - dns
+    - haproxy
+    - bastion

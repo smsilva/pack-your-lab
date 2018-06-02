@@ -1,0 +1,13 @@
+---
+- name: remove yum repositories
+  file:
+    path: "/etc/yum.repos.d/"
+    state: absent
+
+- name: copy nexus repository files
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/yum.repos.d/"
+  with_items:
+    - nexus.repo
+    - nexus-docker-ce.repo

@@ -1,0 +1,39 @@
+---
+- hosts: bastion
+  name: Bastion Instance Configuration
+  
+  roles:
+    - firewalld
+
+  tasks:
+  
+  - name: hostname
+    shell: >
+      hostnamectl set-hostname bastion.{{ hostvars['openstack']['openshift_domain'] }}
+    
+  - name: epel-release
+    yum:
+      name: "epel-release"
+      state: present
+  
+  - name: install packages
+    yum:
+      name: "{{ item }}"
+      state: latest
+    with_items:
+      - git
+      - ansible
+
+  - name: send key
+    copy:
+      src: "~/.ssh/{{ item }}"
+      dest: "/root/.ssh/{{ item }}"
+      mode: 0600
+    with_items:
+      - id_rsa
+      - id_rsa.pub
+
+  - name: send ansible.cfg
+    copy:
+      src: "~/ansible/ansible.cfg"
+      dest: "/root/ansible.cfg"

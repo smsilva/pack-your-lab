@@ -1,0 +1,34 @@
+---
+- hosts: openstack
+
+  tasks:
+
+  - name: remove known_hosts
+    file: 
+      path: ~/.ssh/known_hosts
+      state: absent
+  
+  - name: creating instance
+    shell: >
+      source ~/keystonerc_admin && export OS_PROJECT_NAME=lab && \
+      network_id=$(openstack network show lab_network -f value -c id) && \
+      security_group_id=$(openstack security group list --project lab | grep "Default security group" | cut -d " " -f 2) && \
+      openstack server create \
+        --image centos7 \
+        --flavor m1.small \
+        --key-name server \
+        --nic net-id=$network_id \
+        --security-group=$security_group_id \
+        --wait \
+        sftp && \    
+      openstack server add floating ip sftp 192.168.1.40
+  
+  - name: wait for SSH on each created instance
+    command: >
+      ssh -oBatchMode=yes -oStrictHostKeyChecking=no
+      centos@192.168.1.40 true
+    register: result
+    until: result|success
+    retries: 30
+    delay: 10
+

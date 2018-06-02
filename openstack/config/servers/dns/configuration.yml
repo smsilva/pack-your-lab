@@ -3,8 +3,14 @@
   name: Configure DNS Server
 
   tasks:
+
     - name: hostname update
-      shell: hostnamectl set-hostname dns
+      shell: hostnamectl set-hostname dns.example.com
+      
+    - name: update packages
+      yum:
+        name: *
+        state: latest
 
     - name: install required packages
       yum:

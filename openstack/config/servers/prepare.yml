@@ -13,8 +13,8 @@
 
     - import_tasks: ~/pack-your-lab/nexus/client/configuration.yml
     
-    - name: disable firewalld because instances will use security groups rules
-      systemd:
-        name: firewalld
-        state: stopped
-        enabled: no       
+- name: disable firewalld because instances will use security groups rules
+  systemd:
+    name: firewalld
+    state: stopped
+    enabled: no       

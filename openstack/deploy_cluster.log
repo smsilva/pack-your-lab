@@ -1,0 +1,1785 @@
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_ca : Install openssl] ******************************************************************************************************************
+Tuesday 29 May 2018  09:01:59 -0300 (0:00:00.032)       0:05:40.555 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_ca : Create CA directory] **************************************************************************************************************
+Tuesday 29 May 2018  09:01:59 -0300 (0:00:00.052)       0:05:40.608 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_ca : Create certificate directory] *****************************************************************************************************
+Tuesday 29 May 2018  09:01:59 -0300 (0:00:00.054)       0:05:40.662 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_ca : Check if the CA key already exists] ***********************************************************************************************
+Tuesday 29 May 2018  09:01:59 -0300 (0:00:00.053)       0:05:40.715 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_ca : Create CA key] ********************************************************************************************************************
+Tuesday 29 May 2018  09:01:59 -0300 (0:00:00.054)       0:05:40.770 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_ca : Check if the CA crt already exists] ***********************************************************************************************
+Tuesday 29 May 2018  09:01:59 -0300 (0:00:00.053)       0:05:40.823 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_ca : Create CA crt] ********************************************************************************************************************
+Tuesday 29 May 2018  09:01:59 -0300 (0:00:00.104)       0:05:40.927 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_ca : Create the serial file] ***********************************************************************************************************
+Tuesday 29 May 2018  09:01:59 -0300 (0:00:00.053)       0:05:40.981 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_ca : Copy SSL config file] *************************************************************************************************************
+Tuesday 29 May 2018  09:01:59 -0300 (0:00:00.052)       0:05:41.033 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_common : Set the Nuage plugin openshift directory fact to handle Atomic host install] **************************************************
+Tuesday 29 May 2018  09:01:59 -0300 (0:00:00.034)       0:05:41.068 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_common : Set the Nuage CNI network config directory fact to handle Atomic host install] ************************************************
+Tuesday 29 May 2018  09:01:59 -0300 (0:00:00.032)       0:05:41.101 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_common : Set the Nuage CNI binary directory fact to handle Atomic host install] ********************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.039)       0:05:41.140 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_common : Assure CNI plugin config dir exists before daemon set install] ****************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.033)       0:05:41.173 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_common : Assure CNI netconf directory exists before daemon set install] ****************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.032)       0:05:41.206 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_common : Assure CNI plugin binary directory exists before daemon set install] **********************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.032)       0:05:41.238 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Add iptables allow rules] *****************************************************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.032)       0:05:41.271 ***********
+skipping: [master-0.internal.ocp.example.org] => (item={u'port': u'9443/tcp', u'service': u'openshift-monitor'})
+
+TASK [nuage_master : Remove iptables rules] ********************************************************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.039)       0:05:41.310 ***********
+
+TASK [nuage_master : Add firewalld allow rules] ****************************************************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.032)       0:05:41.342 ***********
+skipping: [master-0.internal.ocp.example.org] => (item={u'port': u'9443/tcp', u'service': u'openshift-monitor'})
+
+TASK [nuage_master : Remove firewalld allow rules] *************************************************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.038)       0:05:41.380 ***********
+
+TASK [nuage_master : Set the Nuage certificate directory fact for Atomic hosts] ********************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.035)       0:05:41.416 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Set the Nuage kubeconfig file path fact for Atomic hosts] *********************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.033)       0:05:41.449 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Set the Nuage monitor yaml location fact for Atomic hosts] ********************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.032)       0:05:41.482 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Set the Nuage monitor certs location fact for Atomic hosts] *******************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.033)       0:05:41.515 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Set the Nuage master config directory for daemon sets install] ****************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.032)       0:05:41.547 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Set the Nuage node config directory for daemon sets install] ******************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.032)       0:05:41.580 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Set the Nuage CNI plugin binary directory for daemon sets install] ************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.033)       0:05:41.614 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Create directory /usr/share/nuage-openshift-monitor] **************************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.032)       0:05:41.646 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Create directory /var/usr/share/nuage-openshift-monitor] **********************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.032)       0:05:41.678 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Create directory /var/usr/bin for monitor binary on atomic] *******************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.041)       0:05:41.720 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Create CNI bin directory /var/opt/cni/bin] ************************************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.032)       0:05:41.752 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Create the log directory] *****************************************************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.031)       0:05:41.784 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : include_tasks] ****************************************************************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.032)       0:05:41.816 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Download the certs and keys] **************************************************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.032)       0:05:41.849 ***********
+skipping: [master-0.internal.ocp.example.org] => (item=ca.crt)
+skipping: [master-0.internal.ocp.example.org] => (item=nuage.crt)
+skipping: [master-0.internal.ocp.example.org] => (item=nuage.key)
+skipping: [master-0.internal.ocp.example.org] => (item=nuage.kubeconfig)
+
+TASK [nuage_master : Copy the certificates and keys] ***********************************************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.050)       0:05:41.899 ***********
+skipping: [master-0.internal.ocp.example.org] => (item=ca.crt)
+skipping: [master-0.internal.ocp.example.org] => (item=nuage.crt)
+skipping: [master-0.internal.ocp.example.org] => (item=nuage.key)
+skipping: [master-0.internal.ocp.example.org] => (item=nuage.kubeconfig)
+
+TASK [nuage_master : include_tasks] ****************************************************************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.050)       0:05:41.949 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : include_tasks] ****************************************************************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.033)       0:05:41.982 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Install Nuage VSD user certificate] *******************************************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.039)       0:05:42.022 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Install Nuage VSD user key] ***************************************************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.034)       0:05:42.056 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Create Nuage master daemon set yaml file] *************************************************************************************
+Tuesday 29 May 2018  09:02:00 -0300 (0:00:00.047)       0:05:42.104 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Create Nuage node daemon set yaml file] ***************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.032)       0:05:42.137 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Create Nuage Infra Pod daemon set yaml file] **********************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.032)       0:05:42.169 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Add the service account to the privileged scc to have root permissions for kube-system] ***************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.032)       0:05:42.202 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Add the service account to the privileged scc to have root permissions for openshift-infra] ***********************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.033)       0:05:42.235 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Spawn Nuage Master monitor daemon sets pod] ***********************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.032)       0:05:42.267 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Spawn Nuage CNI daemon sets pod] **********************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.039)       0:05:42.306 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Spawn Nuage Infra daemon sets pod] ********************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.032)       0:05:42.339 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [nuage_master : Restart daemons] **************************************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.031)       0:05:42.371 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [calico_master : include_tasks] ***************************************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.032)       0:05:42.404 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [calico_master : Calico Master | oc adm policy add-scc-to-user privileged system:serviceaccount:kube-system:calico-node] **********************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.032)       0:05:42.436 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [calico_master : Calico Master | oc adm policy add-scc-to-user privileged system:serviceaccount:kube-system:calico-kube-controllers] **********
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.033)       0:05:42.469 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [calico_master : Set default selector for kube-system] ****************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.032)       0:05:42.502 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [calico_master : Calico Master | Create temp directory] ***************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.032)       0:05:42.535 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [calico_master : Calico Master | Write Calico] ************************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.053)       0:05:42.589 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [calico_master : Calico Master | Launch Calico] ***********************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.033)       0:05:42.622 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [calico_master : Calico Master | Delete temp directory] ***************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.033)       0:05:42.656 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [kuryr : Perform OpenShift ServiceAccount config] *********************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.032)       0:05:42.688 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [kuryr : Create kuryr manifests tempdir] ******************************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.032)       0:05:42.721 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [kuryr : Create kuryr ConfigMap manifest] *****************************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.032)       0:05:42.753 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [kuryr : Create kuryr-controller Deployment manifest] *****************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.031)       0:05:42.785 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [kuryr : Create kuryr-cni DaemonSet manifest] *************************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.032)       0:05:42.818 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [kuryr : Apply ConfigMap manifest] ************************************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.044)       0:05:42.862 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [kuryr : Apply Controller Deployment manifest] ************************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.055)       0:05:42.918 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [kuryr : Apply kuryr-cni DaemonSet manifest] **************************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.057)       0:05:42.975 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [setup bootstrap settings] ********************************************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.055)       0:05:43.031 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+RUNNING HANDLER [openshift_master : restart master api] ********************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.024)       0:05:43.055 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+RUNNING HANDLER [openshift_master : restart master controllers] ************************************************************************************
+Tuesday 29 May 2018  09:02:01 -0300 (0:00:00.047)       0:05:43.103 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [Create group for deployment type] ************************************************************************************************************
+Tuesday 29 May 2018  09:02:02 -0300 (0:00:00.050)       0:05:43.153 ***********
+ok: [master-0.internal.ocp.example.org]
+
+PLAY [Configure API Aggregation on masters] ********************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+Tuesday 29 May 2018  09:02:02 -0300 (0:00:00.088)       0:05:43.242 ***********
+ok: [master-0.internal.ocp.example.org]
+
+TASK [include_tasks] *******************************************************************************************************************************
+Tuesday 29 May 2018  09:02:02 -0300 (0:00:00.750)       0:05:43.993 ***********
+included: /root/openshift-ansible/playbooks/openshift-master/private/tasks/wire_aggregator.yml for master-0.internal.ocp.example.org
+
+TASK [Make temp cert dir] **************************************************************************************************************************
+Tuesday 29 May 2018  09:02:02 -0300 (0:00:00.071)       0:05:44.064 ***********
+ok: [master-0.internal.ocp.example.org]
+
+TASK [Check for First Master Aggregator Signer cert] ***********************************************************************************************
+Tuesday 29 May 2018  09:02:04 -0300 (0:00:01.304)       0:05:45.368 ***********
+ok: [master-0.internal.ocp.example.org -> master-0.internal.ocp.example.org]
+
+TASK [Check for First Master Aggregator Signer key] ************************************************************************************************
+Tuesday 29 May 2018  09:02:04 -0300 (0:00:00.303)       0:05:45.672 ***********
+ok: [master-0.internal.ocp.example.org -> master-0.internal.ocp.example.org]
+
+TASK [Creating First Master Aggregator signer certs] ***********************************************************************************************
+Tuesday 29 May 2018  09:02:04 -0300 (0:00:00.303)       0:05:45.975 ***********
+changed: [master-0.internal.ocp.example.org -> master-0.internal.ocp.example.org]
+
+TASK [Check for Aggregator Signer cert] ************************************************************************************************************
+Tuesday 29 May 2018  09:02:05 -0300 (0:00:00.640)       0:05:46.616 ***********
+ok: [master-0.internal.ocp.example.org]
+
+TASK [Check for Aggregator Signer key] *************************************************************************************************************
+Tuesday 29 May 2018  09:02:05 -0300 (0:00:00.299)       0:05:46.915 ***********
+ok: [master-0.internal.ocp.example.org]
+
+TASK [Copy Aggregator Signer certs from first master] **********************************************************************************************
+Tuesday 29 May 2018  09:02:06 -0300 (0:00:00.382)       0:05:47.298 ***********
+skipping: [master-0.internal.ocp.example.org] => (item=front-proxy-ca.crt)
+skipping: [master-0.internal.ocp.example.org] => (item=front-proxy-ca.key)
+
+TASK [Copy Aggregator Signer certs to host] ********************************************************************************************************
+Tuesday 29 May 2018  09:02:06 -0300 (0:00:00.041)       0:05:47.340 ***********
+skipping: [master-0.internal.ocp.example.org] => (item=front-proxy-ca.crt)
+skipping: [master-0.internal.ocp.example.org] => (item=front-proxy-ca.key)
+
+TASK [Check for first master api-client config] ****************************************************************************************************
+Tuesday 29 May 2018  09:02:06 -0300 (0:00:00.054)       0:05:47.395 ***********
+ok: [master-0.internal.ocp.example.org -> master-0.internal.ocp.example.org]
+
+TASK [Create first master api-client config for Aggregator] ****************************************************************************************
+Tuesday 29 May 2018  09:02:06 -0300 (0:00:00.311)       0:05:47.706 ***********
+changed: [master-0.internal.ocp.example.org -> master-0.internal.ocp.example.org]
+
+TASK [Copy first master api-client config for Aggregator] ******************************************************************************************
+Tuesday 29 May 2018  09:02:07 -0300 (0:00:00.659)       0:05:48.365 ***********
+changed: [master-0.internal.ocp.example.org -> master-0.internal.ocp.example.org] => (item=aggregator-front-proxy.crt)
+changed: [master-0.internal.ocp.example.org -> master-0.internal.ocp.example.org] => (item=aggregator-front-proxy.key)
+changed: [master-0.internal.ocp.example.org -> master-0.internal.ocp.example.org] => (item=aggregator-front-proxy.kubeconfig)
+
+TASK [Check for api-client config] *****************************************************************************************************************
+Tuesday 29 May 2018  09:02:08 -0300 (0:00:00.825)       0:05:49.191 ***********
+ok: [master-0.internal.ocp.example.org]
+
+TASK [Copy api-client config from first master] ****************************************************************************************************
+Tuesday 29 May 2018  09:02:08 -0300 (0:00:00.393)       0:05:49.584 ***********
+skipping: [master-0.internal.ocp.example.org] => (item=aggregator-front-proxy.crt)
+skipping: [master-0.internal.ocp.example.org] => (item=aggregator-front-proxy.key)
+skipping: [master-0.internal.ocp.example.org] => (item=aggregator-front-proxy.kubeconfig)
+
+TASK [Copy api-client config to host] **************************************************************************************************************
+Tuesday 29 May 2018  09:02:08 -0300 (0:00:00.047)       0:05:49.632 ***********
+skipping: [master-0.internal.ocp.example.org] => (item=aggregator-front-proxy.crt)
+skipping: [master-0.internal.ocp.example.org] => (item=aggregator-front-proxy.key)
+skipping: [master-0.internal.ocp.example.org] => (item=aggregator-front-proxy.kubeconfig)
+
+TASK [Delete temp directory] ***********************************************************************************************************************
+Tuesday 29 May 2018  09:02:08 -0300 (0:00:00.044)       0:05:49.677 ***********
+ok: [master-0.internal.ocp.example.org]
+
+TASK [Update master config] ************************************************************************************************************************
+Tuesday 29 May 2018  09:02:08 -0300 (0:00:00.354)       0:05:50.031 ***********
+changed: [master-0.internal.ocp.example.org]
+
+TASK [Setup extension file for service console UI] *************************************************************************************************
+Tuesday 29 May 2018  09:02:09 -0300 (0:00:00.761)       0:05:50.793 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [Update master config] ************************************************************************************************************************
+Tuesday 29 May 2018  09:02:09 -0300 (0:00:00.033)       0:05:50.826 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [restart master api] **************************************************************************************************************************
+Tuesday 29 May 2018  09:02:09 -0300 (0:00:00.033)       0:05:50.859 ***********
+changed: [master-0.internal.ocp.example.org]
+
+TASK [restart master controllers] ******************************************************************************************************************
+Tuesday 29 May 2018  09:02:17 -0300 (0:00:08.226)       0:05:59.085 ***********
+changed: [master-0.internal.ocp.example.org]
+
+TASK [Verify API Server] ***************************************************************************************************************************
+Tuesday 29 May 2018  09:02:19 -0300 (0:00:01.287)       0:06:00.373 ***********
+ok: [master-0.internal.ocp.example.org]
+
+PLAY [Re-enable excluder if it was previously enabled] *********************************************************************************************
+
+TASK [openshift_excluder : Detecting Atomic Host Operating System] *********************************************************************************
+Tuesday 29 May 2018  09:02:19 -0300 (0:00:00.401)       0:06:00.775 ***********
+ok: [master-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Debug r_openshift_excluder_enable_docker_excluder] **********************************************************************
+Tuesday 29 May 2018  09:02:19 -0300 (0:00:00.295)       0:06:01.071 ***********
+ok: [master-0.internal.ocp.example.org] => {
+    "r_openshift_excluder_enable_docker_excluder": true
+}
+
+TASK [openshift_excluder : Debug r_openshift_excluder_enable_openshift_excluder] *******************************************************************
+Tuesday 29 May 2018  09:02:20 -0300 (0:00:00.059)       0:06:01.131 ***********
+ok: [master-0.internal.ocp.example.org] => {
+    "r_openshift_excluder_enable_openshift_excluder": true
+}
+
+TASK [openshift_excluder : Fail if invalid openshift_excluder_action provided] *********************************************************************
+Tuesday 29 May 2018  09:02:20 -0300 (0:00:00.058)       0:06:01.189 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Fail if r_openshift_excluder_upgrade_target is not defined] *************************************************************
+Tuesday 29 May 2018  09:02:20 -0300 (0:00:00.036)       0:06:01.225 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Include main action task file] ******************************************************************************************
+Tuesday 29 May 2018  09:02:20 -0300 (0:00:00.033)       0:06:01.259 ***********
+included: /root/openshift-ansible/roles/openshift_excluder/tasks/enable.yml for master-0.internal.ocp.example.org
+
+TASK [openshift_excluder : Install excluders] ******************************************************************************************************
+Tuesday 29 May 2018  09:02:20 -0300 (0:00:00.054)       0:06:01.314 ***********
+included: /root/openshift-ansible/roles/openshift_excluder/tasks/install.yml for master-0.internal.ocp.example.org
+
+TASK [openshift_excluder : Install docker excluder - yum] ******************************************************************************************
+Tuesday 29 May 2018  09:02:20 -0300 (0:00:00.055)       0:06:01.369 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Install docker excluder - dnf] ******************************************************************************************
+Tuesday 29 May 2018  09:02:20 -0300 (0:00:00.035)       0:06:01.405 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Install openshift excluder - yum] ***************************************************************************************
+Tuesday 29 May 2018  09:02:20 -0300 (0:00:00.041)       0:06:01.446 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Install openshift excluder - dnf] ***************************************************************************************
+Tuesday 29 May 2018  09:02:20 -0300 (0:00:00.036)       0:06:01.483 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : set_fact] ***************************************************************************************************************
+Tuesday 29 May 2018  09:02:20 -0300 (0:00:00.035)       0:06:01.519 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Enable excluders] *******************************************************************************************************
+Tuesday 29 May 2018  09:02:20 -0300 (0:00:00.036)       0:06:01.555 ***********
+included: /root/openshift-ansible/roles/openshift_excluder/tasks/exclude.yml for master-0.internal.ocp.example.org
+
+TASK [openshift_excluder : Check for docker-excluder] **********************************************************************************************
+Tuesday 29 May 2018  09:02:20 -0300 (0:00:00.054)       0:06:01.610 ***********
+ok: [master-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Enable docker excluder] *************************************************************************************************
+Tuesday 29 May 2018  09:02:20 -0300 (0:00:00.320)       0:06:01.931 ***********
+changed: [master-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Check for openshift excluder] *******************************************************************************************
+Tuesday 29 May 2018  09:02:21 -0300 (0:00:00.331)       0:06:02.262 ***********
+ok: [master-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Enable openshift excluder] **********************************************************************************************
+Tuesday 29 May 2018  09:02:21 -0300 (0:00:00.432)       0:06:02.695 ***********
+changed: [master-0.internal.ocp.example.org]
+
+PLAY [Master Install Checkpoint End] ***************************************************************************************************************
+
+TASK [Set Master install 'Complete'] ***************************************************************************************************************
+Tuesday 29 May 2018  09:02:22 -0300 (0:00:00.417)       0:06:03.113 ***********
+ok: [master-0.internal.ocp.example.org]
+
+PLAY [Master Additional Install Checkpoint Start] **************************************************************************************************
+
+TASK [Set Master Additional install 'In Progress'] *************************************************************************************************
+Tuesday 29 May 2018  09:02:22 -0300 (0:00:00.066)       0:06:03.180 ***********
+ok: [master-0.internal.ocp.example.org]
+
+PLAY [Additional master configuration] *************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+Tuesday 29 May 2018  09:02:22 -0300 (0:00:00.074)       0:06:03.254 ***********
+ok: [master-0.internal.ocp.example.org]
+
+TASK [openshift_project_request_template : Create temp file for template] **************************************************************************
+Tuesday 29 May 2018  09:02:22 -0300 (0:00:00.619)       0:06:03.874 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [openshift_project_request_template : Generate default project template] **********************************************************************
+Tuesday 29 May 2018  09:02:22 -0300 (0:00:00.030)       0:06:03.904 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [openshift_project_request_template : Write default project template to file] *****************************************************************
+Tuesday 29 May 2018  09:02:22 -0300 (0:00:00.033)       0:06:03.938 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [openshift_project_request_template : Apply template modifications] ***************************************************************************
+Tuesday 29 May 2018  09:02:22 -0300 (0:00:00.034)       0:06:03.972 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [openshift_project_request_template : Create or update project request template] **************************************************************
+Tuesday 29 May 2018  09:02:22 -0300 (0:00:00.030)       0:06:04.002 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [openshift_project_request_template : Delete temp file] ***************************************************************************************
+Tuesday 29 May 2018  09:02:22 -0300 (0:00:00.029)       0:06:04.032 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [openshift_examples : Create local temp dir for OpenShift examples copy] **********************************************************************
+Tuesday 29 May 2018  09:02:22 -0300 (0:00:00.032)       0:06:04.064 ***********
+changed: [master-0.internal.ocp.example.org -> localhost]
+
+TASK [openshift_examples : Chmod local temp dir for OpenShift examples copy] ***********************************************************************
+Tuesday 29 May 2018  09:02:23 -0300 (0:00:00.161)       0:06:04.226 ***********
+ [WARNING]: Consider using the file module with mode rather than running chmod.  If you need to use command because file is insufficient you can
+add warn=False to this command task or set command_warnings=False in ansible.cfg to get rid of this message.
+
+changed: [master-0.internal.ocp.example.org -> localhost]
+
+TASK [openshift_examples : Create tar of OpenShift examples] ***************************************************************************************
+Tuesday 29 May 2018  09:02:23 -0300 (0:00:00.159)       0:06:04.385 ***********
+changed: [master-0.internal.ocp.example.org -> localhost]
+
+TASK [openshift_examples : Chmod local temp dir for OpenShift examples copy] ***********************************************************************
+Tuesday 29 May 2018  09:02:23 -0300 (0:00:00.173)       0:06:04.559 ***********
+changed: [master-0.internal.ocp.example.org -> localhost]
+
+TASK [openshift_examples : Create the remote OpenShift examples directory] *************************************************************************
+Tuesday 29 May 2018  09:02:23 -0300 (0:00:00.164)       0:06:04.723 ***********
+changed: [master-0.internal.ocp.example.org]
+
+TASK [openshift_examples : Unarchive the OpenShift examples on the remote] *************************************************************************
+Tuesday 29 May 2018  09:02:23 -0300 (0:00:00.296)       0:06:05.020 ***********
+changed: [master-0.internal.ocp.example.org]
+
+TASK [openshift_examples : Cleanup the OpenShift Examples temp dir] ********************************************************************************
+Tuesday 29 May 2018  09:02:24 -0300 (0:00:00.799)       0:06:05.819 ***********
+changed: [master-0.internal.ocp.example.org -> localhost]
+
+TASK [openshift_examples : Modify registry paths if registry_url is not registry.access.redhat.com] ************************************************
+Tuesday 29 May 2018  09:02:24 -0300 (0:00:00.195)       0:06:06.014 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [openshift_examples : Import RHEL streams] ****************************************************************************************************
+Tuesday 29 May 2018  09:02:24 -0300 (0:00:00.048)       0:06:06.062 ***********
+skipping: [master-0.internal.ocp.example.org] => (item=/usr/share/openshift/examples/image-streams/image-streams-rhel7.json)
+skipping: [master-0.internal.ocp.example.org] => (item=/usr/share/openshift/examples/image-streams/dotnet_imagestreams.json)
+
+TASK [openshift_examples : Import Centos Image streams] ********************************************************************************************
+Tuesday 29 May 2018  09:02:25 -0300 (0:00:00.076)       0:06:06.139 ***********
+ok: [master-0.internal.ocp.example.org] => (item=/usr/share/openshift/examples/image-streams/image-streams-centos7.json)
+ok: [master-0.internal.ocp.example.org] => (item=/usr/share/openshift/examples/image-streams/dotnet_imagestreams_centos.json)
+
+TASK [openshift_examples : Import db templates] ****************************************************************************************************
+Tuesday 29 May 2018  09:02:26 -0300 (0:00:01.216)       0:06:07.355 ***********
+ok: [master-0.internal.ocp.example.org]
+
+TASK [openshift_examples : Remove defunct quickstart template files] *******************************************************************************
+Tuesday 29 May 2018  09:02:26 -0300 (0:00:00.581)       0:06:07.937 ***********
+ok: [master-0.internal.ocp.example.org] => (item=/usr/share/openshift/examples/quickstart-templates/nodejs.json)
+ok: [master-0.internal.ocp.example.org] => (item=/usr/share/openshift/examples/quickstart-templates/cakephp.json)
+ok: [master-0.internal.ocp.example.org] => (item=/usr/share/openshift/examples/quickstart-templates/dancer.json)
+ok: [master-0.internal.ocp.example.org] => (item=/usr/share/openshift/examples/quickstart-templates/django.json)
+
+TASK [openshift_examples : Remove defunct quickstart templates from openshift namespace] ***********************************************************
+Tuesday 29 May 2018  09:02:27 -0300 (0:00:01.058)       0:06:08.995 ***********
+ok: [master-0.internal.ocp.example.org] => (item=nodejs-example)
+ok: [master-0.internal.ocp.example.org] => (item=cakephp-example)
+ok: [master-0.internal.ocp.example.org] => (item=dancer-example)
+ok: [master-0.internal.ocp.example.org] => (item=django-example)
+
+TASK [openshift_examples : Import quickstart-templates] ********************************************************************************************
+Tuesday 29 May 2018  09:02:29 -0300 (0:00:01.837)       0:06:10.833 ***********
+ok: [master-0.internal.ocp.example.org]
+
+TASK [openshift_examples : Remove old xPaas template files] ****************************************************************************************
+Tuesday 29 May 2018  09:02:30 -0300 (0:00:00.694)       0:06:11.527 ***********
+ok: [master-0.internal.ocp.example.org] => (item=/usr/share/openshift/examples/xpaas-templates/sso70-basic.json)
+
+TASK [openshift_examples : Remove old xPaas templates from openshift namespace] ********************************************************************
+Tuesday 29 May 2018  09:02:30 -0300 (0:00:00.311)       0:06:11.839 ***********
+ok: [master-0.internal.ocp.example.org] => (item=sso70-basic)
+
+TASK [openshift_examples : Import xPaas image streams] *********************************************************************************************
+Tuesday 29 May 2018  09:02:31 -0300 (0:00:00.553)       0:06:12.393 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [openshift_examples : Import xPaas templates] *************************************************************************************************
+Tuesday 29 May 2018  09:02:31 -0300 (0:00:00.037)       0:06:12.431 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [openshift_hosted_templates : Create local temp dir for OpenShift hosted templates copy] ******************************************************
+Tuesday 29 May 2018  09:02:31 -0300 (0:00:00.041)       0:06:12.473 ***********
+changed: [master-0.internal.ocp.example.org -> localhost]
+
+TASK [openshift_hosted_templates : Chmod local temp dir for OpenShift examples copy] ***************************************************************
+Tuesday 29 May 2018  09:02:31 -0300 (0:00:00.160)       0:06:12.633 ***********
+changed: [master-0.internal.ocp.example.org -> localhost]
+
+TASK [openshift_hosted_templates : Create tar of OpenShift examples] *******************************************************************************
+Tuesday 29 May 2018  09:02:31 -0300 (0:00:00.160)       0:06:12.793 ***********
+changed: [master-0.internal.ocp.example.org -> localhost]
+
+TASK [openshift_hosted_templates : Chmod local tar of OpenShift examples] **************************************************************************
+Tuesday 29 May 2018  09:02:31 -0300 (0:00:00.164)       0:06:12.958 ***********
+changed: [master-0.internal.ocp.example.org -> localhost]
+
+TASK [openshift_hosted_templates : Create remote OpenShift hosted templates directory] *************************************************************
+Tuesday 29 May 2018  09:02:32 -0300 (0:00:00.160)       0:06:13.118 ***********
+changed: [master-0.internal.ocp.example.org]
+
+TASK [openshift_hosted_templates : Unarchive the OpenShift hosted templates on the remote] *********************************************************
+Tuesday 29 May 2018  09:02:32 -0300 (0:00:00.356)       0:06:13.474 ***********
+changed: [master-0.internal.ocp.example.org]
+
+TASK [openshift_hosted_templates : Cleanup the OpenShift hosted templates temp dir] ****************************************************************
+Tuesday 29 May 2018  09:02:32 -0300 (0:00:00.611)       0:06:14.086 ***********
+changed: [master-0.internal.ocp.example.org -> localhost]
+
+TASK [openshift_hosted_templates : Modify registry paths if registry_url is not registry.access.redhat.com] ****************************************
+Tuesday 29 May 2018  09:02:33 -0300 (0:00:00.157)       0:06:14.244 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [openshift_hosted_templates : Create temp directory for kubeconfig] ***************************************************************************
+Tuesday 29 May 2018  09:02:33 -0300 (0:00:00.036)       0:06:14.280 ***********
+ok: [master-0.internal.ocp.example.org]
+
+TASK [openshift_hosted_templates : Record kubeconfig tmp dir] **************************************************************************************
+Tuesday 29 May 2018  09:02:33 -0300 (0:00:00.308)       0:06:14.588 ***********
+ok: [master-0.internal.ocp.example.org]
+
+TASK [openshift_hosted_templates : Copy the admin client config(s)] ********************************************************************************
+Tuesday 29 May 2018  09:02:33 -0300 (0:00:00.116)       0:06:14.705 ***********
+ok: [master-0.internal.ocp.example.org]
+
+TASK [openshift_hosted_templates : Create or update hosted templates] ******************************************************************************
+Tuesday 29 May 2018  09:02:33 -0300 (0:00:00.389)       0:06:15.095 ***********
+changed: [master-0.internal.ocp.example.org]
+
+TASK [openshift_hosted_templates : Delete temp directory] ******************************************************************************************
+Tuesday 29 May 2018  09:02:34 -0300 (0:00:00.587)       0:06:15.682 ***********
+ok: [master-0.internal.ocp.example.org]
+
+TASK [openshift_manageiq : Add Management Infrastructure project] **********************************************************************************
+Tuesday 29 May 2018  09:02:34 -0300 (0:00:00.300)       0:06:15.983 ***********
+changed: [master-0.internal.ocp.example.org]
+
+TASK [openshift_manageiq : Create Admin and Image Inspector Service Account] ***********************************************************************
+Tuesday 29 May 2018  09:02:36 -0300 (0:00:01.611)       0:06:17.595 ***********
+changed: [master-0.internal.ocp.example.org] => (item=management-admin)
+changed: [master-0.internal.ocp.example.org] => (item=inspector-admin)
+
+TASK [openshift_manageiq : Create manageiq cluster role] *******************************************************************************************
+Tuesday 29 May 2018  09:02:38 -0300 (0:00:02.126)       0:06:19.721 ***********
+changed: [master-0.internal.ocp.example.org]
+
+TASK [openshift_manageiq : Create Hawkular Metrics Admin Cluster Role] *****************************************************************************
+Tuesday 29 May 2018  09:02:39 -0300 (0:00:01.254)       0:06:20.976 ***********
+changed: [master-0.internal.ocp.example.org]
+
+TASK [openshift_manageiq : Configure role/user permissions] ****************************************************************************************
+Tuesday 29 May 2018  09:02:41 -0300 (0:00:01.136)       0:06:22.113 ***********
+changed: [master-0.internal.ocp.example.org] => (item={u'resource_kind': u'role', u'resource_name': u'admin', u'user': u'management-admin'})
+changed: [master-0.internal.ocp.example.org] => (item={u'resource_kind': u'role', u'resource_name': u'admin', u'user': u'system:serviceaccount:management-infra:management-admin'})
+changed: [master-0.internal.ocp.example.org] => (item={u'resource_kind': u'cluster-role', u'resource_name': u'management-infra-admin', u'user': u'system:serviceaccount:management-infra:management-admin'})
+changed: [master-0.internal.ocp.example.org] => (item={u'resource_kind': u'cluster-role', u'resource_name': u'cluster-reader', u'user': u'system:serviceaccount:management-infra:management-admin'})
+changed: [master-0.internal.ocp.example.org] => (item={u'resource_kind': u'scc', u'resource_name': u'privileged', u'user': u'system:serviceaccount:management-infra:management-admin'})
+changed: [master-0.internal.ocp.example.org] => (item={u'resource_kind': u'cluster-role', u'resource_name': u'system:image-puller', u'user': u'system:serviceaccount:management-infra:inspector-admin'})
+changed: [master-0.internal.ocp.example.org] => (item={u'resource_kind': u'scc', u'resource_name': u'privileged', u'user': u'system:serviceaccount:management-infra:inspector-admin'})
+changed: [master-0.internal.ocp.example.org] => (item={u'resource_kind': u'cluster-role', u'resource_name': u'self-provisioner', u'user': u'system:serviceaccount:management-infra:management-admin'})
+changed: [master-0.internal.ocp.example.org] => (item={u'resource_kind': u'cluster-role', u'resource_name': u'hawkular-metrics-admin', u'user': u'system:serviceaccount:management-infra:management-admin'})
+
+TASK [openshift_manageiq : Configure 3_2 role/user permissions] ************************************************************************************
+Tuesday 29 May 2018  09:02:47 -0300 (0:00:06.064)       0:06:28.178 ***********
+changed: [master-0.internal.ocp.example.org] => (item={u'resource_kind': u'cluster-role', u'resource_name': u'system:image-auditor', u'user': u'system:serviceaccount:management-infra:management-admin'})
+
+TASK [cockpit : Add iptables allow rules] **********************************************************************************************************
+Tuesday 29 May 2018  09:02:47 -0300 (0:00:00.712)       0:06:28.890 ***********
+skipping: [master-0.internal.ocp.example.org] => (item={u'port': u'9090/tcp', u'service': u'cockpit-ws'})
+
+TASK [cockpit : Remove iptables rules] *************************************************************************************************************
+Tuesday 29 May 2018  09:02:47 -0300 (0:00:00.041)       0:06:28.931 ***********
+
+TASK [cockpit : Add firewalld allow rules] *********************************************************************************************************
+Tuesday 29 May 2018  09:02:47 -0300 (0:00:00.031)       0:06:28.962 ***********
+skipping: [master-0.internal.ocp.example.org] => (item={u'port': u'9090/tcp', u'service': u'cockpit-ws'})
+
+TASK [cockpit : Remove firewalld allow rules] ******************************************************************************************************
+Tuesday 29 May 2018  09:02:47 -0300 (0:00:00.040)       0:06:29.003 ***********
+
+TASK [cockpit : Install cockpit-ws] ****************************************************************************************************************
+Tuesday 29 May 2018  09:02:47 -0300 (0:00:00.031)       0:06:29.034 ***********
+skipping: [master-0.internal.ocp.example.org] => (item=cockpit-ws)
+skipping: [master-0.internal.ocp.example.org] => (item=cockpit-system)
+skipping: [master-0.internal.ocp.example.org] => (item=cockpit-bridge)
+skipping: [master-0.internal.ocp.example.org] => (item=cockpit-docker)
+skipping: [master-0.internal.ocp.example.org] => (item=cockpit-kubernetes)
+
+TASK [cockpit : Enable cockpit-ws] *****************************************************************************************************************
+Tuesday 29 May 2018  09:02:48 -0300 (0:00:00.073)       0:06:29.108 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [flannel_register : Assures /etc/flannel dir exists] ******************************************************************************************
+Tuesday 29 May 2018  09:02:48 -0300 (0:00:00.039)       0:06:29.147 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [flannel_register : Generate etcd configuration for etcd] *************************************************************************************
+Tuesday 29 May 2018  09:02:48 -0300 (0:00:00.033)       0:06:29.181 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [flannel_register : Insert flannel configuration into etcd] ***********************************************************************************
+Tuesday 29 May 2018  09:02:48 -0300 (0:00:00.032)       0:06:29.214 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+PLAY [Master Additional Install Checkpoint End] ****************************************************************************************************
+
+TASK [Set Master Additional install 'Complete'] ****************************************************************************************************
+Tuesday 29 May 2018  09:02:48 -0300 (0:00:00.038)       0:06:29.253 ***********
+ok: [master-0.internal.ocp.example.org]
+
+PLAY [Node Install Checkpoint Start] ***************************************************************************************************************
+
+TASK [Set Node install 'In Progress'] **************************************************************************************************************
+Tuesday 29 May 2018  09:02:48 -0300 (0:00:00.066)       0:06:29.319 ***********
+ok: [master-0.internal.ocp.example.org]
+
+PLAY [Create OpenShift certificates for node hosts] ************************************************************************************************
+
+TASK [openshift_node_certificates : Ensure CA certificate exists on openshift_ca_host] *************************************************************
+Tuesday 29 May 2018  09:02:48 -0300 (0:00:00.088)       0:06:29.408 ***********
+ok: [master-0.internal.ocp.example.org -> master-0.internal.ocp.example.org]
+
+TASK [openshift_node_certificates : fail] **********************************************************************************************************
+Tuesday 29 May 2018  09:02:48 -0300 (0:00:00.324)       0:06:29.733 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+TASK [openshift_node_certificates : Check status of node certificates] *****************************************************************************
+Tuesday 29 May 2018  09:02:48 -0300 (0:00:00.034)       0:06:29.767 ***********
+ok: [master-0.internal.ocp.example.org] => (item=system:node:10.0.0.30.crt)
+ok: [master-0.internal.ocp.example.org] => (item=system:node:10.0.0.30.key)
+ok: [infra-node-0.internal.ocp.example.org] => (item=system:node:10.0.0.40.crt)
+ok: [master-0.internal.ocp.example.org] => (item=system:node:10.0.0.30.kubeconfig)
+ok: [infra-node-0.internal.ocp.example.org] => (item=system:node:10.0.0.40.key)
+ok: [master-0.internal.ocp.example.org] => (item=ca.crt)
+ok: [infra-node-0.internal.ocp.example.org] => (item=system:node:10.0.0.40.kubeconfig)
+ok: [master-0.internal.ocp.example.org] => (item=server.key)
+ok: [infra-node-0.internal.ocp.example.org] => (item=ca.crt)
+ok: [app-node-0.internal.ocp.example.org] => (item=system:node:10.0.0.50.crt)
+ok: [infra-node-0.internal.ocp.example.org] => (item=server.key)
+ok: [master-0.internal.ocp.example.org] => (item=server.crt)
+ok: [app-node-0.internal.ocp.example.org] => (item=system:node:10.0.0.50.key)
+ok: [infra-node-0.internal.ocp.example.org] => (item=server.crt)
+ok: [app-node-0.internal.ocp.example.org] => (item=system:node:10.0.0.50.kubeconfig)
+ok: [app-node-0.internal.ocp.example.org] => (item=ca.crt)
+ok: [app-node-0.internal.ocp.example.org] => (item=server.key)
+ok: [app-node-0.internal.ocp.example.org] => (item=server.crt)
+
+TASK [openshift_node_certificates : set_fact] ******************************************************************************************************
+Tuesday 29 May 2018  09:02:51 -0300 (0:00:03.181)       0:06:32.948 ***********
+ok: [master-0.internal.ocp.example.org]
+ok: [infra-node-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node_certificates : Create openshift_generated_configs_dir if it does not exist] ***************************************************
+Tuesday 29 May 2018  09:02:52 -0300 (0:00:00.182)       0:06:33.130 ***********
+changed: [master-0.internal.ocp.example.org -> master-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org -> master-0.internal.ocp.example.org]
+ok: [infra-node-0.internal.ocp.example.org -> master-0.internal.ocp.example.org]
+
+TASK [openshift_node_certificates : find] **********************************************************************************************************
+Tuesday 29 May 2018  09:02:52 -0300 (0:00:00.654)       0:06:33.785 ***********
+ok: [master-0.internal.ocp.example.org -> master-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org -> master-0.internal.ocp.example.org]
+ok: [infra-node-0.internal.ocp.example.org -> master-0.internal.ocp.example.org]
+
+TASK [openshift_node_certificates : Generate the node client config] *******************************************************************************
+Tuesday 29 May 2018  09:02:53 -0300 (0:00:00.711)       0:06:34.497 ***********
+changed: [master-0.internal.ocp.example.org -> master-0.internal.ocp.example.org] => (item=master-0.internal.ocp.example.org)
+changed: [master-0.internal.ocp.example.org -> master-0.internal.ocp.example.org] => (item=infra-node-0.internal.ocp.example.org)
+changed: [master-0.internal.ocp.example.org -> master-0.internal.ocp.example.org] => (item=app-node-0.internal.ocp.example.org)
+
+TASK [openshift_node_certificates : Generate the node server certificate] **************************************************************************
+Tuesday 29 May 2018  09:02:55 -0300 (0:00:02.397)       0:06:36.894 ***********
+changed: [master-0.internal.ocp.example.org -> master-0.internal.ocp.example.org] => (item=master-0.internal.ocp.example.org)
+changed: [master-0.internal.ocp.example.org -> master-0.internal.ocp.example.org] => (item=infra-node-0.internal.ocp.example.org)
+changed: [master-0.internal.ocp.example.org -> master-0.internal.ocp.example.org] => (item=app-node-0.internal.ocp.example.org)
+
+TASK [openshift_node_certificates : Create a tarball of the node config directories] ***************************************************************
+Tuesday 29 May 2018  09:02:58 -0300 (0:00:02.651)       0:06:39.545 ***********
+changed: [master-0.internal.ocp.example.org -> master-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org -> master-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org -> master-0.internal.ocp.example.org]
+
+TASK [openshift_node_certificates : Retrieve the node config tarballs from the master] *************************************************************
+Tuesday 29 May 2018  09:02:59 -0300 (0:00:00.930)       0:06:40.475 ***********
+changed: [master-0.internal.ocp.example.org -> master-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org -> master-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org -> master-0.internal.ocp.example.org]
+
+TASK [openshift_node_certificates : Ensure certificate directory exists] ***************************************************************************
+Tuesday 29 May 2018  09:02:59 -0300 (0:00:00.608)       0:06:41.084 ***********
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [master-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node_certificates : Unarchive the tarball on the node] *****************************************************************************
+Tuesday 29 May 2018  09:03:00 -0300 (0:00:00.505)       0:06:41.589 ***********
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [master-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node_certificates : Delete local temp directory] ***********************************************************************************
+Tuesday 29 May 2018  09:03:01 -0300 (0:00:00.936)       0:06:42.525 ***********
+ok: [master-0.internal.ocp.example.org -> localhost]
+ok: [infra-node-0.internal.ocp.example.org -> localhost]
+ok: [app-node-0.internal.ocp.example.org -> localhost]
+
+TASK [openshift_node_certificates : Copy OpenShift CA to system CA trust] **************************************************************************
+Tuesday 29 May 2018  09:03:01 -0300 (0:00:00.507)       0:06:43.033 ***********
+changed: [app-node-0.internal.ocp.example.org] => (item={u'cert': u'/etc/origin/node/ca.crt', u'id': u'openshift'})
+changed: [infra-node-0.internal.ocp.example.org] => (item={u'cert': u'/etc/origin/node/ca.crt', u'id': u'openshift'})
+changed: [master-0.internal.ocp.example.org] => (item={u'cert': u'/etc/origin/node/ca.crt', u'id': u'openshift'})
+
+RUNNING HANDLER [openshift_node_certificates : update ca trust] ************************************************************************************
+Tuesday 29 May 2018  09:03:02 -0300 (0:00:00.533)       0:06:43.567 ***********
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+changed: [master-0.internal.ocp.example.org]
+
+RUNNING HANDLER [openshift_node_certificates : check for container runtime after updating ca trust] ************************************************
+Tuesday 29 May 2018  09:03:03 -0300 (0:00:01.378)       0:06:44.945 ***********
+changed: [app-node-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [master-0.internal.ocp.example.org]
+
+RUNNING HANDLER [openshift_node_certificates : restart container runtime after updating ca trust] **************************************************
+Tuesday 29 May 2018  09:03:04 -0300 (0:00:00.542)       0:06:45.488 ***********
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [master-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+
+PLAY [Disable excluders] ***************************************************************************************************************************
+
+TASK [openshift_excluder : Detecting Atomic Host Operating System] *********************************************************************************
+Tuesday 29 May 2018  09:03:07 -0300 (0:00:03.038)       0:06:48.527 ***********
+ok: [master-0.internal.ocp.example.org]
+ok: [infra-node-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Debug r_openshift_excluder_enable_docker_excluder] **********************************************************************
+Tuesday 29 May 2018  09:03:07 -0300 (0:00:00.458)       0:06:48.986 ***********
+ok: [master-0.internal.ocp.example.org] => {
+    "r_openshift_excluder_enable_docker_excluder": true
+}
+ok: [infra-node-0.internal.ocp.example.org] => {
+    "r_openshift_excluder_enable_docker_excluder": true
+}
+ok: [app-node-0.internal.ocp.example.org] => {
+    "r_openshift_excluder_enable_docker_excluder": true
+}
+
+TASK [openshift_excluder : Debug r_openshift_excluder_enable_openshift_excluder] *******************************************************************
+Tuesday 29 May 2018  09:03:08 -0300 (0:00:00.175)       0:06:49.162 ***********
+ok: [master-0.internal.ocp.example.org] => {
+    "r_openshift_excluder_enable_openshift_excluder": true
+}
+ok: [infra-node-0.internal.ocp.example.org] => {
+    "r_openshift_excluder_enable_openshift_excluder": true
+}
+ok: [app-node-0.internal.ocp.example.org] => {
+    "r_openshift_excluder_enable_openshift_excluder": true
+}
+
+TASK [openshift_excluder : Fail if invalid openshift_excluder_action provided] *********************************************************************
+Tuesday 29 May 2018  09:03:08 -0300 (0:00:00.169)       0:06:49.331 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Fail if r_openshift_excluder_upgrade_target is not defined] *************************************************************
+Tuesday 29 May 2018  09:03:08 -0300 (0:00:00.098)       0:06:49.429 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Include main action task file] ******************************************************************************************
+Tuesday 29 May 2018  09:03:08 -0300 (0:00:00.098)       0:06:49.528 ***********
+included: /root/openshift-ansible/roles/openshift_excluder/tasks/disable.yml for master-0.internal.ocp.example.org, infra-node-0.internal.ocp.example.org, app-node-0.internal.ocp.example.org
+
+TASK [openshift_excluder : Include verify_upgrade.yml when upgrading] ******************************************************************************
+Tuesday 29 May 2018  09:03:08 -0300 (0:00:00.158)       0:06:49.687 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Disable excluders before the upgrade to remove older excluding expressions] *********************************************
+Tuesday 29 May 2018  09:03:08 -0300 (0:00:00.097)       0:06:49.784 ***********
+included: /root/openshift-ansible/roles/openshift_excluder/tasks/unexclude.yml for master-0.internal.ocp.example.org, infra-node-0.internal.ocp.example.org, app-node-0.internal.ocp.example.org
+
+TASK [openshift_excluder : Check for docker-excluder] **********************************************************************************************
+Tuesday 29 May 2018  09:03:08 -0300 (0:00:00.144)       0:06:49.929 ***********
+ok: [master-0.internal.ocp.example.org]
+ok: [infra-node-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : disable docker excluder] ************************************************************************************************
+Tuesday 29 May 2018  09:03:09 -0300 (0:00:00.519)       0:06:50.448 ***********
+changed: [master-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Check for openshift excluder] *******************************************************************************************
+Tuesday 29 May 2018  09:03:09 -0300 (0:00:00.599)       0:06:51.048 ***********
+ok: [infra-node-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org]
+ok: [master-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : disable openshift excluder] *********************************************************************************************
+Tuesday 29 May 2018  09:03:10 -0300 (0:00:00.511)       0:06:51.560 ***********
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+changed: [master-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Include install.yml] ****************************************************************************************************
+Tuesday 29 May 2018  09:03:10 -0300 (0:00:00.495)       0:06:52.055 ***********
+included: /root/openshift-ansible/roles/openshift_excluder/tasks/install.yml for master-0.internal.ocp.example.org, infra-node-0.internal.ocp.example.org, app-node-0.internal.ocp.example.org
+
+TASK [openshift_excluder : Install docker excluder - yum] ******************************************************************************************
+Tuesday 29 May 2018  09:03:11 -0300 (0:00:00.153)       0:06:52.208 ***********
+skipping: [master-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org]
+ok: [infra-node-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Install docker excluder - dnf] ******************************************************************************************
+Tuesday 29 May 2018  09:03:15 -0300 (0:00:04.509)       0:06:56.717 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Install openshift excluder - yum] ***************************************************************************************
+Tuesday 29 May 2018  09:03:15 -0300 (0:00:00.234)       0:06:56.951 ***********
+skipping: [master-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Install openshift excluder - dnf] ***************************************************************************************
+Tuesday 29 May 2018  09:03:18 -0300 (0:00:02.476)       0:06:59.428 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : set_fact] ***************************************************************************************************************
+Tuesday 29 May 2018  09:03:18 -0300 (0:00:00.121)       0:06:59.550 ***********
+skipping: [master-0.internal.ocp.example.org]
+ok: [infra-node-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Include exclude.yml] ****************************************************************************************************
+Tuesday 29 May 2018  09:03:18 -0300 (0:00:00.152)       0:06:59.702 ***********
+included: /root/openshift-ansible/roles/openshift_excluder/tasks/exclude.yml for master-0.internal.ocp.example.org, infra-node-0.internal.ocp.example.org, app-node-0.internal.ocp.example.org
+
+TASK [openshift_excluder : Check for docker-excluder] **********************************************************************************************
+Tuesday 29 May 2018  09:03:18 -0300 (0:00:00.155)       0:06:59.857 ***********
+ok: [infra-node-0.internal.ocp.example.org]
+ok: [master-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Enable docker excluder] *************************************************************************************************
+Tuesday 29 May 2018  09:03:19 -0300 (0:00:00.516)       0:07:00.373 ***********
+changed: [master-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Check for openshift excluder] *******************************************************************************************
+Tuesday 29 May 2018  09:03:19 -0300 (0:00:00.610)       0:07:00.984 ***********
+ok: [master-0.internal.ocp.example.org]
+ok: [infra-node-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Enable openshift excluder] **********************************************************************************************
+Tuesday 29 May 2018  09:03:20 -0300 (0:00:00.504)       0:07:01.488 ***********
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [master-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Include unexclude.yml] **************************************************************************************************
+Tuesday 29 May 2018  09:03:20 -0300 (0:00:00.572)       0:07:02.061 ***********
+included: /root/openshift-ansible/roles/openshift_excluder/tasks/unexclude.yml for master-0.internal.ocp.example.org, infra-node-0.internal.ocp.example.org, app-node-0.internal.ocp.example.org
+
+TASK [openshift_excluder : Check for docker-excluder] **********************************************************************************************
+Tuesday 29 May 2018  09:03:21 -0300 (0:00:00.156)       0:07:02.217 ***********
+ok: [master-0.internal.ocp.example.org]
+ok: [infra-node-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : disable docker excluder] ************************************************************************************************
+Tuesday 29 May 2018  09:03:21 -0300 (0:00:00.519)       0:07:02.737 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : Check for openshift excluder] *******************************************************************************************
+Tuesday 29 May 2018  09:03:21 -0300 (0:00:00.101)       0:07:02.839 ***********
+ok: [master-0.internal.ocp.example.org]
+ok: [infra-node-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_excluder : disable openshift excluder] *********************************************************************************************
+Tuesday 29 May 2018  09:03:22 -0300 (0:00:00.524)       0:07:03.363 ***********
+changed: [master-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+
+PLAY [Evaluate node groups] ************************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+Tuesday 29 May 2018  09:03:22 -0300 (0:00:00.617)       0:07:03.981 ***********
+ok: [localhost]
+
+TASK [Evaluate oo_containerized_master_nodes] ******************************************************************************************************
+Tuesday 29 May 2018  09:03:24 -0300 (0:00:01.957)       0:07:05.938 ***********
+skipping: [localhost] => (item=master-0.internal.ocp.example.org)
+skipping: [localhost] => (item=infra-node-0.internal.ocp.example.org)
+skipping: [localhost] => (item=app-node-0.internal.ocp.example.org)
+ [WARNING]: Could not match supplied host pattern, ignoring: oo_containerized_master_nodes
+
+
+PLAY [Configure containerized nodes] ***************************************************************************************************************
+skipping: no hosts matched
+
+PLAY [Configure nodes] *****************************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+Tuesday 29 May 2018  09:03:25 -0300 (0:00:00.353)       0:07:06.292 ***********
+ok: [infra-node-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org]
+ok: [master-0.internal.ocp.example.org]
+
+TASK [openshift_clock : Determine if chrony is installed] ******************************************************************************************
+Tuesday 29 May 2018  09:03:28 -0300 (0:00:03.220)       0:07:09.512 ***********
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [master-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_clock : Install ntp package] *******************************************************************************************************
+Tuesday 29 May 2018  09:03:28 -0300 (0:00:00.585)       0:07:10.097 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_clock : Start and enable ntpd/chronyd] *********************************************************************************************
+Tuesday 29 May 2018  09:03:29 -0300 (0:00:00.101)       0:07:10.199 ***********
+changed: [master-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_cloud_provider : Set cloud provider facts] *****************************************************************************************
+Tuesday 29 May 2018  09:03:29 -0300 (0:00:00.723)       0:07:10.922 ***********
+ok: [master-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_cloud_provider : Create cloudprovider config dir] **********************************************************************************
+Tuesday 29 May 2018  09:03:36 -0300 (0:00:06.683)       0:07:17.606 ***********
+ok: [master-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_cloud_provider : include the defined cloud provider files] *************************************************************************
+Tuesday 29 May 2018  09:03:37 -0300 (0:00:00.724)       0:07:18.331 ***********
+included: /root/openshift-ansible/roles/openshift_cloud_provider/tasks/openstack.yml for master-0.internal.ocp.example.org, infra-node-0.internal.ocp.example.org, app-node-0.internal.ocp.example.org
+
+TASK [openshift_cloud_provider : Create cloud config] **********************************************************************************************
+Tuesday 29 May 2018  09:03:37 -0300 (0:00:00.201)       0:07:18.532 ***********
+ok: [master-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : fail] ***********************************************************************************************************************
+Tuesday 29 May 2018  09:03:38 -0300 (0:00:00.854)       0:07:19.387 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Check for NetworkManager service] *******************************************************************************************
+Tuesday 29 May 2018  09:03:38 -0300 (0:00:00.092)       0:07:19.479 ***********
+ok: [infra-node-0.internal.ocp.example.org]
+ok: [master-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Set fact using_network_manager] *********************************************************************************************
+Tuesday 29 May 2018  09:03:38 -0300 (0:00:00.523)       0:07:20.003 ***********
+ok: [master-0.internal.ocp.example.org]
+ok: [infra-node-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Install dnsmasq] ************************************************************************************************************
+Tuesday 29 May 2018  09:03:39 -0300 (0:00:00.165)       0:07:20.169 ***********
+changed: [master-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : ensure origin/node directory exists] ****************************************************************************************
+Tuesday 29 May 2018  09:03:46 -0300 (0:00:07.277)       0:07:27.446 ***********
+changed: [app-node-0.internal.ocp.example.org] => (item=/etc/origin)
+changed: [infra-node-0.internal.ocp.example.org] => (item=/etc/origin)
+changed: [master-0.internal.ocp.example.org] => (item=/etc/origin)
+changed: [app-node-0.internal.ocp.example.org] => (item=/etc/origin/node)
+changed: [infra-node-0.internal.ocp.example.org] => (item=/etc/origin/node)
+changed: [master-0.internal.ocp.example.org] => (item=/etc/origin/node)
+
+TASK [openshift_node : Install node-dnsmasq.conf] **************************************************************************************************
+Tuesday 29 May 2018  09:03:47 -0300 (0:00:00.896)       0:07:28.343 ***********
+changed: [master-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : fail] ***********************************************************************************************************************
+Tuesday 29 May 2018  09:03:48 -0300 (0:00:00.802)       0:07:29.145 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Install NetworkManager during node_bootstrap provisioning] ******************************************************************
+Tuesday 29 May 2018  09:03:48 -0300 (0:00:00.092)       0:07:29.238 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Install network manager dispatch script] ************************************************************************************
+Tuesday 29 May 2018  09:03:48 -0300 (0:00:00.093)       0:07:29.331 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Install dnsmasq configuration] **********************************************************************************************
+Tuesday 29 May 2018  09:03:48 -0300 (0:00:00.094)       0:07:29.426 ***********
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+changed: [master-0.internal.ocp.example.org]
+
+TASK [openshift_node : Deploy additional dnsmasq.conf] *********************************************************************************************
+Tuesday 29 May 2018  09:03:49 -0300 (0:00:00.840)       0:07:30.266 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Enable dnsmasq] *************************************************************************************************************
+Tuesday 29 May 2018  09:03:49 -0300 (0:00:00.090)       0:07:30.356 ***********
+changed: [master-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Install network manager dispatch script] ************************************************************************************
+Tuesday 29 May 2018  09:03:49 -0300 (0:00:00.624)       0:07:30.981 ***********
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+changed: [master-0.internal.ocp.example.org]
+
+RUNNING HANDLER [openshift_node : restart NetworkManager] ******************************************************************************************
+Tuesday 29 May 2018  09:03:50 -0300 (0:00:00.805)       0:07:31.787 ***********
+changed: [master-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+
+RUNNING HANDLER [openshift_node : restart dnsmasq] *************************************************************************************************
+Tuesday 29 May 2018  09:03:51 -0300 (0:00:00.720)       0:07:32.508 ***********
+changed: [master-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Add iptables allow rules] ***************************************************************************************************
+Tuesday 29 May 2018  09:03:52 -0300 (0:00:00.694)       0:07:33.203 ***********
+changed: [infra-node-0.internal.ocp.example.org] => (item={u'port': u'10250/tcp', u'service': u'Kubernetes kubelet'})
+changed: [master-0.internal.ocp.example.org] => (item={u'port': u'10250/tcp', u'service': u'Kubernetes kubelet'})
+changed: [app-node-0.internal.ocp.example.org] => (item={u'port': u'10250/tcp', u'service': u'Kubernetes kubelet'})
+changed: [infra-node-0.internal.ocp.example.org] => (item={u'port': u'80/tcp', u'service': u'http'})
+changed: [master-0.internal.ocp.example.org] => (item={u'port': u'80/tcp', u'service': u'http'})
+changed: [app-node-0.internal.ocp.example.org] => (item={u'port': u'80/tcp', u'service': u'http'})
+changed: [infra-node-0.internal.ocp.example.org] => (item={u'port': u'443/tcp', u'service': u'https'})
+changed: [master-0.internal.ocp.example.org] => (item={u'port': u'443/tcp', u'service': u'https'})
+changed: [app-node-0.internal.ocp.example.org] => (item={u'port': u'443/tcp', u'service': u'https'})
+changed: [infra-node-0.internal.ocp.example.org] => (item={u'cond': u'openshift_use_openshift_sdn | bool', u'port': u'4789/udp', u'service': u'OpenShift OVS sdn'})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={u'cond': False, u'port': u'179/tcp', u'service': u'Calico BGP Port'})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={u'cond': False, u'port': u'/tcp', u'service': u'Kubernetes service NodePort TCP'})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={u'cond': False, u'port': u'/udp', u'service': u'Kubernetes service NodePort UDP'})
+changed: [app-node-0.internal.ocp.example.org] => (item={u'cond': u'openshift_use_openshift_sdn | bool', u'port': u'4789/udp', u'service': u'OpenShift OVS sdn'})
+skipping: [app-node-0.internal.ocp.example.org] => (item={u'cond': False, u'port': u'179/tcp', u'service': u'Calico BGP Port'})
+skipping: [app-node-0.internal.ocp.example.org] => (item={u'cond': False, u'port': u'/tcp', u'service': u'Kubernetes service NodePort TCP'})
+skipping: [app-node-0.internal.ocp.example.org] => (item={u'cond': False, u'port': u'/udp', u'service': u'Kubernetes service NodePort UDP'})
+changed: [master-0.internal.ocp.example.org] => (item={u'cond': u'openshift_use_openshift_sdn | bool', u'port': u'4789/udp', u'service': u'OpenShift OVS sdn'})
+skipping: [master-0.internal.ocp.example.org] => (item={u'cond': False, u'port': u'179/tcp', u'service': u'Calico BGP Port'})
+skipping: [master-0.internal.ocp.example.org] => (item={u'cond': False, u'port': u'/tcp', u'service': u'Kubernetes service NodePort TCP'})
+skipping: [master-0.internal.ocp.example.org] => (item={u'cond': False, u'port': u'/udp', u'service': u'Kubernetes service NodePort UDP'})
+
+TASK [openshift_node : Remove iptables rules] ******************************************************************************************************
+Tuesday 29 May 2018  09:03:54 -0300 (0:00:02.099)       0:07:35.302 ***********
+
+TASK [openshift_node : Add firewalld allow rules] **************************************************************************************************
+Tuesday 29 May 2018  09:03:54 -0300 (0:00:00.089)       0:07:35.392 ***********
+skipping: [master-0.internal.ocp.example.org] => (item={u'port': u'10250/tcp', u'service': u'Kubernetes kubelet'})
+skipping: [master-0.internal.ocp.example.org] => (item={u'port': u'80/tcp', u'service': u'http'})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={u'port': u'10250/tcp', u'service': u'Kubernetes kubelet'})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={u'port': u'80/tcp', u'service': u'http'})
+skipping: [master-0.internal.ocp.example.org] => (item={u'port': u'443/tcp', u'service': u'https'})
+skipping: [master-0.internal.ocp.example.org] => (item={u'cond': u'openshift_use_openshift_sdn | bool', u'port': u'4789/udp', u'service': u'OpenShift OVS sdn'})
+skipping: [master-0.internal.ocp.example.org] => (item={u'cond': False, u'port': u'179/tcp', u'service': u'Calico BGP Port'})
+skipping: [master-0.internal.ocp.example.org] => (item={u'cond': False, u'port': u'/tcp', u'service': u'Kubernetes service NodePort TCP'})
+skipping: [master-0.internal.ocp.example.org] => (item={u'cond': False, u'port': u'/udp', u'service': u'Kubernetes service NodePort UDP'})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={u'port': u'443/tcp', u'service': u'https'})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={u'cond': u'openshift_use_openshift_sdn | bool', u'port': u'4789/udp', u'service': u'OpenShift OVS sdn'})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={u'cond': False, u'port': u'179/tcp', u'service': u'Calico BGP Port'})
+skipping: [app-node-0.internal.ocp.example.org] => (item={u'port': u'10250/tcp', u'service': u'Kubernetes kubelet'})
+skipping: [app-node-0.internal.ocp.example.org] => (item={u'port': u'80/tcp', u'service': u'http'})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={u'cond': False, u'port': u'/tcp', u'service': u'Kubernetes service NodePort TCP'})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={u'cond': False, u'port': u'/udp', u'service': u'Kubernetes service NodePort UDP'})
+skipping: [app-node-0.internal.ocp.example.org] => (item={u'port': u'443/tcp', u'service': u'https'})
+skipping: [app-node-0.internal.ocp.example.org] => (item={u'cond': u'openshift_use_openshift_sdn | bool', u'port': u'4789/udp', u'service': u'OpenShift OVS sdn'})
+skipping: [app-node-0.internal.ocp.example.org] => (item={u'cond': False, u'port': u'179/tcp', u'service': u'Calico BGP Port'})
+skipping: [app-node-0.internal.ocp.example.org] => (item={u'cond': False, u'port': u'/tcp', u'service': u'Kubernetes service NodePort TCP'})
+skipping: [app-node-0.internal.ocp.example.org] => (item={u'cond': False, u'port': u'/udp', u'service': u'Kubernetes service NodePort UDP'})
+
+TASK [openshift_node : Remove firewalld allow rules] ***********************************************************************************************
+Tuesday 29 May 2018  09:03:54 -0300 (0:00:00.310)       0:07:35.702 ***********
+
+TASK [openshift_node : Checking for journald.conf] *************************************************************************************************
+Tuesday 29 May 2018  09:03:54 -0300 (0:00:00.093)       0:07:35.796 ***********
+ok: [master-0.internal.ocp.example.org]
+ok: [infra-node-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Create journald persistence directories] ************************************************************************************
+Tuesday 29 May 2018  09:03:55 -0300 (0:00:00.670)       0:07:36.467 ***********
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [master-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Update journald setup] ******************************************************************************************************
+Tuesday 29 May 2018  09:03:55 -0300 (0:00:00.575)       0:07:37.042 ***********
+changed: [infra-node-0.internal.ocp.example.org] => (item={u'var': u'Storage', u'val': u'persistent'})
+changed: [app-node-0.internal.ocp.example.org] => (item={u'var': u'Storage', u'val': u'persistent'})
+changed: [master-0.internal.ocp.example.org] => (item={u'var': u'Storage', u'val': u'persistent'})
+changed: [app-node-0.internal.ocp.example.org] => (item={u'var': u'Compress', u'val': True})
+changed: [infra-node-0.internal.ocp.example.org] => (item={u'var': u'Compress', u'val': True})
+changed: [master-0.internal.ocp.example.org] => (item={u'var': u'Compress', u'val': True})
+changed: [master-0.internal.ocp.example.org] => (item={u'var': u'SyncIntervalSec', u'val': u'1s'})
+changed: [infra-node-0.internal.ocp.example.org] => (item={u'var': u'SyncIntervalSec', u'val': u'1s'})
+changed: [app-node-0.internal.ocp.example.org] => (item={u'var': u'SyncIntervalSec', u'val': u'1s'})
+changed: [infra-node-0.internal.ocp.example.org] => (item={u'var': u'RateLimitInterval', u'val': u'1s'})
+changed: [master-0.internal.ocp.example.org] => (item={u'var': u'RateLimitInterval', u'val': u'1s'})
+changed: [app-node-0.internal.ocp.example.org] => (item={u'var': u'RateLimitInterval', u'val': u'1s'})
+changed: [master-0.internal.ocp.example.org] => (item={u'var': u'RateLimitBurst', u'val': 10000})
+changed: [infra-node-0.internal.ocp.example.org] => (item={u'var': u'RateLimitBurst', u'val': 10000})
+changed: [app-node-0.internal.ocp.example.org] => (item={u'var': u'RateLimitBurst', u'val': 10000})
+changed: [infra-node-0.internal.ocp.example.org] => (item={u'var': u'SystemMaxUse', u'val': u'8G'})
+changed: [app-node-0.internal.ocp.example.org] => (item={u'var': u'SystemMaxUse', u'val': u'8G'})
+changed: [master-0.internal.ocp.example.org] => (item={u'var': u'SystemMaxUse', u'val': u'8G'})
+ok: [infra-node-0.internal.ocp.example.org] => (item={u'var': u'SystemKeepFree', u'val': u'20%'})
+ok: [app-node-0.internal.ocp.example.org] => (item={u'var': u'SystemKeepFree', u'val': u'20%'})
+ok: [master-0.internal.ocp.example.org] => (item={u'var': u'SystemKeepFree', u'val': u'20%'})
+changed: [infra-node-0.internal.ocp.example.org] => (item={u'var': u'SystemMaxFileSize', u'val': u'10M'})
+changed: [app-node-0.internal.ocp.example.org] => (item={u'var': u'SystemMaxFileSize', u'val': u'10M'})
+changed: [master-0.internal.ocp.example.org] => (item={u'var': u'SystemMaxFileSize', u'val': u'10M'})
+changed: [infra-node-0.internal.ocp.example.org] => (item={u'var': u'MaxRetentionSec', u'val': u'1month'})
+changed: [app-node-0.internal.ocp.example.org] => (item={u'var': u'MaxRetentionSec', u'val': u'1month'})
+changed: [master-0.internal.ocp.example.org] => (item={u'var': u'MaxRetentionSec', u'val': u'1month'})
+ok: [infra-node-0.internal.ocp.example.org] => (item={u'var': u'MaxFileSec', u'val': u'1day'})
+ok: [app-node-0.internal.ocp.example.org] => (item={u'var': u'MaxFileSec', u'val': u'1day'})
+ok: [master-0.internal.ocp.example.org] => (item={u'var': u'MaxFileSec', u'val': u'1day'})
+changed: [infra-node-0.internal.ocp.example.org] => (item={u'var': u'ForwardToSyslog', u'val': False})
+changed: [app-node-0.internal.ocp.example.org] => (item={u'var': u'ForwardToSyslog', u'val': False})
+changed: [master-0.internal.ocp.example.org] => (item={u'var': u'ForwardToSyslog', u'val': False})
+changed: [infra-node-0.internal.ocp.example.org] => (item={u'var': u'ForwardToWall', u'val': False})
+changed: [app-node-0.internal.ocp.example.org] => (item={u'var': u'ForwardToWall', u'val': False})
+changed: [master-0.internal.ocp.example.org] => (item={u'var': u'ForwardToWall', u'val': False})
+
+TASK [openshift_node : Restart journald] ***********************************************************************************************************
+Tuesday 29 May 2018  09:04:01 -0300 (0:00:05.250)       0:07:42.292 ***********
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+changed: [master-0.internal.ocp.example.org]
+
+TASK [openshift_node : Disable swap] ***************************************************************************************************************
+Tuesday 29 May 2018  09:04:02 -0300 (0:00:00.821)       0:07:43.114 ***********
+ok: [app-node-0.internal.ocp.example.org]
+ok: [infra-node-0.internal.ocp.example.org]
+ok: [master-0.internal.ocp.example.org]
+
+TASK [openshift_node : Install Node package, sdn-ovs, conntrack packages] **************************************************************************
+Tuesday 29 May 2018  09:04:02 -0300 (0:00:00.841)       0:07:43.955 ***********
+changed: [master-0.internal.ocp.example.org] => (item={u'name': u'origin-node-3.9.0'})
+changed: [master-0.internal.ocp.example.org] => (item={u'name': u'origin-sdn-ovs-3.9.0', u'install': True})
+ok: [master-0.internal.ocp.example.org] => (item={u'name': u'conntrack-tools'})
+changed: [app-node-0.internal.ocp.example.org] => (item={u'name': u'origin-node-3.9.0'})
+changed: [infra-node-0.internal.ocp.example.org] => (item={u'name': u'origin-node-3.9.0'})
+changed: [infra-node-0.internal.ocp.example.org] => (item={u'name': u'origin-sdn-ovs-3.9.0', u'install': True})
+ok: [infra-node-0.internal.ocp.example.org] => (item={u'name': u'conntrack-tools'})
+changed: [app-node-0.internal.ocp.example.org] => (item={u'name': u'origin-sdn-ovs-3.9.0', u'install': True})
+ok: [app-node-0.internal.ocp.example.org] => (item={u'name': u'conntrack-tools'})
+
+TASK [openshift_node : Pre-pull node image when containerized] *************************************************************************************
+Tuesday 29 May 2018  09:07:53 -0300 (0:03:50.614)       0:11:34.570 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Restart cri-o] **************************************************************************************************************
+Tuesday 29 May 2018  09:07:53 -0300 (0:00:00.095)       0:11:34.666 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : restart NetworkManager to ensure resolv.conf is present] ********************************************************************
+Tuesday 29 May 2018  09:07:53 -0300 (0:00:00.096)       0:11:34.762 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : sysctl] *********************************************************************************************************************
+Tuesday 29 May 2018  09:07:53 -0300 (0:00:00.091)       0:11:34.853 ***********
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+changed: [master-0.internal.ocp.example.org]
+
+TASK [openshift_node : Check for credentials file for registry auth] *******************************************************************************
+Tuesday 29 May 2018  09:07:54 -0300 (0:00:00.907)       0:11:35.761 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Create credentials for registry auth] ***************************************************************************************
+Tuesday 29 May 2018  09:07:54 -0300 (0:00:00.101)       0:11:35.862 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Create credentials for registry auth (alternative)] *************************************************************************
+Tuesday 29 May 2018  09:07:54 -0300 (0:00:00.108)       0:11:35.971 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Setup ro mount of /root/.docker for containerized hosts] ********************************************************************
+Tuesday 29 May 2018  09:07:54 -0300 (0:00:00.102)       0:11:36.073 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Install Node service file] **************************************************************************************************
+Tuesday 29 May 2018  09:07:55 -0300 (0:00:00.101)       0:11:36.174 ***********
+changed: [master-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Install Node dependencies docker service file] ******************************************************************************
+Tuesday 29 May 2018  09:07:56 -0300 (0:00:00.952)       0:11:37.127 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Create the openvswitch service env file] ************************************************************************************
+Tuesday 29 May 2018  09:07:56 -0300 (0:00:00.093)       0:11:37.220 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Install OpenvSwitch docker service file] ************************************************************************************
+Tuesday 29 May 2018  09:07:56 -0300 (0:00:00.094)       0:11:37.315 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Configure Node settings] ****************************************************************************************************
+Tuesday 29 May 2018  09:07:56 -0300 (0:00:00.098)       0:11:37.414 ***********
+changed: [infra-node-0.internal.ocp.example.org] => (item={u'regex': u'^OPTIONS=', u'line': u'OPTIONS=--loglevel=2 '})
+changed: [app-node-0.internal.ocp.example.org] => (item={u'regex': u'^OPTIONS=', u'line': u'OPTIONS=--loglevel=2 '})
+changed: [master-0.internal.ocp.example.org] => (item={u'regex': u'^OPTIONS=', u'line': u'OPTIONS=--loglevel=2 '})
+ok: [infra-node-0.internal.ocp.example.org] => (item={u'regex': u'^CONFIG_FILE=', u'line': u'CONFIG_FILE=/etc/origin/node/node-config.yaml'})
+ok: [app-node-0.internal.ocp.example.org] => (item={u'regex': u'^CONFIG_FILE=', u'line': u'CONFIG_FILE=/etc/origin/node/node-config.yaml'})
+ok: [master-0.internal.ocp.example.org] => (item={u'regex': u'^CONFIG_FILE=', u'line': u'CONFIG_FILE=/etc/origin/node/node-config.yaml'})
+changed: [infra-node-0.internal.ocp.example.org] => (item={u'regex': u'^IMAGE_VERSION=', u'line': u'IMAGE_VERSION=v3.9.0'})
+changed: [app-node-0.internal.ocp.example.org] => (item={u'regex': u'^IMAGE_VERSION=', u'line': u'IMAGE_VERSION=v3.9.0'})
+changed: [master-0.internal.ocp.example.org] => (item={u'regex': u'^IMAGE_VERSION=', u'line': u'IMAGE_VERSION=v3.9.0'})
+
+TASK [openshift_node : Configure Proxy Settings] ***************************************************************************************************
+Tuesday 29 May 2018  09:07:57 -0300 (0:00:01.523)       0:11:38.938 ***********
+skipping: [master-0.internal.ocp.example.org] => (item={u'regex': u'^HTTP_PROXY=', u'line': u'HTTP_PROXY='})
+skipping: [master-0.internal.ocp.example.org] => (item={u'regex': u'^HTTPS_PROXY=', u'line': u'HTTPS_PROXY='})
+skipping: [master-0.internal.ocp.example.org] => (item={u'regex': u'^NO_PROXY=', u'line': u'NO_PROXY=[],172.30.0.0/16,10.128.0.0/14'})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={u'regex': u'^HTTP_PROXY=', u'line': u'HTTP_PROXY='})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={u'regex': u'^HTTPS_PROXY=', u'line': u'HTTPS_PROXY='})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={u'regex': u'^NO_PROXY=', u'line': u'NO_PROXY=[],172.30.0.0/16,10.128.0.0/14'})
+skipping: [app-node-0.internal.ocp.example.org] => (item={u'regex': u'^HTTP_PROXY=', u'line': u'HTTP_PROXY='})
+skipping: [app-node-0.internal.ocp.example.org] => (item={u'regex': u'^HTTPS_PROXY=', u'line': u'HTTPS_PROXY='})
+skipping: [app-node-0.internal.ocp.example.org] => (item={u'regex': u'^NO_PROXY=', u'line': u'NO_PROXY=[],172.30.0.0/16,10.128.0.0/14'})
+
+TASK [openshift_node : Pre-pull node system container image] ***************************************************************************************
+Tuesday 29 May 2018  09:07:58 -0300 (0:00:00.293)       0:11:39.231 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Install or Update node system container] ************************************************************************************
+Tuesday 29 May 2018  09:07:58 -0300 (0:00:00.095)       0:11:39.326 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : set_fact] *******************************************************************************************************************
+Tuesday 29 May 2018  09:07:58 -0300 (0:00:00.093)       0:11:39.420 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : set_fact] *******************************************************************************************************************
+Tuesday 29 May 2018  09:07:58 -0300 (0:00:00.093)       0:11:39.514 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Pre-pull OpenVSwitch system container image] ********************************************************************************
+Tuesday 29 May 2018  09:07:58 -0300 (0:00:00.093)       0:11:39.608 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Install or Update OpenVSwitch system container] *****************************************************************************
+Tuesday 29 May 2018  09:07:58 -0300 (0:00:00.096)       0:11:39.704 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Pre-pull openvswitch image] *************************************************************************************************
+Tuesday 29 May 2018  09:07:58 -0300 (0:00:00.092)       0:11:39.796 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Start and enable openvswitch service] ***************************************************************************************
+Tuesday 29 May 2018  09:07:58 -0300 (0:00:00.100)       0:11:39.897 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : set_fact] *******************************************************************************************************************
+Tuesday 29 May 2018  09:07:58 -0300 (0:00:00.093)       0:11:39.990 ***********
+ok: [master-0.internal.ocp.example.org]
+ok: [infra-node-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Create kublet args config dir] **********************************************************************************************
+Tuesday 29 May 2018  09:07:59 -0300 (0:00:00.349)       0:11:40.340 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Create the Node config] *****************************************************************************************************
+Tuesday 29 May 2018  09:07:59 -0300 (0:00:00.140)       0:11:40.480 ***********
+[DEPRECATION WARNING]: Using tests as filters is deprecated. Instead of using `result|version_compare` instead use `result is version_compare`.
+This feature will be removed in version 2.9. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+[DEPRECATION WARNING]: Using tests as filters is deprecated. Instead of using `result|version_compare` instead use `result is version_compare`.
+This feature will be removed in version 2.9. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+[DEPRECATION WARNING]: Using tests as filters is deprecated. Instead of using `result|version_compare` instead use `result is version_compare`.
+This feature will be removed in version 2.9. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+changed: [master-0.internal.ocp.example.org]
+
+TASK [openshift_node : Configure Node Environment Variables] ***************************************************************************************
+Tuesday 29 May 2018  09:08:00 -0300 (0:00:01.240)       0:11:41.720 ***********
+
+TASK [openshift_node : Configure AWS Cloud Provider Settings] **************************************************************************************
+Tuesday 29 May 2018  09:08:00 -0300 (0:00:00.206)       0:11:41.927 ***********
+skipping: [master-0.internal.ocp.example.org] => (item=None)
+skipping: [master-0.internal.ocp.example.org] => (item=None)
+skipping: [infra-node-0.internal.ocp.example.org] => (item=None)
+skipping: [infra-node-0.internal.ocp.example.org] => (item=None)
+skipping: [app-node-0.internal.ocp.example.org] => (item=None)
+skipping: [app-node-0.internal.ocp.example.org] => (item=None)
+
+TASK [openshift_node : Wait for master API to become available before proceeding] ******************************************************************
+Tuesday 29 May 2018  09:08:00 -0300 (0:00:00.159)       0:11:42.086 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Start and enable node dep] **************************************************************************************************
+Tuesday 29 May 2018  09:08:01 -0300 (0:00:00.095)       0:11:42.181 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Start and enable node] ******************************************************************************************************
+Tuesday 29 May 2018  09:08:01 -0300 (0:00:00.101)       0:11:42.283 ***********
+FAILED - RETRYING: Start and enable node (1 retries left).
+ok: [master-0.internal.ocp.example.org]
+FAILED - RETRYING: Start and enable node (1 retries left).
+FAILED - RETRYING: Start and enable node (1 retries left).
+ok: [app-node-0.internal.ocp.example.org]
+ok: [infra-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Dump logs from node service if it failed] ***********************************************************************************
+Tuesday 29 May 2018  09:10:26 -0300 (0:02:24.962)       0:14:07.246 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Abort if node failed to start] **********************************************************************************************
+Tuesday 29 May 2018  09:10:26 -0300 (0:00:00.101)       0:14:07.347 ***********
+skipping: [master-0.internal.ocp.example.org]
+skipping: [infra-node-0.internal.ocp.example.org]
+skipping: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : set_fact] *******************************************************************************************************************
+Tuesday 29 May 2018  09:10:26 -0300 (0:00:00.101)       0:14:07.449 ***********
+ok: [master-0.internal.ocp.example.org]
+ok: [infra-node-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Install NFS storage plugin dependencies] ************************************************************************************
+Tuesday 29 May 2018  09:10:26 -0300 (0:00:00.162)       0:14:07.611 ***********
+ok: [infra-node-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org]
+ok: [master-0.internal.ocp.example.org]
+
+TASK [openshift_node : Check for existence of nfs sebooleans] **************************************************************************************
+Tuesday 29 May 2018  09:10:32 -0300 (0:00:05.754)       0:14:13.365 ***********
+ok: [app-node-0.internal.ocp.example.org] => (item=virt_use_nfs)
+ok: [infra-node-0.internal.ocp.example.org] => (item=virt_use_nfs)
+ok: [master-0.internal.ocp.example.org] => (item=virt_use_nfs)
+ok: [app-node-0.internal.ocp.example.org] => (item=virt_sandbox_use_nfs)
+ok: [infra-node-0.internal.ocp.example.org] => (item=virt_sandbox_use_nfs)
+ok: [master-0.internal.ocp.example.org] => (item=virt_sandbox_use_nfs)
+
+TASK [openshift_node : Set seboolean to allow nfs storage plugin access from containers] ***********************************************************
+Tuesday 29 May 2018  09:10:33 -0300 (0:00:01.019)       0:14:14.385 ***********
+ok: [infra-node-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:32.752817', '_ansible_no_log': False, u'stdout': u'virt_use_nfs --> on', u'cmd': [u'getsebool', u'virt_use_nfs'], u'rc': 0, 'item': u'virt_use_nfs', u'delta': u'0:00:00.004126', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_use_nfs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_use_nfs --> on'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:32.748691', '_ansible_ignore_errors': None, 'failed': False})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:33.185158', '_ansible_no_log': False, u'stdout': u'virt_use_nfs --> on', u'cmd': [u'getsebool', u'virt_sandbox_use_nfs'], u'rc': 0, 'item': u'virt_sandbox_use_nfs', u'delta': u'0:00:00.002544', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_sandbox_use_nfs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_use_nfs --> on'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:33.182614', '_ansible_ignore_errors': None, 'failed': False})
+ok: [app-node-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:32.771948', '_ansible_no_log': False, u'stdout': u'virt_use_nfs --> on', u'cmd': [u'getsebool', u'virt_use_nfs'], u'rc': 0, 'item': u'virt_use_nfs', u'delta': u'0:00:00.003324', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_use_nfs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_use_nfs --> on'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:32.768624', '_ansible_ignore_errors': None, 'failed': False})
+skipping: [app-node-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:33.159321', '_ansible_no_log': False, u'stdout': u'virt_use_nfs --> on', u'cmd': [u'getsebool', u'virt_sandbox_use_nfs'], u'rc': 0, 'item': u'virt_sandbox_use_nfs', u'delta': u'0:00:00.003299', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_sandbox_use_nfs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_use_nfs --> on'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:33.156022', '_ansible_ignore_errors': None, 'failed': False})
+ok: [master-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:32.757787', '_ansible_no_log': False, u'stdout': u'virt_use_nfs --> on', u'cmd': [u'getsebool', u'virt_use_nfs'], u'rc': 0, 'item': u'virt_use_nfs', u'delta': u'0:00:00.006587', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_use_nfs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_use_nfs --> on'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:32.751200', '_ansible_ignore_errors': None, 'failed': False})
+skipping: [master-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:33.209851', '_ansible_no_log': False, u'stdout': u'virt_use_nfs --> on', u'cmd': [u'getsebool', u'virt_sandbox_use_nfs'], u'rc': 0, 'item': u'virt_sandbox_use_nfs', u'delta': u'0:00:00.003248', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_sandbox_use_nfs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_use_nfs --> on'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:33.206603', '_ansible_ignore_errors': None, 'failed': False})
+
+TASK [openshift_node : Set seboolean to allow nfs storage plugin access from containers (python 3)] ************************************************
+Tuesday 29 May 2018  09:10:34 -0300 (0:00:00.813)       0:14:15.198 ***********
+skipping: [master-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:32.757787', '_ansible_no_log': False, u'stdout': u'virt_use_nfs --> on', u'cmd': [u'getsebool', u'virt_use_nfs'], u'rc': 0, 'item': u'virt_use_nfs', u'delta': u'0:00:00.006587', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_use_nfs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_use_nfs --> on'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:32.751200', '_ansible_ignore_errors': None, 'failed': False})
+skipping: [master-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:33.209851', '_ansible_no_log': False, u'stdout': u'virt_use_nfs --> on', u'cmd': [u'getsebool', u'virt_sandbox_use_nfs'], u'rc': 0, 'item': u'virt_sandbox_use_nfs', u'delta': u'0:00:00.003248', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_sandbox_use_nfs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_use_nfs --> on'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:33.206603', '_ansible_ignore_errors': None, 'failed': False})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:32.752817', '_ansible_no_log': False, u'stdout': u'virt_use_nfs --> on', u'cmd': [u'getsebool', u'virt_use_nfs'], u'rc': 0, 'item': u'virt_use_nfs', u'delta': u'0:00:00.004126', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_use_nfs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_use_nfs --> on'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:32.748691', '_ansible_ignore_errors': None, 'failed': False})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:33.185158', '_ansible_no_log': False, u'stdout': u'virt_use_nfs --> on', u'cmd': [u'getsebool', u'virt_sandbox_use_nfs'], u'rc': 0, 'item': u'virt_sandbox_use_nfs', u'delta': u'0:00:00.002544', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_sandbox_use_nfs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_use_nfs --> on'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:33.182614', '_ansible_ignore_errors': None, 'failed': False})
+skipping: [app-node-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:32.771948', '_ansible_no_log': False, u'stdout': u'virt_use_nfs --> on', u'cmd': [u'getsebool', u'virt_use_nfs'], u'rc': 0, 'item': u'virt_use_nfs', u'delta': u'0:00:00.003324', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_use_nfs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_use_nfs --> on'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:32.768624', '_ansible_ignore_errors': None, 'failed': False})
+skipping: [app-node-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:33.159321', '_ansible_no_log': False, u'stdout': u'virt_use_nfs --> on', u'cmd': [u'getsebool', u'virt_sandbox_use_nfs'], u'rc': 0, 'item': u'virt_sandbox_use_nfs', u'delta': u'0:00:00.003299', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_sandbox_use_nfs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_use_nfs --> on'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:33.156022', '_ansible_ignore_errors': None, 'failed': False})
+
+TASK [openshift_node : Install GlusterFS storage plugin dependencies] ******************************************************************************
+Tuesday 29 May 2018  09:10:34 -0300 (0:00:00.190)       0:14:15.389 ***********
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [master-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Check for existence of fusefs sebooleans] ***********************************************************************************
+Tuesday 29 May 2018  09:10:44 -0300 (0:00:09.935)       0:14:25.325 ***********
+ok: [app-node-0.internal.ocp.example.org] => (item=virt_use_fusefs)
+ok: [infra-node-0.internal.ocp.example.org] => (item=virt_use_fusefs)
+ok: [master-0.internal.ocp.example.org] => (item=virt_use_fusefs)
+ok: [app-node-0.internal.ocp.example.org] => (item=virt_sandbox_use_fusefs)
+ok: [infra-node-0.internal.ocp.example.org] => (item=virt_sandbox_use_fusefs)
+ok: [master-0.internal.ocp.example.org] => (item=virt_sandbox_use_fusefs)
+
+TASK [openshift_node : Set seboolean to allow gluster storage plugin access from containers] *******************************************************
+Tuesday 29 May 2018  09:10:45 -0300 (0:00:00.952)       0:14:26.277 ***********
+changed: [infra-node-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:44.694670', '_ansible_no_log': False, u'stdout': u'virt_use_fusefs --> off', u'cmd': [u'getsebool', u'virt_use_fusefs'], u'rc': 0, 'item': u'virt_use_fusefs', u'delta': u'0:00:00.003145', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_use_fusefs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_use_fusefs --> off'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:44.691525', '_ansible_ignore_errors': None, 'failed': False})
+changed: [app-node-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:44.665225', '_ansible_no_log': False, u'stdout': u'virt_use_fusefs --> off', u'cmd': [u'getsebool', u'virt_use_fusefs'], u'rc': 0, 'item': u'virt_use_fusefs', u'delta': u'0:00:00.002619', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_use_fusefs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_use_fusefs --> off'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:44.662606', '_ansible_ignore_errors': None, 'failed': False})
+changed: [master-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:44.698100', '_ansible_no_log': False, u'stdout': u'virt_use_fusefs --> off', u'cmd': [u'getsebool', u'virt_use_fusefs'], u'rc': 0, 'item': u'virt_use_fusefs', u'delta': u'0:00:00.002891', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_use_fusefs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_use_fusefs --> off'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:44.695209', '_ansible_ignore_errors': None, 'failed': False})
+changed: [infra-node-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:45.060715', '_ansible_no_log': False, u'stdout': u'virt_sandbox_use_fusefs --> off', u'cmd': [u'getsebool', u'virt_sandbox_use_fusefs'], u'rc': 0, 'item': u'virt_sandbox_use_fusefs', u'delta': u'0:00:00.002461', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_sandbox_use_fusefs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_sandbox_use_fusefs --> off'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:45.058254', '_ansible_ignore_errors': None, 'failed': False})
+changed: [app-node-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:45.003837', '_ansible_no_log': False, u'stdout': u'virt_sandbox_use_fusefs --> off', u'cmd': [u'getsebool', u'virt_sandbox_use_fusefs'], u'rc': 0, 'item': u'virt_sandbox_use_fusefs', u'delta': u'0:00:00.002570', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_sandbox_use_fusefs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_sandbox_use_fusefs --> off'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:45.001267', '_ansible_ignore_errors': None, 'failed': False})
+changed: [master-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:45.116345', '_ansible_no_log': False, u'stdout': u'virt_sandbox_use_fusefs --> off', u'cmd': [u'getsebool', u'virt_sandbox_use_fusefs'], u'rc': 0, 'item': u'virt_sandbox_use_fusefs', u'delta': u'0:00:00.002911', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_sandbox_use_fusefs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_sandbox_use_fusefs --> off'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:45.113434', '_ansible_ignore_errors': None, 'failed': False})
+
+TASK [openshift_node : Set seboolean to allow gluster storage plugin access from containers (python 3)] ********************************************
+Tuesday 29 May 2018  09:10:47 -0300 (0:00:02.194)       0:14:28.471 ***********
+skipping: [master-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:44.698100', '_ansible_no_log': False, u'stdout': u'virt_use_fusefs --> off', u'cmd': [u'getsebool', u'virt_use_fusefs'], u'rc': 0, 'item': u'virt_use_fusefs', u'delta': u'0:00:00.002891', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_use_fusefs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_use_fusefs --> off'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:44.695209', '_ansible_ignore_errors': None, 'failed': False})
+skipping: [master-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:45.116345', '_ansible_no_log': False, u'stdout': u'virt_sandbox_use_fusefs --> off', u'cmd': [u'getsebool', u'virt_sandbox_use_fusefs'], u'rc': 0, 'item': u'virt_sandbox_use_fusefs', u'delta': u'0:00:00.002911', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_sandbox_use_fusefs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_sandbox_use_fusefs --> off'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:45.113434', '_ansible_ignore_errors': None, 'failed': False})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:44.694670', '_ansible_no_log': False, u'stdout': u'virt_use_fusefs --> off', u'cmd': [u'getsebool', u'virt_use_fusefs'], u'rc': 0, 'item': u'virt_use_fusefs', u'delta': u'0:00:00.003145', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_use_fusefs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_use_fusefs --> off'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:44.691525', '_ansible_ignore_errors': None, 'failed': False})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:45.060715', '_ansible_no_log': False, u'stdout': u'virt_sandbox_use_fusefs --> off', u'cmd': [u'getsebool', u'virt_sandbox_use_fusefs'], u'rc': 0, 'item': u'virt_sandbox_use_fusefs', u'delta': u'0:00:00.002461', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_sandbox_use_fusefs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_sandbox_use_fusefs --> off'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:45.058254', '_ansible_ignore_errors': None, 'failed': False})
+skipping: [app-node-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:44.665225', '_ansible_no_log': False, u'stdout': u'virt_use_fusefs --> off', u'cmd': [u'getsebool', u'virt_use_fusefs'], u'rc': 0, 'item': u'virt_use_fusefs', u'delta': u'0:00:00.002619', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_use_fusefs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_use_fusefs --> off'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:44.662606', '_ansible_ignore_errors': None, 'failed': False})
+skipping: [app-node-0.internal.ocp.example.org] => (item={'_ansible_parsed': True, 'stderr_lines': [], '_ansible_item_result': True, u'end': u'2018-05-29 09:10:45.003837', '_ansible_no_log': False, u'stdout': u'virt_sandbox_use_fusefs --> off', u'cmd': [u'getsebool', u'virt_sandbox_use_fusefs'], u'rc': 0, 'item': u'virt_sandbox_use_fusefs', u'delta': u'0:00:00.002570', u'stderr': u'', u'changed': False, u'invocation': {u'module_args': {u'creates': None, u'executable': None, u'_uses_shell': False, u'_raw_params': u'getsebool virt_sandbox_use_fusefs', u'removes': None, u'warn': True, u'chdir': None, u'stdin': None}}, 'stdout_lines': [u'virt_sandbox_use_fusefs --> off'], 'failed_when_result': False, u'start': u'2018-05-29 09:10:45.001267', '_ansible_ignore_errors': None, 'failed': False})
+
+TASK [openshift_node : Install Ceph storage plugin dependencies] ***********************************************************************************
+Tuesday 29 May 2018  09:10:47 -0300 (0:00:00.212)       0:14:28.684 ***********
+changed: [app-node-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [master-0.internal.ocp.example.org]
+
+TASK [openshift_node : Install iSCSI storage plugin dependencies] **********************************************************************************
+Tuesday 29 May 2018  09:11:27 -0300 (0:00:40.410)       0:15:09.095 ***********
+changed: [infra-node-0.internal.ocp.example.org] => (item=iscsi-initiator-utils)
+changed: [app-node-0.internal.ocp.example.org] => (item=iscsi-initiator-utils)
+changed: [infra-node-0.internal.ocp.example.org] => (item=device-mapper-multipath)
+changed: [app-node-0.internal.ocp.example.org] => (item=device-mapper-multipath)
+changed: [master-0.internal.ocp.example.org] => (item=iscsi-initiator-utils)
+changed: [master-0.internal.ocp.example.org] => (item=device-mapper-multipath)
+
+TASK [openshift_node : restart services] ***********************************************************************************************************
+Tuesday 29 May 2018  09:11:44 -0300 (0:00:16.861)       0:15:25.956 ***********
+changed: [infra-node-0.internal.ocp.example.org] => (item=multipathd)
+changed: [app-node-0.internal.ocp.example.org] => (item=multipathd)
+changed: [master-0.internal.ocp.example.org] => (item=multipathd)
+changed: [app-node-0.internal.ocp.example.org] => (item=rpcbind)
+changed: [infra-node-0.internal.ocp.example.org] => (item=rpcbind)
+changed: [master-0.internal.ocp.example.org] => (item=rpcbind)
+changed: [master-0.internal.ocp.example.org] => (item=iscsid)
+changed: [app-node-0.internal.ocp.example.org] => (item=iscsid)
+changed: [infra-node-0.internal.ocp.example.org] => (item=iscsid)
+
+TASK [openshift_node : Template multipath configuration] *******************************************************************************************
+Tuesday 29 May 2018  09:11:46 -0300 (0:00:01.832)       0:15:27.789 ***********
+changed: [master-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Enable multipath] ***********************************************************************************************************
+Tuesday 29 May 2018  09:11:47 -0300 (0:00:01.034)       0:15:28.824 ***********
+changed: [master-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Create OpenvSwitch service.d directory] *************************************************************************************
+Tuesday 29 May 2018  09:11:48 -0300 (0:00:00.789)       0:15:29.614 ***********
+changed: [master-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+
+TASK [openshift_node : Install OpenvSwitch service OOM fix] ****************************************************************************************
+Tuesday 29 May 2018  09:11:49 -0300 (0:00:00.592)       0:15:30.206 ***********
+changed: [master-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+
+TASK [tuned : Check for tuned package] *************************************************************************************************************
+Tuesday 29 May 2018  09:11:50 -0300 (0:00:00.956)       0:15:31.163 ***********
+ok: [infra-node-0.internal.ocp.example.org]
+ok: [master-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org]
+
+TASK [tuned : Set tuned OpenShift variables] *******************************************************************************************************
+Tuesday 29 May 2018  09:11:50 -0300 (0:00:00.631)       0:15:31.795 ***********
+ok: [master-0.internal.ocp.example.org]
+ok: [infra-node-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org]
+
+TASK [tuned : Ensure directory structure exists] ***************************************************************************************************
+Tuesday 29 May 2018  09:11:50 -0300 (0:00:00.266)       0:15:32.062 ***********
+changed: [app-node-0.internal.ocp.example.org] => (item={'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'state': 'directory', 'ctime': 1527594517.1919756, 'serole': 'object_r', 'gid': 0, 'mode': '0755', 'mtime': 1527594517.1919756, 'owner': 'root', 'path': u'openshift', 'size': 4096, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+changed: [infra-node-0.internal.ocp.example.org] => (item={'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'state': 'directory', 'ctime': 1527594517.1919756, 'serole': 'object_r', 'gid': 0, 'mode': '0755', 'mtime': 1527594517.1919756, 'owner': 'root', 'path': u'openshift', 'size': 4096, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+ok: [master-0.internal.ocp.example.org] => (item={'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'state': 'directory', 'ctime': 1527594517.1919756, 'serole': 'object_r', 'gid': 0, 'mode': '0755', 'mtime': 1527594517.1919756, 'owner': 'root', 'path': u'openshift', 'size': 4096, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+changed: [app-node-0.internal.ocp.example.org] => (item={'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'state': 'directory', 'ctime': 1527594432.2491353, 'serole': 'object_r', 'gid': 0, 'mode': '0755', 'mtime': 1527594432.2491353, 'owner': 'root', 'path': u'openshift-node', 'size': 4096, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+changed: [infra-node-0.internal.ocp.example.org] => (item={'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'state': 'directory', 'ctime': 1527594432.2491353, 'serole': 'object_r', 'gid': 0, 'mode': '0755', 'mtime': 1527594432.2491353, 'owner': 'root', 'path': u'openshift-node', 'size': 4096, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+ok: [master-0.internal.ocp.example.org] => (item={'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'state': 'directory', 'ctime': 1527594432.2491353, 'serole': 'object_r', 'gid': 0, 'mode': '0755', 'mtime': 1527594432.2491353, 'owner': 'root', 'path': u'openshift-node', 'size': 4096, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+changed: [app-node-0.internal.ocp.example.org] => (item={'group': u'root', 'uid': 0, 'selevel': u's0', 'seuser': u'unconfined_u', 'state': u'directory', 'ctime': 1527594432.2491353, 'serole': u'object_r', 'gid': 0, 'mode': u'0755', 'mtime': 1527594432.2491353, 'owner': u'root', 'path': u'openshift-control-plane', 'size': 4096, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': u'admin_home_t'})
+skipping: [app-node-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/recommend.conf', 'group': u'root', 'uid': 0, 'selevel': u's0', 'seuser': u'unconfined_u', 'serole': u'object_r', 'ctime': 1527594517.1919756, 'state': u'file', 'gid': 0, 'mode': u'0644', 'mtime': 1527594517.1919756, 'owner': u'root', 'path': u'recommend.conf', 'size': 268, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': u'admin_home_t'})
+skipping: [app-node-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/openshift/tuned.conf', 'group': u'root', 'uid': 0, 'selevel': u's0', 'seuser': u'unconfined_u', 'serole': u'object_r', 'ctime': 1527594517.1919756, 'state': u'file', 'gid': 0, 'mode': u'0644', 'mtime': 1527594517.1919756, 'owner': u'root', 'path': u'openshift/tuned.conf', 'size': 593, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': u'admin_home_t'})
+skipping: [app-node-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/openshift-node/tuned.conf', 'group': u'root', 'uid': 0, 'selevel': u's0', 'seuser': u'unconfined_u', 'serole': u'object_r', 'ctime': 1527594432.2491353, 'state': u'file', 'gid': 0, 'mode': u'0644', 'mtime': 1527594432.2491353, 'owner': u'root', 'path': u'openshift-node/tuned.conf', 'size': 135, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': u'admin_home_t'})
+skipping: [app-node-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/openshift-control-plane/tuned.conf', 'group': u'root', 'uid': 0, 'selevel': u's0', 'seuser': u'unconfined_u', 'serole': u'object_r', 'ctime': 1527594432.2491353, 'state': u'file', 'gid': 0, 'mode': u'0644', 'mtime': 1527594432.2491353, 'owner': u'root', 'path': u'openshift-control-plane/tuned.conf', 'size': 744, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': u'admin_home_t'})
+changed: [infra-node-0.internal.ocp.example.org] => (item={'group': u'root', 'uid': 0, 'selevel': u's0', 'seuser': u'unconfined_u', 'state': u'directory', 'ctime': 1527594432.2491353, 'serole': u'object_r', 'gid': 0, 'mode': u'0755', 'mtime': 1527594432.2491353, 'owner': u'root', 'path': u'openshift-control-plane', 'size': 4096, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': u'admin_home_t'})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/recommend.conf', 'group': u'root', 'uid': 0, 'selevel': u's0', 'seuser': u'unconfined_u', 'serole': u'object_r', 'ctime': 1527594517.1919756, 'state': u'file', 'gid': 0, 'mode': u'0644', 'mtime': 1527594517.1919756, 'owner': u'root', 'path': u'recommend.conf', 'size': 268, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': u'admin_home_t'})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/openshift/tuned.conf', 'group': u'root', 'uid': 0, 'selevel': u's0', 'seuser': u'unconfined_u', 'serole': u'object_r', 'ctime': 1527594517.1919756, 'state': u'file', 'gid': 0, 'mode': u'0644', 'mtime': 1527594517.1919756, 'owner': u'root', 'path': u'openshift/tuned.conf', 'size': 593, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': u'admin_home_t'})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/openshift-node/tuned.conf', 'group': u'root', 'uid': 0, 'selevel': u's0', 'seuser': u'unconfined_u', 'serole': u'object_r', 'ctime': 1527594432.2491353, 'state': u'file', 'gid': 0, 'mode': u'0644', 'mtime': 1527594432.2491353, 'owner': u'root', 'path': u'openshift-node/tuned.conf', 'size': 135, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': u'admin_home_t'})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/openshift-control-plane/tuned.conf', 'group': u'root', 'uid': 0, 'selevel': u's0', 'seuser': u'unconfined_u', 'serole': u'object_r', 'ctime': 1527594432.2491353, 'state': u'file', 'gid': 0, 'mode': u'0644', 'mtime': 1527594432.2491353, 'owner': u'root', 'path': u'openshift-control-plane/tuned.conf', 'size': 744, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': u'admin_home_t'})
+ok: [master-0.internal.ocp.example.org] => (item={'group': u'root', 'uid': 0, 'selevel': u's0', 'seuser': u'unconfined_u', 'state': u'directory', 'ctime': 1527594432.2491353, 'serole': u'object_r', 'gid': 0, 'mode': u'0755', 'mtime': 1527594432.2491353, 'owner': u'root', 'path': u'openshift-control-plane', 'size': 4096, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': u'admin_home_t'})
+skipping: [master-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/recommend.conf', 'group': u'root', 'uid': 0, 'selevel': u's0', 'seuser': u'unconfined_u', 'serole': u'object_r', 'ctime': 1527594517.1919756, 'state': u'file', 'gid': 0, 'mode': u'0644', 'mtime': 1527594517.1919756, 'owner': u'root', 'path': u'recommend.conf', 'size': 268, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': u'admin_home_t'})
+skipping: [master-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/openshift/tuned.conf', 'group': u'root', 'uid': 0, 'selevel': u's0', 'seuser': u'unconfined_u', 'serole': u'object_r', 'ctime': 1527594517.1919756, 'state': u'file', 'gid': 0, 'mode': u'0644', 'mtime': 1527594517.1919756, 'owner': u'root', 'path': u'openshift/tuned.conf', 'size': 593, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': u'admin_home_t'})
+skipping: [master-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/openshift-node/tuned.conf', 'group': u'root', 'uid': 0, 'selevel': u's0', 'seuser': u'unconfined_u', 'serole': u'object_r', 'ctime': 1527594432.2491353, 'state': u'file', 'gid': 0, 'mode': u'0644', 'mtime': 1527594432.2491353, 'owner': u'root', 'path': u'openshift-node/tuned.conf', 'size': 135, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': u'admin_home_t'})
+skipping: [master-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/openshift-control-plane/tuned.conf', 'group': u'root', 'uid': 0, 'selevel': u's0', 'seuser': u'unconfined_u', 'serole': u'object_r', 'ctime': 1527594432.2491353, 'state': u'file', 'gid': 0, 'mode': u'0644', 'mtime': 1527594432.2491353, 'owner': u'root', 'path': u'openshift-control-plane/tuned.conf', 'size': 744, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': u'admin_home_t'})
+
+TASK [tuned : Ensure files are populated from templates] *******************************************************************************************
+Tuesday 29 May 2018  09:11:52 -0300 (0:00:01.410)       0:15:33.472 ***********
+skipping: [master-0.internal.ocp.example.org] => (item={'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'state': 'directory', 'ctime': 1527594517.1919756, 'serole': 'object_r', 'gid': 0, 'mode': '0755', 'mtime': 1527594517.1919756, 'owner': 'root', 'path': u'openshift', 'size': 4096, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+skipping: [master-0.internal.ocp.example.org] => (item={'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'state': 'directory', 'ctime': 1527594432.2491353, 'serole': 'object_r', 'gid': 0, 'mode': '0755', 'mtime': 1527594432.2491353, 'owner': 'root', 'path': u'openshift-node', 'size': 4096, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'state': 'directory', 'ctime': 1527594517.1919756, 'serole': 'object_r', 'gid': 0, 'mode': '0755', 'mtime': 1527594517.1919756, 'owner': 'root', 'path': u'openshift', 'size': 4096, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'state': 'directory', 'ctime': 1527594432.2491353, 'serole': 'object_r', 'gid': 0, 'mode': '0755', 'mtime': 1527594432.2491353, 'owner': 'root', 'path': u'openshift-node', 'size': 4096, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+skipping: [master-0.internal.ocp.example.org] => (item={'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'state': 'directory', 'ctime': 1527594432.2491353, 'serole': 'object_r', 'gid': 0, 'mode': '0755', 'mtime': 1527594432.2491353, 'owner': 'root', 'path': u'openshift-control-plane', 'size': 4096, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+skipping: [app-node-0.internal.ocp.example.org] => (item={'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'state': 'directory', 'ctime': 1527594517.1919756, 'serole': 'object_r', 'gid': 0, 'mode': '0755', 'mtime': 1527594517.1919756, 'owner': 'root', 'path': u'openshift', 'size': 4096, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+skipping: [app-node-0.internal.ocp.example.org] => (item={'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'state': 'directory', 'ctime': 1527594432.2491353, 'serole': 'object_r', 'gid': 0, 'mode': '0755', 'mtime': 1527594432.2491353, 'owner': 'root', 'path': u'openshift-node', 'size': 4096, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+skipping: [app-node-0.internal.ocp.example.org] => (item={'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'state': 'directory', 'ctime': 1527594432.2491353, 'serole': 'object_r', 'gid': 0, 'mode': '0755', 'mtime': 1527594432.2491353, 'owner': 'root', 'path': u'openshift-control-plane', 'size': 4096, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+skipping: [infra-node-0.internal.ocp.example.org] => (item={'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'state': 'directory', 'ctime': 1527594432.2491353, 'serole': 'object_r', 'gid': 0, 'mode': '0755', 'mtime': 1527594432.2491353, 'owner': 'root', 'path': u'openshift-control-plane', 'size': 4096, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+ok: [master-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/recommend.conf', 'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'serole': 'object_r', 'ctime': 1527594517.1919756, 'state': 'file', 'gid': 0, 'mode': '0644', 'mtime': 1527594517.1919756, 'owner': 'root', 'path': u'recommend.conf', 'size': 268, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+changed: [infra-node-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/recommend.conf', 'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'serole': 'object_r', 'ctime': 1527594517.1919756, 'state': 'file', 'gid': 0, 'mode': '0644', 'mtime': 1527594517.1919756, 'owner': 'root', 'path': u'recommend.conf', 'size': 268, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+changed: [app-node-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/recommend.conf', 'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'serole': 'object_r', 'ctime': 1527594517.1919756, 'state': 'file', 'gid': 0, 'mode': '0644', 'mtime': 1527594517.1919756, 'owner': 'root', 'path': u'recommend.conf', 'size': 268, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+ok: [master-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/openshift/tuned.conf', 'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'serole': 'object_r', 'ctime': 1527594517.1919756, 'state': 'file', 'gid': 0, 'mode': '0644', 'mtime': 1527594517.1919756, 'owner': 'root', 'path': u'openshift/tuned.conf', 'size': 593, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+changed: [app-node-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/openshift/tuned.conf', 'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'serole': 'object_r', 'ctime': 1527594517.1919756, 'state': 'file', 'gid': 0, 'mode': '0644', 'mtime': 1527594517.1919756, 'owner': 'root', 'path': u'openshift/tuned.conf', 'size': 593, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+changed: [infra-node-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/openshift/tuned.conf', 'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'serole': 'object_r', 'ctime': 1527594517.1919756, 'state': 'file', 'gid': 0, 'mode': '0644', 'mtime': 1527594517.1919756, 'owner': 'root', 'path': u'openshift/tuned.conf', 'size': 593, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+ok: [master-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/openshift-node/tuned.conf', 'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'serole': 'object_r', 'ctime': 1527594432.2491353, 'state': 'file', 'gid': 0, 'mode': '0644', 'mtime': 1527594432.2491353, 'owner': 'root', 'path': u'openshift-node/tuned.conf', 'size': 135, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+changed: [app-node-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/openshift-node/tuned.conf', 'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'serole': 'object_r', 'ctime': 1527594432.2491353, 'state': 'file', 'gid': 0, 'mode': '0644', 'mtime': 1527594432.2491353, 'owner': 'root', 'path': u'openshift-node/tuned.conf', 'size': 135, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+changed: [infra-node-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/openshift-node/tuned.conf', 'group': u'root', 'uid': 0, 'selevel': 's0', 'seuser': 'unconfined_u', 'serole': 'object_r', 'ctime': 1527594432.2491353, 'state': 'file', 'gid': 0, 'mode': '0644', 'mtime': 1527594432.2491353, 'owner': 'root', 'path': u'openshift-node/tuned.conf', 'size': 135, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': 'admin_home_t'})
+ok: [master-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/openshift-control-plane/tuned.conf', 'group': u'root', 'uid': 0, 'selevel': u's0', 'seuser': u'unconfined_u', 'serole': u'object_r', 'ctime': 1527594432.2491353, 'state': u'file', 'gid': 0, 'mode': u'0644', 'mtime': 1527594432.2491353, 'owner': u'root', 'path': u'openshift-control-plane/tuned.conf', 'size': 744, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': u'admin_home_t'})
+changed: [app-node-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/openshift-control-plane/tuned.conf', 'group': u'root', 'uid': 0, 'selevel': u's0', 'seuser': u'unconfined_u', 'serole': u'object_r', 'ctime': 1527594432.2491353, 'state': u'file', 'gid': 0, 'mode': u'0644', 'mtime': 1527594432.2491353, 'owner': u'root', 'path': u'openshift-control-plane/tuned.conf', 'size': 744, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': u'admin_home_t'})
+changed: [infra-node-0.internal.ocp.example.org] => (item={'src': u'/root/openshift-ansible/roles/tuned/templates/openshift-control-plane/tuned.conf', 'group': u'root', 'uid': 0, 'selevel': u's0', 'seuser': u'unconfined_u', 'serole': u'object_r', 'ctime': 1527594432.2491353, 'state': u'file', 'gid': 0, 'mode': u'0644', 'mtime': 1527594432.2491353, 'owner': u'root', 'path': u'openshift-control-plane/tuned.conf', 'size': 744, 'root': u'/root/openshift-ansible/roles/tuned/templates', 'setype': u'admin_home_t'})
+
+TASK [tuned : Make tuned use the recommended tuned profile on restart] *****************************************************************************
+Tuesday 29 May 2018  09:11:55 -0300 (0:00:03.057)       0:15:36.530 ***********
+changed: [infra-node-0.internal.ocp.example.org] => (item=/etc/tuned/active_profile)
+changed: [master-0.internal.ocp.example.org] => (item=/etc/tuned/active_profile)
+changed: [app-node-0.internal.ocp.example.org] => (item=/etc/tuned/active_profile)
+changed: [infra-node-0.internal.ocp.example.org] => (item=/etc/tuned/profile_mode)
+changed: [app-node-0.internal.ocp.example.org] => (item=/etc/tuned/profile_mode)
+changed: [master-0.internal.ocp.example.org] => (item=/etc/tuned/profile_mode)
+
+TASK [tuned : Restart tuned service] ***************************************************************************************************************
+Tuesday 29 May 2018  09:11:56 -0300 (0:00:00.961)       0:15:37.492 ***********
+changed: [infra-node-0.internal.ocp.example.org]
+changed: [master-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+
+TASK [nickhammond.logrotate : nickhammond.logrotate | Install logrotate] ***************************************************************************
+Tuesday 29 May 2018  09:11:58 -0300 (0:00:02.045)       0:15:39.538 ***********
+ok: [infra-node-0.internal.ocp.example.org]
+ok: [app-node-0.internal.ocp.example.org]
+ok: [master-0.internal.ocp.example.org]
+
+TASK [nickhammond.logrotate : nickhammond.logrotate | Setup logrotate.d scripts] *******************************************************************
+Tuesday 29 May 2018  09:11:59 -0300 (0:00:00.701)       0:15:40.240 ***********
+
+RUNNING HANDLER [openshift_node : restart openvswitch] *********************************************************************************************
+Tuesday 29 May 2018  09:11:59 -0300 (0:00:00.071)       0:15:40.311 ***********
+changed: [master-0.internal.ocp.example.org]
+changed: [app-node-0.internal.ocp.example.org]
+changed: [infra-node-0.internal.ocp.example.org]
+
+RUNNING HANDLER [openshift_node : restart openvswitch pause] ***************************************************************************************
+Tuesday 29 May 2018  09:11:59 -0300 (0:00:00.701)       0:15:41.012 ***********
+skipping: [master-0.internal.ocp.example.org]
+
+RUNNING HANDLER [openshift_node : restart node] ****************************************************************************************************
+Tuesday 29 May 2018  09:11:59 -0300 (0:00:00.038)       0:15:41.051 ***********
+FAILED - RETRYING: restart node (3 retries left).
+FAILED - RETRYING: restart node (3 retries left).
+FAILED - RETRYING: restart node (3 retries left).
+FAILED - RETRYING: restart node (2 retries left).
+FAILED - RETRYING: restart node (2 retries left).
+FAILED - RETRYING: restart node (2 retries left).
+FAILED - RETRYING: restart node (1 retries left).
+FAILED - RETRYING: restart node (1 retries left).
+FAILED - RETRYING: restart node (1 retries left).
+fatal: [master-0.internal.ocp.example.org]: FAILED! => {"attempts": 3, "changed": false, "msg": "Unable to restart service origin-node: Job for origin-node.service failed because the control process exited with error code. See \"systemctl status origin-node.service\" and \"journalctl -xe\" for details.\n"}
+fatal: [app-node-0.internal.ocp.example.org]: FAILED! => {"attempts": 3, "changed": false, "msg": "Unable to restart service origin-node: Job for origin-node.service failed because the control process exited with error code. See \"systemctl status origin-node.service\" and \"journalctl -xe\" for details.\n"}
+fatal: [infra-node-0.internal.ocp.example.org]: FAILED! => {"attempts": 3, "changed": false, "msg": "Unable to restart service origin-node: Job for origin-node.service failed because the control process exited with error code. See \"systemctl status origin-node.service\" and \"journalctl -xe\" for details.\n"}
+
+RUNNING HANDLER [openshift_node : reload systemd units] ********************************************************************************************
+Tuesday 29 May 2018  09:21:06 -0300 (0:09:06.235)       0:24:47.287 ***********
+        to retry, use: --limit @/root/openshift-ansible/playbooks/deploy_cluster.retry
+
+PLAY RECAP *****************************************************************************************************************************************
+app-node-0.internal.ocp.example.org : ok=113  changed=50   unreachable=0    failed=1
+haproxy.ocp.example.org    : ok=35   changed=9    unreachable=0    failed=0
+infra-node-0.internal.ocp.example.org : ok=113  changed=50   unreachable=0    failed=1
+localhost                  : ok=13   changed=0    unreachable=0    failed=0
+master-0.internal.ocp.example.org : ok=426  changed=172  unreachable=0    failed=1
+
+
+INSTALLER STATUS ***********************************************************************************************************************************
+Initialization             : Complete (0:00:48)
+Health Check               : Complete (0:00:20)
+etcd Install               : Complete (0:00:43)
+Load balancer Install      : Complete (0:00:10)
+Master Install             : Complete (0:04:03)
+Master Additional Install  : Complete (0:00:26)
+Node Install               : In Progress (0:18:18)
+        This phase can be restarted by running: playbooks/openshift-node/config.yml
+
+Tuesday 29 May 2018  09:21:06 -0300 (0:00:00.004)       0:24:47.291 ***********
+===============================================================================
+openshift_node : restart node ------------------------------------------------------------------------------------------------------------- 546.24s
+openshift_node : Install Node package, sdn-ovs, conntrack packages ------------------------------------------------------------------------ 230.61s
+openshift_node : Start and enable node ---------------------------------------------------------------------------------------------------- 144.96s
+openshift_ca : Install the base package for admin tooling ---------------------------------------------------------------------------------- 60.24s
+openshift_cli : Install clients ------------------------------------------------------------------------------------------------------------ 42.45s
+openshift_node : Install Ceph storage plugin dependencies ---------------------------------------------------------------------------------- 40.41s
+Run health checks (install) - EL ----------------------------------------------------------------------------------------------------------- 17.51s
+openshift_node : Install iSCSI storage plugin dependencies --------------------------------------------------------------------------------- 16.86s
+openshift_node : Install GlusterFS storage plugin dependencies ------------------------------------------------------------------------------ 9.94s
+etcd : Install etcd ------------------------------------------------------------------------------------------------------------------------- 8.98s
+openshift_master : Start and enable master api ---------------------------------------------------------------------------------------------- 8.54s
+restart master api -------------------------------------------------------------------------------------------------------------------------- 8.23s
+openshift_version : Get available origin version -------------------------------------------------------------------------------------------- 7.65s
+openshift_node : Install dnsmasq ------------------------------------------------------------------------------------------------------------ 7.28s
+openshift_version : Get available origin version -------------------------------------------------------------------------------------------- 7.04s
+openshift_cloud_provider : Set cloud provider facts ----------------------------------------------------------------------------------------- 6.68s
+openshift_manageiq : Configure role/user permissions ---------------------------------------------------------------------------------------- 6.06s
+Gather Cluster facts ------------------------------------------------------------------------------------------------------------------------ 6.01s
+openshift_master : Install Master package --------------------------------------------------------------------------------------------------- 5.93s
+openshift_node : Install NFS storage plugin dependencies ------------------------------------------------------------------------------------ 5.75s
+Playbook run took 0 days, 0 hours, 24 minutes, 47 seconds
+
+
+Failure summary:
+
+
+  1. Hosts:    app-node-0.internal.ocp.example.org, infra-node-0.internal.ocp.example.org, master-0.internal.ocp.example.org
+     Play:     Configure nodes
+     Task:     restart node
+     Message:  Unable to restart service origin-node: Job for origin-node.service failed because the control process exited with error code. See "systemctl status origin-node.service" and "journalctl -xe" for details.
+
+[root@bastion ~]#

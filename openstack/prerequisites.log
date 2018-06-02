@@ -1,0 +1,1569 @@
+[root@bastion ~]# ansible all -i hosts.cfg -m ping
+haproxy.example.com | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+master2.example.com | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+master0.example.com | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+infra0.example.com | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+app0.example.com | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+master1.example.com | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+[root@bastion ~]# clear
+[root@bastion ~]# ansible-playbook -i hosts.cfg ~/openshift-ansible/playbooks/prerequisites.yml
+
+PLAY [Initialization Checkpoint Start] *************************************************************************************************************
+
+TASK [Set install initialization 'In Progress'] ****************************************************************************************************
+ok: [master0.example.com]
+
+PLAY [Populate config host groups] *****************************************************************************************************************
+
+TASK [Load group name mapping variables] ***********************************************************************************************************
+ok: [localhost]
+
+TASK [Evaluate groups - g_etcd_hosts or g_new_etcd_hosts required] *********************************************************************************
+skipping: [localhost]
+
+TASK [Evaluate groups - g_master_hosts or g_new_master_hosts required] *****************************************************************************
+skipping: [localhost]
+
+TASK [Evaluate groups - g_node_hosts or g_new_node_hosts required] *********************************************************************************
+skipping: [localhost]
+
+TASK [Evaluate groups - g_lb_hosts required] *******************************************************************************************************
+skipping: [localhost]
+
+TASK [Evaluate groups - g_nfs_hosts required] ******************************************************************************************************
+skipping: [localhost]
+
+TASK [Evaluate groups - g_nfs_hosts is single host] ************************************************************************************************
+skipping: [localhost]
+
+TASK [Evaluate groups - g_glusterfs_hosts required] ************************************************************************************************
+skipping: [localhost]
+
+TASK [Evaluate groups - Fail if no etcd hosts group is defined] ************************************************************************************
+skipping: [localhost]
+
+TASK [Evaluate oo_all_hosts] ***********************************************************************************************************************
+ok: [localhost] => (item=master0.example.com)
+ok: [localhost] => (item=master1.example.com)
+ok: [localhost] => (item=master2.example.com)
+ok: [localhost] => (item=infra0.example.com)
+ok: [localhost] => (item=app0.example.com)
+ok: [localhost] => (item=haproxy.example.com)
+
+TASK [Evaluate oo_masters] *************************************************************************************************************************
+ok: [localhost] => (item=master0.example.com)
+ok: [localhost] => (item=master1.example.com)
+ok: [localhost] => (item=master2.example.com)
+
+TASK [Evaluate oo_first_master] ********************************************************************************************************************
+ok: [localhost]
+
+TASK [Evaluate oo_new_etcd_to_config] **************************************************************************************************************
+
+TASK [Evaluate oo_masters_to_config] ***************************************************************************************************************
+ok: [localhost] => (item=master0.example.com)
+ok: [localhost] => (item=master1.example.com)
+ok: [localhost] => (item=master2.example.com)
+
+TASK [Evaluate oo_etcd_to_config] ******************************************************************************************************************
+ok: [localhost] => (item=master0.example.com)
+ok: [localhost] => (item=master1.example.com)
+ok: [localhost] => (item=master2.example.com)
+
+TASK [Evaluate oo_first_etcd] **********************************************************************************************************************
+ok: [localhost]
+
+TASK [Evaluate oo_etcd_hosts_to_upgrade] ***********************************************************************************************************
+ok: [localhost] => (item=master0.example.com)
+ok: [localhost] => (item=master1.example.com)
+ok: [localhost] => (item=master2.example.com)
+
+TASK [Evaluate oo_etcd_hosts_to_backup] ************************************************************************************************************
+ok: [localhost] => (item=master0.example.com)
+ok: [localhost] => (item=master1.example.com)
+ok: [localhost] => (item=master2.example.com)
+
+TASK [Evaluate oo_nodes_to_config] *****************************************************************************************************************
+ok: [localhost] => (item=master0.example.com)
+ok: [localhost] => (item=master1.example.com)
+ok: [localhost] => (item=master2.example.com)
+ok: [localhost] => (item=infra0.example.com)
+ok: [localhost] => (item=app0.example.com)
+
+TASK [Add master to oo_nodes_to_config] ************************************************************************************************************
+skipping: [localhost] => (item=master0.example.com)
+skipping: [localhost] => (item=master1.example.com)
+skipping: [localhost] => (item=master2.example.com)
+
+TASK [Evaluate oo_lb_to_config] ********************************************************************************************************************
+ok: [localhost] => (item=haproxy.example.com)
+
+TASK [Evaluate oo_nfs_to_config] *******************************************************************************************************************
+
+TASK [Evaluate oo_glusterfs_to_config] *************************************************************************************************************
+
+TASK [Evaluate oo_etcd_to_migrate] *****************************************************************************************************************
+ok: [localhost] => (item=master0.example.com)
+ok: [localhost] => (item=master1.example.com)
+ok: [localhost] => (item=master2.example.com)
+ [WARNING]: Could not match supplied host pattern, ignoring: oo_nfs_to_config
+
+
+PLAY [Ensure that all non-node hosts are accessible] ***********************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+ok: [haproxy.example.com]
+ok: [master1.example.com]
+ok: [master2.example.com]
+ok: [master0.example.com]
+
+PLAY [Initialize basic host facts] *****************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+ok: [master0.example.com]
+ok: [infra0.example.com]
+ok: [master1.example.com]
+ok: [haproxy.example.com]
+ok: [master2.example.com]
+ok: [app0.example.com]
+
+TASK [openshift_sanitize_inventory : include_tasks] ************************************************************************************************
+included: /root/openshift-ansible/roles/openshift_sanitize_inventory/tasks/deprecations.yml for master0.example.com, master1.example.com, master2.example.com, infra0.example.com, app0.example.com, haproxy.example.com
+
+TASK [openshift_sanitize_inventory : Check for usage of deprecated variables] **********************************************************************
+ok: [master0.example.com]
+ok: [master1.example.com]
+ok: [infra0.example.com]
+ok: [master2.example.com]
+ok: [app0.example.com]
+ok: [haproxy.example.com]
+
+TASK [openshift_sanitize_inventory : debug] ********************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [openshift_sanitize_inventory : set_stats] ****************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [openshift_sanitize_inventory : Assign deprecated variables to correct counterparts] **********************************************************
+included: /root/openshift-ansible/roles/openshift_sanitize_inventory/tasks/__deprecations_metrics.yml for master0.example.com, master1.example.com, master2.example.com, infra0.example.com, app0.example.com, haproxy.example.com
+included: /root/openshift-ansible/roles/openshift_sanitize_inventory/tasks/__deprecations_logging.yml for master0.example.com, master1.example.com, master2.example.com, infra0.example.com, app0.example.com, haproxy.example.com
+
+TASK [openshift_sanitize_inventory : conditional_set_fact] *****************************************************************************************
+ok: [master0.example.com]
+ok: [master1.example.com]
+ok: [master2.example.com]
+ok: [infra0.example.com]
+ok: [app0.example.com]
+ok: [haproxy.example.com]
+
+TASK [openshift_sanitize_inventory : conditional_set_fact] *****************************************************************************************
+ok: [master1.example.com]
+ok: [master0.example.com]
+ok: [master2.example.com]
+ok: [infra0.example.com]
+ok: [app0.example.com]
+ok: [haproxy.example.com]
+
+TASK [openshift_sanitize_inventory : set_fact] *****************************************************************************************************
+ok: [master0.example.com]
+ok: [master1.example.com]
+ok: [master2.example.com]
+ok: [infra0.example.com]
+ok: [app0.example.com]
+ok: [haproxy.example.com]
+
+TASK [openshift_sanitize_inventory : Standardize on latest variable names] *************************************************************************
+ok: [master0.example.com]
+ok: [master1.example.com]
+ok: [master2.example.com]
+ok: [infra0.example.com]
+ok: [app0.example.com]
+ok: [haproxy.example.com]
+
+TASK [openshift_sanitize_inventory : Normalize openshift_release] **********************************************************************************
+ok: [master0.example.com]
+ok: [master1.example.com]
+ok: [master2.example.com]
+ok: [infra0.example.com]
+ok: [app0.example.com]
+ok: [haproxy.example.com]
+
+TASK [openshift_sanitize_inventory : Abort when openshift_release is invalid] **********************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [openshift_sanitize_inventory : include_tasks] ************************************************************************************************
+included: /root/openshift-ansible/roles/openshift_sanitize_inventory/tasks/unsupported.yml for master0.example.com, master1.example.com, master2.example.com, infra0.example.com, app0.example.com, haproxy.example.com
+
+TASK [openshift_sanitize_inventory : Ensure that openshift_use_dnsmasq is true] ********************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [openshift_sanitize_inventory : Ensure that openshift_node_dnsmasq_install_network_manager_hook is true] **************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [openshift_sanitize_inventory : set_fact] *****************************************************************************************************
+skipping: [master0.example.com] => (item=openshift_hosted_registry_storage_kind)
+skipping: [master1.example.com] => (item=openshift_hosted_registry_storage_kind)
+skipping: [master2.example.com] => (item=openshift_hosted_registry_storage_kind)
+skipping: [infra0.example.com] => (item=openshift_hosted_registry_storage_kind)
+skipping: [app0.example.com] => (item=openshift_hosted_registry_storage_kind)
+skipping: [haproxy.example.com] => (item=openshift_hosted_registry_storage_kind)
+
+TASK [openshift_sanitize_inventory : Ensure that dynamic provisioning is set if using dynamic storage] *********************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [openshift_sanitize_inventory : Ensure the hosted registry's GlusterFS storage is configured correctly] ***************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [openshift_sanitize_inventory : Ensure the hosted registry's GlusterFS storage is configured correctly] ***************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [openshift_sanitize_inventory : Ensure clusterid is set along with the cloudprovider] *********************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [openshift_sanitize_inventory : Ensure ansible_service_broker_remove and ansible_service_broker_install are mutually exclusive] ***************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [openshift_sanitize_inventory : Ensure template_service_broker_remove and template_service_broker_install are mutually exclusive] *************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [openshift_sanitize_inventory : Ensure that all requires vsphere configuration variables are set] *********************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [openshift_sanitize_inventory : Ensure removed web console extension variables are not set] ***************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [openshift_sanitize_inventory : Ensure that web console port matches API server port] *********************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [openshift_sanitize_inventory : At least one master is schedulable] ***************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [Detecting Operating System from ostree_booted] ***********************************************************************************************
+ok: [infra0.example.com]
+ok: [app0.example.com]
+ok: [master0.example.com]
+ok: [master1.example.com]
+ok: [master2.example.com]
+ok: [haproxy.example.com]
+
+TASK [set openshift_deployment_type if unset] ******************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [initialize_facts set fact openshift_is_atomic and openshift_is_containerized] ****************************************************************
+ok: [master0.example.com]
+ok: [master1.example.com]
+ok: [master2.example.com]
+ok: [infra0.example.com]
+ok: [app0.example.com]
+ok: [haproxy.example.com]
+
+TASK [Set use_crio to True if cri-o rpm is requested] **********************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [Determine Atomic Host Docker Version] ********************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [assert atomic host docker version is 1.12 or later] ******************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+PLAY [Initialize special first-master variables] ***************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+ok: [master0.example.com]
+
+TASK [stat] ****************************************************************************************************************************************
+ok: [master0.example.com]
+
+TASK [slurp] ***************************************************************************************************************************************
+skipping: [master0.example.com]
+
+TASK [set_fact] ************************************************************************************************************************************
+skipping: [master0.example.com]
+
+TASK [set_fact] ************************************************************************************************************************************
+ok: [master0.example.com]
+
+PLAY [Disable web console if required] *************************************************************************************************************
+
+TASK [set_fact] ************************************************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+
+PLAY [Install packages necessary for installer] ****************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+ok: [master0.example.com]
+ok: [master1.example.com]
+ok: [app0.example.com]
+ok: [infra0.example.com]
+ok: [master2.example.com]
+ok: [haproxy.example.com]
+
+TASK [Ensure openshift-ansible installer package deps are installed] *******************************************************************************
+ok: [app0.example.com] => (item=iproute)
+ok: [infra0.example.com] => (item=iproute)
+ok: [master0.example.com] => (item=iproute)
+ok: [master2.example.com] => (item=iproute)
+ok: [master1.example.com] => (item=iproute)
+ok: [app0.example.com] => (item=dbus-python)
+ok: [infra0.example.com] => (item=dbus-python)
+ok: [master0.example.com] => (item=dbus-python)
+ok: [master1.example.com] => (item=dbus-python)
+ok: [master2.example.com] => (item=dbus-python)
+ok: [app0.example.com] => (item=PyYAML)
+ok: [infra0.example.com] => (item=PyYAML)
+ok: [master1.example.com] => (item=PyYAML)
+ok: [master0.example.com] => (item=PyYAML)
+ok: [master2.example.com] => (item=PyYAML)
+ok: [app0.example.com] => (item=python-ipaddress)
+ok: [infra0.example.com] => (item=python-ipaddress)
+ok: [master2.example.com] => (item=python-ipaddress)
+ok: [master1.example.com] => (item=python-ipaddress)
+ok: [master0.example.com] => (item=python-ipaddress)
+changed: [master0.example.com] => (item=yum-utils)
+changed: [app0.example.com] => (item=yum-utils)
+ok: [haproxy.example.com] => (item=iproute)
+ok: [haproxy.example.com] => (item=dbus-python)
+ok: [haproxy.example.com] => (item=PyYAML)
+ok: [haproxy.example.com] => (item=python-ipaddress)
+changed: [haproxy.example.com] => (item=yum-utils)
+changed: [master2.example.com] => (item=yum-utils)
+changed: [master1.example.com] => (item=yum-utils)
+changed: [infra0.example.com] => (item=yum-utils)
+
+TASK [Ensure various deps for running system containers are installed] *****************************************************************************
+skipping: [master0.example.com] => (item=atomic)
+skipping: [master0.example.com] => (item=ostree)
+skipping: [master0.example.com] => (item=runc)
+skipping: [master1.example.com] => (item=atomic)
+skipping: [master2.example.com] => (item=atomic)
+skipping: [infra0.example.com] => (item=atomic)
+skipping: [master1.example.com] => (item=ostree)
+skipping: [master1.example.com] => (item=runc)
+skipping: [master2.example.com] => (item=ostree)
+skipping: [master2.example.com] => (item=runc)
+skipping: [infra0.example.com] => (item=ostree)
+skipping: [infra0.example.com] => (item=runc)
+skipping: [app0.example.com] => (item=atomic)
+skipping: [haproxy.example.com] => (item=atomic)
+skipping: [app0.example.com] => (item=ostree)
+skipping: [app0.example.com] => (item=runc)
+skipping: [haproxy.example.com] => (item=ostree)
+skipping: [haproxy.example.com] => (item=runc)
+
+PLAY [Initialize cluster facts] ********************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+ok: [master1.example.com]
+ok: [master0.example.com]
+ok: [app0.example.com]
+ok: [master2.example.com]
+ok: [haproxy.example.com]
+ok: [infra0.example.com]
+
+TASK [Gather Cluster facts] ************************************************************************************************************************
+changed: [app0.example.com]
+changed: [master2.example.com]
+changed: [master1.example.com]
+changed: [haproxy.example.com]
+changed: [master0.example.com]
+changed: [infra0.example.com]
+
+TASK [Set fact of no_proxy_internal_hostnames] *****************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [Initialize openshift.node.sdn_mtu] ***********************************************************************************************************
+changed: [master2.example.com]
+changed: [app0.example.com]
+changed: [master0.example.com]
+changed: [master1.example.com]
+changed: [infra0.example.com]
+changed: [haproxy.example.com]
+
+PLAY [Initialize etcd host variables] **************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+ok: [master0.example.com]
+ok: [master1.example.com]
+ok: [master2.example.com]
+
+TASK [set_fact] ************************************************************************************************************************************
+ok: [master0.example.com]
+ok: [master1.example.com]
+ok: [master2.example.com]
+
+TASK [set_fact] ************************************************************************************************************************************
+ok: [master0.example.com]
+ok: [master1.example.com]
+ok: [master2.example.com]
+
+PLAY [Determine openshift_version to configure on first master] ************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+skipping: [master0.example.com]
+
+TASK [include_role] ********************************************************************************************************************************
+skipping: [master0.example.com]
+
+PLAY [Set openshift_version for etcd, node, and master hosts] **************************************************************************************
+skipping: no hosts matched
+
+PLAY [Ensure the requested version packages are available.] ****************************************************************************************
+skipping: no hosts matched
+
+PLAY [Verify Requirements] *************************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+ok: [master0.example.com]
+
+TASK [Run variable sanity checks] ******************************************************************************************************************
+ok: [master0.example.com]
+
+PLAY [Initialization Checkpoint End] ***************************************************************************************************************
+
+TASK [Set install initialization 'Complete'] *******************************************************************************************************
+ok: [master0.example.com]
+
+PLAY [Validate node hostnames] *********************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+ok: [master2.example.com]
+ok: [master1.example.com]
+ok: [infra0.example.com]
+ok: [master0.example.com]
+ok: [app0.example.com]
+
+TASK [Query DNS for IP address of 10.0.0.30] *******************************************************************************************************
+ok: [app0.example.com]
+ok: [infra0.example.com]
+ok: [master0.example.com]
+ok: [master2.example.com]
+ok: [master1.example.com]
+
+TASK [Validate openshift_hostname when defined] ****************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [Validate openshift_ip exists on node when defined] *******************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+PLAY [Setup yum repositories for all hosts] ********************************************************************************************************
+
+TASK [rhel_subscribe : fail] ***********************************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [rhel_subscribe : Install Red Hat Subscription manager] ***************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [rhel_subscribe : Is host already registered?] ************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [rhel_subscribe : Register host] **************************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [rhel_subscribe : fail] ***********************************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [rhel_subscribe : Determine if OpenShift Pool Already Attached] *******************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [rhel_subscribe : Attach to OpenShift Pool] ***************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [rhel_subscribe : include_tasks] **************************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [openshift_repos : openshift_repos detect ostree] *********************************************************************************************
+ok: [master2.example.com]
+ok: [master0.example.com]
+ok: [app0.example.com]
+ok: [infra0.example.com]
+ok: [master1.example.com]
+ok: [haproxy.example.com]
+
+TASK [openshift_repos : Ensure libselinux-python is installed] *************************************************************************************
+ok: [master0.example.com]
+ok: [infra0.example.com]
+ok: [master1.example.com]
+ok: [master2.example.com]
+ok: [app0.example.com]
+ok: [haproxy.example.com]
+
+TASK [openshift_repos : Remove openshift_additional.repo file] *************************************************************************************
+ok: [app0.example.com]
+ok: [infra0.example.com]
+ok: [master2.example.com]
+ok: [master1.example.com]
+ok: [master0.example.com]
+ok: [haproxy.example.com]
+
+TASK [openshift_repos : Create any additional repos that are defined] ******************************************************************************
+
+TASK [openshift_repos : include_tasks] *************************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+skipping: [haproxy.example.com]
+
+TASK [openshift_repos : include_tasks] *************************************************************************************************************
+included: /root/openshift-ansible/roles/openshift_repos/tasks/centos_repos.yml for master0.example.com, master1.example.com, master2.example.com, infra0.example.com, app0.example.com, haproxy.example.com
+
+TASK [openshift_repos : Configure origin gpg keys] *************************************************************************************************
+changed: [infra0.example.com]
+changed: [master0.example.com]
+changed: [app0.example.com]
+changed: [master2.example.com]
+changed: [master1.example.com]
+changed: [haproxy.example.com]
+
+TASK [openshift_repos : Configure correct origin release repository] *******************************************************************************
+changed: [infra0.example.com] => (item=/root/openshift-ansible/roles/openshift_repos/templates/CentOS-OpenShift-Origin.repo.j2)
+changed: [app0.example.com] => (item=/root/openshift-ansible/roles/openshift_repos/templates/CentOS-OpenShift-Origin.repo.j2)
+changed: [master0.example.com] => (item=/root/openshift-ansible/roles/openshift_repos/templates/CentOS-OpenShift-Origin.repo.j2)
+changed: [master1.example.com] => (item=/root/openshift-ansible/roles/openshift_repos/templates/CentOS-OpenShift-Origin.repo.j2)
+changed: [master2.example.com] => (item=/root/openshift-ansible/roles/openshift_repos/templates/CentOS-OpenShift-Origin.repo.j2)
+changed: [haproxy.example.com] => (item=/root/openshift-ansible/roles/openshift_repos/templates/CentOS-OpenShift-Origin.repo.j2)
+
+TASK [openshift_repos : Ensure clean repo cache in the event repos have been changed manually] *****************************************************
+changed: [master0.example.com] => {
+    "msg": "First run of openshift_repos"
+}
+changed: [master1.example.com] => {
+    "msg": "First run of openshift_repos"
+}
+changed: [master2.example.com] => {
+    "msg": "First run of openshift_repos"
+}
+changed: [infra0.example.com] => {
+    "msg": "First run of openshift_repos"
+}
+changed: [app0.example.com] => {
+    "msg": "First run of openshift_repos"
+}
+changed: [haproxy.example.com] => {
+    "msg": "First run of openshift_repos"
+}
+
+TASK [openshift_repos : Record that openshift_repos already ran] ***********************************************************************************
+ok: [master0.example.com]
+ok: [master1.example.com]
+ok: [master2.example.com]
+ok: [infra0.example.com]
+ok: [app0.example.com]
+ok: [haproxy.example.com]
+
+RUNNING HANDLER [openshift_repos : refresh cache] **************************************************************************************************
+changed: [app0.example.com]
+changed: [infra0.example.com]
+changed: [master0.example.com]
+changed: [master1.example.com]
+changed: [master2.example.com]
+changed: [haproxy.example.com]
+
+PLAY [Configure os_firewall] ***********************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+ok: [master0.example.com]
+ok: [haproxy.example.com]
+ok: [infra0.example.com]
+ok: [app0.example.com]
+ok: [master1.example.com]
+ok: [master2.example.com]
+
+TASK [os_firewall : Detecting Atomic Host Operating System] ****************************************************************************************
+ok: [master0.example.com]
+ok: [master1.example.com]
+ok: [infra0.example.com]
+ok: [haproxy.example.com]
+ok: [master2.example.com]
+ok: [app0.example.com]
+
+TASK [os_firewall : Set fact r_os_firewall_is_atomic] **********************************************************************************************
+ok: [master0.example.com]
+ok: [master1.example.com]
+ok: [master2.example.com]
+ok: [haproxy.example.com]
+ok: [infra0.example.com]
+ok: [app0.example.com]
+
+TASK [os_firewall : include_tasks] *****************************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [haproxy.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [os_firewall : include_tasks] *****************************************************************************************************************
+included: /root/openshift-ansible/roles/os_firewall/tasks/iptables.yml for master0.example.com, master1.example.com, master2.example.com, haproxy.example.com, infra0.example.com, app0.example.com
+
+TASK [os_firewall : Ensure firewalld service is not enabled] ***************************************************************************************
+changed: [infra0.example.com]
+changed: [haproxy.example.com]
+changed: [master2.example.com]
+changed: [master1.example.com]
+changed: [master0.example.com]
+changed: [app0.example.com]
+
+TASK [os_firewall : Wait 10 seconds after disabling firewalld] *************************************************************************************
+Pausing for 10 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+ok: [master0.example.com]
+
+TASK [os_firewall : Install iptables packages] *****************************************************************************************************
+ok: [master0.example.com] => (item=iptables)
+ok: [infra0.example.com] => (item=iptables)
+ok: [master2.example.com] => (item=iptables)
+ok: [master1.example.com] => (item=iptables)
+ok: [haproxy.example.com] => (item=iptables)
+changed: [master0.example.com] => (item=iptables-services)
+ok: [app0.example.com] => (item=iptables)
+changed: [master2.example.com] => (item=iptables-services)
+changed: [master1.example.com] => (item=iptables-services)
+changed: [infra0.example.com] => (item=iptables-services)
+changed: [haproxy.example.com] => (item=iptables-services)
+changed: [app0.example.com] => (item=iptables-services)
+
+TASK [os_firewall : Start and enable iptables service] *********************************************************************************************
+changed: [master0.example.com -> master0.example.com] => (item=master0.example.com)
+changed: [master0.example.com -> master1.example.com] => (item=master1.example.com)
+changed: [master0.example.com -> master2.example.com] => (item=master2.example.com)
+changed: [master0.example.com -> infra0.example.com] => (item=infra0.example.com)
+changed: [master0.example.com -> app0.example.com] => (item=app0.example.com)
+changed: [master0.example.com -> haproxy.example.com] => (item=haproxy.example.com)
+
+TASK [os_firewall : need to pause here, otherwise the iptables service starting can sometimes cause ssh to fail] ***********************************
+Pausing for 10 seconds
+(ctrl+C then 'C' = continue early, ctrl+C then 'A' = abort)
+ok: [master0.example.com]
+
+PLAY [create oo_hosts_containerized_managed_true host group] ***************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+ok: [haproxy.example.com]
+
+TASK [group_by] ************************************************************************************************************************************
+ok: [haproxy.example.com]
+ [WARNING]: Could not match supplied host pattern, ignoring: oo_hosts_containerized_managed_true
+
+
+PLAY [oo_nodes_to_config:oo_hosts_containerized_managed_true] **************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+ok: [master0.example.com]
+ok: [infra0.example.com]
+ok: [master2.example.com]
+ok: [app0.example.com]
+ok: [master1.example.com]
+
+TASK [container_runtime : Setup the docker-storage for overlay] ************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+PLAY [create oo_hosts_containerized_managed_true host group] ***************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+ok: [haproxy.example.com]
+
+TASK [group_by] ************************************************************************************************************************************
+ok: [haproxy.example.com]
+
+PLAY [oo_nodes_to_config:oo_hosts_containerized_managed_true] **************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************
+ok: [master1.example.com]
+ok: [master2.example.com]
+ok: [app0.example.com]
+ok: [master0.example.com]
+ok: [infra0.example.com]
+
+TASK [openshift_excluder : Install excluders] ******************************************************************************************************
+included: /root/openshift-ansible/roles/openshift_excluder/tasks/install.yml for master0.example.com, master1.example.com, master2.example.com, infra0.example.com, app0.example.com
+
+TASK [openshift_excluder : Install docker excluder - yum] ******************************************************************************************
+changed: [master0.example.com]
+changed: [master1.example.com]
+changed: [app0.example.com]
+changed: [infra0.example.com]
+changed: [master2.example.com]
+
+TASK [openshift_excluder : Install docker excluder - dnf] ******************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [openshift_excluder : Install openshift excluder - yum] ***************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [openshift_excluder : Install openshift excluder - dnf] ***************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [openshift_excluder : set_fact] ***************************************************************************************************************
+ok: [master0.example.com]
+ok: [master1.example.com]
+ok: [master2.example.com]
+ok: [infra0.example.com]
+ok: [app0.example.com]
+
+TASK [openshift_excluder : Enable excluders] *******************************************************************************************************
+included: /root/openshift-ansible/roles/openshift_excluder/tasks/exclude.yml for master0.example.com, master1.example.com, master2.example.com, infra0.example.com, app0.example.com
+
+TASK [openshift_excluder : Check for docker-excluder] **********************************************************************************************
+ok: [master0.example.com]
+ok: [master1.example.com]
+ok: [master2.example.com]
+ok: [app0.example.com]
+ok: [infra0.example.com]
+
+TASK [openshift_excluder : Enable docker excluder] *************************************************************************************************
+changed: [infra0.example.com]
+changed: [app0.example.com]
+changed: [master0.example.com]
+changed: [master1.example.com]
+changed: [master2.example.com]
+
+TASK [openshift_excluder : Check for openshift excluder] *******************************************************************************************
+ok: [master0.example.com]
+ok: [master1.example.com]
+ok: [master2.example.com]
+ok: [infra0.example.com]
+ok: [app0.example.com]
+
+TASK [openshift_excluder : Enable openshift excluder] **********************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : include_tasks] ***********************************************************************************************************
+included: /root/openshift-ansible/roles/container_runtime/tasks/common/pre.yml for master0.example.com, master1.example.com, master2.example.com, infra0.example.com, app0.example.com
+
+TASK [container_runtime : include_tasks] ***********************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Add enterprise registry, if necessary] ***********************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : include_tasks] ***********************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Get current installed Docker version] ************************************************************************************
+ok: [master0.example.com]
+ok: [master1.example.com]
+ok: [app0.example.com]
+ok: [infra0.example.com]
+ok: [master2.example.com]
+
+TASK [container_runtime : include_tasks] ***********************************************************************************************************
+included: /root/openshift-ansible/roles/container_runtime/tasks/docker_sanity.yml for master0.example.com, master1.example.com, master2.example.com, infra0.example.com, app0.example.com
+
+TASK [container_runtime : Error out if Docker pre-installed but too old] ***************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Error out if requested Docker is too old] ********************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Fail if Docker version requested but downgrade is required] **************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Error out if attempting to upgrade Docker across the 1.10 boundary] ******************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Install Docker] **********************************************************************************************************
+changed: [app0.example.com]
+changed: [master2.example.com]
+changed: [master0.example.com]
+changed: [master1.example.com]
+changed: [infra0.example.com]
+
+TASK [container_runtime : Ensure docker.service.d directory exists] ********************************************************************************
+changed: [master0.example.com]
+changed: [infra0.example.com]
+changed: [master1.example.com]
+changed: [master2.example.com]
+changed: [app0.example.com]
+
+TASK [container_runtime : Configure Docker service unit file] **************************************************************************************
+changed: [app0.example.com]
+changed: [infra0.example.com]
+changed: [master1.example.com]
+changed: [master2.example.com]
+changed: [master0.example.com]
+
+TASK [container_runtime : stat] ********************************************************************************************************************
+ok: [master0.example.com]
+ok: [master1.example.com]
+ok: [app0.example.com]
+ok: [infra0.example.com]
+ok: [master2.example.com]
+
+TASK [container_runtime : Set registry params] *****************************************************************************************************
+skipping: [master0.example.com] => (item={u'reg_conf_var': u'ADD_REGISTRY', u'reg_flag': u'--add-registry', u'reg_fact_val': []})
+skipping: [master0.example.com] => (item={u'reg_conf_var': u'BLOCK_REGISTRY', u'reg_flag': u'--block-registry', u'reg_fact_val': []})
+skipping: [master0.example.com] => (item={u'reg_conf_var': u'INSECURE_REGISTRY', u'reg_flag': u'--insecure-registry', u'reg_fact_val': []})
+skipping: [master1.example.com] => (item={u'reg_conf_var': u'ADD_REGISTRY', u'reg_flag': u'--add-registry', u'reg_fact_val': []})
+skipping: [master2.example.com] => (item={u'reg_conf_var': u'ADD_REGISTRY', u'reg_flag': u'--add-registry', u'reg_fact_val': []})
+skipping: [master1.example.com] => (item={u'reg_conf_var': u'BLOCK_REGISTRY', u'reg_flag': u'--block-registry', u'reg_fact_val': []})
+skipping: [master1.example.com] => (item={u'reg_conf_var': u'INSECURE_REGISTRY', u'reg_flag': u'--insecure-registry', u'reg_fact_val': []})
+skipping: [master2.example.com] => (item={u'reg_conf_var': u'BLOCK_REGISTRY', u'reg_flag': u'--block-registry', u'reg_fact_val': []})
+skipping: [master2.example.com] => (item={u'reg_conf_var': u'INSECURE_REGISTRY', u'reg_flag': u'--insecure-registry', u'reg_fact_val': []})
+skipping: [infra0.example.com] => (item={u'reg_conf_var': u'ADD_REGISTRY', u'reg_flag': u'--add-registry', u'reg_fact_val': []})
+skipping: [app0.example.com] => (item={u'reg_conf_var': u'ADD_REGISTRY', u'reg_flag': u'--add-registry', u'reg_fact_val': []})
+skipping: [infra0.example.com] => (item={u'reg_conf_var': u'BLOCK_REGISTRY', u'reg_flag': u'--block-registry', u'reg_fact_val': []})
+skipping: [infra0.example.com] => (item={u'reg_conf_var': u'INSECURE_REGISTRY', u'reg_flag': u'--insecure-registry', u'reg_fact_val': []})
+skipping: [app0.example.com] => (item={u'reg_conf_var': u'BLOCK_REGISTRY', u'reg_flag': u'--block-registry', u'reg_fact_val': []})
+skipping: [app0.example.com] => (item={u'reg_conf_var': u'INSECURE_REGISTRY', u'reg_flag': u'--insecure-registry', u'reg_fact_val': []})
+
+TASK [container_runtime : Place additional/blocked/insecure registries in /etc/containers/registries.conf] *****************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Set Proxy Settings] ******************************************************************************************************
+skipping: [master0.example.com] => (item={u'reg_conf_var': u'HTTP_PROXY', u'reg_fact_val': u''})
+skipping: [master1.example.com] => (item={u'reg_conf_var': u'HTTP_PROXY', u'reg_fact_val': u''})
+skipping: [master0.example.com] => (item={u'reg_conf_var': u'HTTPS_PROXY', u'reg_fact_val': u''})
+skipping: [master0.example.com] => (item={u'reg_conf_var': u'NO_PROXY', u'reg_fact_val': u''})
+skipping: [master1.example.com] => (item={u'reg_conf_var': u'HTTPS_PROXY', u'reg_fact_val': u''})
+skipping: [master1.example.com] => (item={u'reg_conf_var': u'NO_PROXY', u'reg_fact_val': u''})
+skipping: [master2.example.com] => (item={u'reg_conf_var': u'HTTP_PROXY', u'reg_fact_val': u''})
+skipping: [infra0.example.com] => (item={u'reg_conf_var': u'HTTP_PROXY', u'reg_fact_val': u''})
+skipping: [master2.example.com] => (item={u'reg_conf_var': u'HTTPS_PROXY', u'reg_fact_val': u''})
+skipping: [master2.example.com] => (item={u'reg_conf_var': u'NO_PROXY', u'reg_fact_val': u''})
+skipping: [app0.example.com] => (item={u'reg_conf_var': u'HTTP_PROXY', u'reg_fact_val': u''})
+skipping: [infra0.example.com] => (item={u'reg_conf_var': u'HTTPS_PROXY', u'reg_fact_val': u''})
+skipping: [infra0.example.com] => (item={u'reg_conf_var': u'NO_PROXY', u'reg_fact_val': u''})
+skipping: [app0.example.com] => (item={u'reg_conf_var': u'HTTPS_PROXY', u'reg_fact_val': u''})
+skipping: [app0.example.com] => (item={u'reg_conf_var': u'NO_PROXY', u'reg_fact_val': u''})
+
+TASK [container_runtime : Set various Docker options] **********************************************************************************************
+changed: [master2.example.com]
+changed: [master1.example.com]
+changed: [infra0.example.com]
+changed: [master0.example.com]
+changed: [app0.example.com]
+
+TASK [container_runtime : stat] ********************************************************************************************************************
+ok: [master0.example.com]
+ok: [infra0.example.com]
+ok: [master2.example.com]
+ok: [app0.example.com]
+ok: [master1.example.com]
+
+TASK [container_runtime : Configure Docker Network OPTIONS] ****************************************************************************************
+changed: [master0.example.com]
+changed: [master1.example.com]
+changed: [infra0.example.com]
+changed: [app0.example.com]
+changed: [master2.example.com]
+
+TASK [container_runtime : Detect if docker is already started] *************************************************************************************
+ok: [master0.example.com]
+ok: [infra0.example.com]
+ok: [master1.example.com]
+ok: [app0.example.com]
+ok: [master2.example.com]
+
+TASK [container_runtime : Start the Docker service] ************************************************************************************************
+changed: [infra0.example.com]
+changed: [app0.example.com]
+changed: [master2.example.com]
+changed: [master0.example.com]
+changed: [master1.example.com]
+
+TASK [container_runtime : set_fact] ****************************************************************************************************************
+ok: [master0.example.com]
+ok: [master1.example.com]
+ok: [master2.example.com]
+ok: [infra0.example.com]
+ok: [app0.example.com]
+
+TASK [container_runtime : include_tasks] ***********************************************************************************************************
+included: /root/openshift-ansible/roles/container_runtime/tasks/common/post.yml for master0.example.com, master1.example.com, master2.example.com, infra0.example.com, app0.example.com
+
+TASK [container_runtime : Ensure /var/lib/containers exists] ***************************************************************************************
+changed: [master1.example.com]
+changed: [master0.example.com]
+changed: [app0.example.com]
+changed: [infra0.example.com]
+changed: [master2.example.com]
+
+TASK [container_runtime : Fix SELinux Permissions on /var/lib/containers] **************************************************************************
+ok: [master1.example.com]
+ok: [infra0.example.com]
+ok: [app0.example.com]
+ok: [master0.example.com]
+ok: [master2.example.com]
+
+RUNNING HANDLER [container_runtime : restart container runtime] ************************************************************************************
+skipping: [app0.example.com]
+skipping: [infra0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [master0.example.com]
+
+TASK [container_runtime : include_tasks] ***********************************************************************************************************
+included: /root/openshift-ansible/roles/container_runtime/tasks/registry_auth.yml for master0.example.com, master1.example.com, master2.example.com, infra0.example.com, app0.example.com
+
+TASK [container_runtime : Check for credentials file for registry auth] ****************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Create credentials for docker cli registry auth] *************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Create credentials for docker cli registry auth (alternative)] ***********************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : stat the docker data dir] ************************************************************************************************
+ok: [master0.example.com]
+ok: [infra0.example.com]
+ok: [master1.example.com]
+ok: [app0.example.com]
+ok: [master2.example.com]
+
+TASK [container_runtime : include_tasks] ***********************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Fail quickly if openshift_docker_options are set] ************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : include_tasks] ***********************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : include_tasks] ***********************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Install Docker so we can use the client] *********************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Disable Docker] **********************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Ensure proxies are in the atomic.conf] ***********************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : debug] *******************************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : include_tasks] ***********************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Pre-pull Container Engine System Container image] ************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Ensure container-engine.service.d directory exists] **********************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Ensure /etc/docker directory exists] *************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Install Container Engine System Container] *******************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Configure Container Engine Service File] *********************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Configure Container Engine] **********************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Start the container-engine service] **************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : set_fact] ****************************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : include_tasks] ***********************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Check we are not using node as a Docker container with CRI-O] ************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : include_tasks] ***********************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : include_tasks] ***********************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Check that overlay is in the kernel] *************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Add overlay to modprobe.d] ***********************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Manually modprobe overlay into the kernel] *******************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Enable and start systemd-modules-load] ***********************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Ensure proxies are in the atomic.conf] ***********************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : debug] *******************************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Pre-pull CRI-O System Container image] ***********************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Install CRI-O System Container] ******************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Remove CRI-O default configuration files] ********************************************************************************
+skipping: [master0.example.com] => (item=/etc/cni/net.d/200-loopback.conf)
+skipping: [master0.example.com] => (item=/etc/cni/net.d/100-crio-bridge.conf)
+skipping: [master1.example.com] => (item=/etc/cni/net.d/200-loopback.conf)
+skipping: [master1.example.com] => (item=/etc/cni/net.d/100-crio-bridge.conf)
+skipping: [master2.example.com] => (item=/etc/cni/net.d/200-loopback.conf)
+skipping: [master2.example.com] => (item=/etc/cni/net.d/100-crio-bridge.conf)
+skipping: [infra0.example.com] => (item=/etc/cni/net.d/200-loopback.conf)
+skipping: [infra0.example.com] => (item=/etc/cni/net.d/100-crio-bridge.conf)
+skipping: [app0.example.com] => (item=/etc/cni/net.d/200-loopback.conf)
+skipping: [app0.example.com] => (item=/etc/cni/net.d/100-crio-bridge.conf)
+
+TASK [container_runtime : Create the CRI-O configuration] ******************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Ensure CNI configuration directory exists] *******************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Add iptables allow rules] ************************************************************************************************
+skipping: [master0.example.com] => (item={u'port': u'10010/tcp', u'service': u'crio'})
+skipping: [master1.example.com] => (item={u'port': u'10010/tcp', u'service': u'crio'})
+skipping: [master2.example.com] => (item={u'port': u'10010/tcp', u'service': u'crio'})
+skipping: [infra0.example.com] => (item={u'port': u'10010/tcp', u'service': u'crio'})
+skipping: [app0.example.com] => (item={u'port': u'10010/tcp', u'service': u'crio'})
+
+TASK [container_runtime : Remove iptables rules] ***************************************************************************************************
+
+TASK [container_runtime : Add firewalld allow rules] ***********************************************************************************************
+skipping: [master0.example.com] => (item={u'port': u'10010/tcp', u'service': u'crio'})
+skipping: [master1.example.com] => (item={u'port': u'10010/tcp', u'service': u'crio'})
+skipping: [master2.example.com] => (item={u'port': u'10010/tcp', u'service': u'crio'})
+skipping: [infra0.example.com] => (item={u'port': u'10010/tcp', u'service': u'crio'})
+skipping: [app0.example.com] => (item={u'port': u'10010/tcp', u'service': u'crio'})
+
+TASK [container_runtime : Remove firewalld allow rules] ********************************************************************************************
+
+TASK [container_runtime : Configure the CNI network] ***********************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Create /etc/sysconfig/crio-storage] **************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Create /etc/sysconfig/crio-network] **************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : debug] *******************************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Start the CRI-O service] *************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : include_tasks] ***********************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Fail if Atomic Host since this is an rpm request] ************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : include_tasks] ***********************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Check that overlay is in the kernel] *************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Add overlay to modprobe.d] ***********************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Manually modprobe overlay into the kernel] *******************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Enable and start systemd-modules-load] ***********************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Install cri-o] ***********************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Remove CRI-O default configuration files] ********************************************************************************
+skipping: [master0.example.com] => (item=/etc/cni/net.d/200-loopback.conf)
+skipping: [master0.example.com] => (item=/etc/cni/net.d/100-crio-bridge.conf)
+skipping: [master1.example.com] => (item=/etc/cni/net.d/200-loopback.conf)
+skipping: [master1.example.com] => (item=/etc/cni/net.d/100-crio-bridge.conf)
+skipping: [master2.example.com] => (item=/etc/cni/net.d/200-loopback.conf)
+skipping: [master2.example.com] => (item=/etc/cni/net.d/100-crio-bridge.conf)
+skipping: [infra0.example.com] => (item=/etc/cni/net.d/200-loopback.conf)
+skipping: [infra0.example.com] => (item=/etc/cni/net.d/100-crio-bridge.conf)
+skipping: [app0.example.com] => (item=/etc/cni/net.d/200-loopback.conf)
+skipping: [app0.example.com] => (item=/etc/cni/net.d/100-crio-bridge.conf)
+
+TASK [container_runtime : Create the CRI-O configuration] ******************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Ensure CNI configuration directory exists] *******************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Add iptables allow rules] ************************************************************************************************
+skipping: [master0.example.com] => (item={u'port': u'10010/tcp', u'service': u'crio'})
+skipping: [master1.example.com] => (item={u'port': u'10010/tcp', u'service': u'crio'})
+skipping: [master2.example.com] => (item={u'port': u'10010/tcp', u'service': u'crio'})
+skipping: [infra0.example.com] => (item={u'port': u'10010/tcp', u'service': u'crio'})
+skipping: [app0.example.com] => (item={u'port': u'10010/tcp', u'service': u'crio'})
+
+TASK [container_runtime : Remove iptables rules] ***************************************************************************************************
+
+TASK [container_runtime : Add firewalld allow rules] ***********************************************************************************************
+skipping: [master0.example.com] => (item={u'port': u'10010/tcp', u'service': u'crio'})
+skipping: [master1.example.com] => (item={u'port': u'10010/tcp', u'service': u'crio'})
+skipping: [master2.example.com] => (item={u'port': u'10010/tcp', u'service': u'crio'})
+skipping: [infra0.example.com] => (item={u'port': u'10010/tcp', u'service': u'crio'})
+skipping: [app0.example.com] => (item={u'port': u'10010/tcp', u'service': u'crio'})
+
+TASK [container_runtime : Remove firewalld allow rules] ********************************************************************************************
+
+TASK [container_runtime : Configure the CNI network] ***********************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Create /etc/sysconfig/crio-network] **************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : Start the CRI-O service] *************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+TASK [container_runtime : include_tasks] ***********************************************************************************************************
+skipping: [master0.example.com]
+skipping: [master1.example.com]
+skipping: [master2.example.com]
+skipping: [infra0.example.com]
+skipping: [app0.example.com]
+
+PLAY RECAP *****************************************************************************************************************************************
+app0.example.com           : ok=62   changed=18   unreachable=0    failed=0
+haproxy.example.com        : ok=38   changed=9    unreachable=0    failed=0
+infra0.example.com         : ok=62   changed=18   unreachable=0    failed=0
+localhost                  : ok=12   changed=0    unreachable=0    failed=0
+master0.example.com        : ok=76   changed=19   unreachable=0    failed=0
+master1.example.com        : ok=66   changed=18   unreachable=0    failed=0
+master2.example.com        : ok=66   changed=18   unreachable=0    failed=0
+
+
+INSTALLER STATUS ***********************************************************************************************************************************
+Initialization             : Complete (0:01:24)

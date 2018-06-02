@@ -1,0 +1,20 @@
+---
+- hosts: openstack
+  name: DNS Subnet Config
+
+  tasks:
+
+  - name: Set Subnet DNS Server
+    shell: >
+      floating_ip=$(openstack floating ip list --port $(openstack port show dns-port -c id -f value) -c "Floating IP Address" -f value) && \
+      openstack subnet set \
+        --no-dns-nameservers \
+        --dns-nameserver $floating_ip \
+        lab_subnet
+
+  - name: Restart Servers
+    shell: >
+      for server in $(openstack server list -c Name -f value);
+      do
+        openstack server reboot $server;
+      done;

@@ -1,0 +1,83 @@
+[nexus-docker-ce-stable]
+name=Nexus Docker CE Stable - $basearch
+baseurl=http://nexus-server:8081/repository/yum-proxy/$releasever/$basearch/stable
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-Docker-CE
+
+[nexus-docker-ce-stable-debuginfo]
+name=Nexus Docker CE Stable - Debuginfo $basearch
+baseurl=http://nexus-server:8081/repository/yum-proxy/$releasever/debug-$basearch/stable
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-Docker-CE
+
+[nexus-docker-ce-stable-source]
+name=Nexus Docker CE Stable - Sources
+baseurl=http://nexus-server:8081/repository/yum-proxy/$releasever/source/stable
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-Docker-CE
+
+[nexus-docker-ce-edge]
+name=Nexus Docker CE Edge - $basearch
+baseurl=http://nexus-server:8081/repository/yum-proxy/$releasever/$basearch/edge
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-Docker-CE
+
+[nexus-docker-ce-edge-debuginfo]
+name=Nexus Docker CE Edge - Debuginfo $basearch
+baseurl=http://nexus-server:8081/repository/yum-proxy/$releasever/debug-$basearch/edge
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-Docker-CE
+
+[nexus-docker-ce-edge-source]
+name=Nexus Docker CE Edge - Sources
+baseurl=http://nexus-server:8081/repository/yum-proxy/$releasever/source/edge
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-Docker-CE
+
+[nexus-docker-ce-test]
+name=Nexus Docker CE Test - $basearch
+baseurl=http://nexus-server:8081/repository/yum-proxy/$releasever/$basearch/test
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-Docker-CE
+
+[nexus-docker-ce-test-debuginfo]
+name=Nexus Docker CE Test - Debuginfo $basearch
+baseurl=http://nexus-server:8081/repository/yum-proxy/$releasever/debug-$basearch/test
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-Docker-CE
+
+[nexus-docker-ce-test-source]
+name=Nexus Docker CE Test - Sources
+baseurl=http://nexus-server:8081/repository/yum-proxy/$releasever/source/test
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-Docker-CE
+
+[nexus-docker-ce-nightly]
+name=Nexus Docker CE Nightly - $basearch
+baseurl=http://nexus-server:8081/repository/yum-proxy/$releasever/$basearch/nightly
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-Docker-CE
+
+[nexus-docker-ce-nightly-debuginfo]
+name=Nexus Docker CE Nightly - Debuginfo $basearch
+baseurl=http://nexus-server:8081/repository/yum-proxy/$releasever/debug-$basearch/nightly
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-Docker-CE
+
+[nexus-docker-ce-nightly-source]
+name=Nexus Docker CE Nightly - Sources
+baseurl=http://nexus-server:8081/repository/yum-proxy/$releasever/source/nightly
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-Docker-CE

@@ -26,3 +26,4 @@ nexus               A        192.168.1.3
 ntp                 A        192.168.1.4
 haproxy             A        192.168.1.5
 openshift           A        192.168.1.5
+

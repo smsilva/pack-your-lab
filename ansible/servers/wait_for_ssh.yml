@@ -1,0 +1,13 @@
+---
+- name: wait for SSH connection
+  shell: >
+    floating_ip=$(openstack floating ip list --port $(openstack port show {{ item }}-port -c id -f value) -c "Floating IP Address" -f value) && \
+    ssh -oBatchMode=yes -oStrictHostKeyChecking=no centos@$floating_ip true
+  register: result
+  until: result|success
+  retries: 30
+  delay: 10
+  with_items: 
+    - bastion
+    - dns
+    - haproxy

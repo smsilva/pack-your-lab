@@ -1,0 +1,42 @@
+- name: create user
+  user:
+    name: silvio
+    password: $1$12345$ue7n/lsdz8J7eslVdqYdn0
+  
+- name: creates directory
+  file: 
+    path: /var/sftp/users/silvio
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+    
+- name: creates subdirectories
+  file: 
+    path: "{{ item }}"
+    state: directory
+    owner: silvio
+    group: silvio
+  with_items:
+    - /var/sftp/users/silvio/in
+    - /var/sftp/users/silvio/out
+
+- name: insert/update "Match User" configuration block in /etc/ssh/sshd_config
+  blockinfile:
+    path: /etc/ssh/sshd_config
+    block: |
+      Match User silvio
+      ForceCommand internal-sftp
+      PasswordAuthentication yes
+      ChrootDirectory /var/sftp/users/silvio
+      PermitTunnel no
+      AllowAgentForwarding no
+      AllowTcpForwarding no
+      X11Forwarding no
+    
+- name: restart sshd service
+  systemd:
+    name: sshd
+    state: restarted
+    daemon_reload: yes
+
