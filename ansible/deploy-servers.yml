@@ -15,6 +15,7 @@
       openstack_default_security_group_id: $(openstack security group list --project lab | grep "Default security group" | cut -d " " -f 2)
       
   - import_tasks: servers/deploy.yml
+  - import_tasks: servers/registry-volume.yml
   - import_tasks: servers/wait_for_ssh.yml
 
 - import_playbook: servers/dns/config.yml

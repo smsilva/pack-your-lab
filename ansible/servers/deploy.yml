@@ -16,7 +16,7 @@
 
 - name: Deploy Masters
   shell: >
-    for instance_number in {0..2};
+    for instance_number in {0..0};
     do
       instance_name=master && instance_sequence=$instance_number && \
       private_ip=10.0.0.3$instance_number && \
@@ -44,7 +44,7 @@
 
 - name: Deploy Infra Instances
   shell: >
-    for instance_number in {0..0};
+    for instance_number in {0..1};
     do
       instance_name=infra && instance_sequence=$instance_number && \
       instance=$instance_name$instance_sequence && \
@@ -68,7 +68,7 @@
 
 - name: Deploy App Instances
   shell: >
-    for instance_number in {0..0};
+    for instance_number in {0..1};
     do
       instance_name=app && instance_sequence=$instance_number && \
       instance=$instance_name$instance_sequence && \

@@ -1,0 +1,4 @@
+---
+- name: openshift-registry volume creation
+  shell: >
+    openstack volume create --size 50 openshift-registry

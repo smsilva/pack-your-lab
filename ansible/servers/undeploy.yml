@@ -1,6 +1,6 @@
 ---
 - hosts: openstack
-  name: Remove Instances and Subnet Congig Reset
+  name: Remove Instances and Subnet Config Reset
 
   tasks:
 
@@ -11,7 +11,6 @@
         --dns-nameserver 192.168.1.1 \
         --dns-nameserver 8.8.8.8 \
         lab_subnet
-
 
 # | grep -v dns | grep -v haproxy | grep -v bastion
 

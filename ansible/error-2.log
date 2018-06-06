@@ -31,20 +31,23 @@ os_sdn_network_plugin_name='redhat/openshift-ovs-networkpolicy'
 #openshift_use_flannel=true
 #flannel_interface=br-ex
 
-openshift_hosted_router_replicas=3
-openshift_hosted_registry_replicas=1
+#openshift_hosted_router_replicas=3
+#openshift_hosted_registry_replicas=1
 
 openshift_node_local_quota_per_fsgroup=512Mi
 
-openshift_public_hostname=openshift.example.com
 
 osm_use_cockpit=true
 
-openshift_master_api_port=8443
-openshift_master_console_port=8443
+openshift_public_hostname=openshift.example.com
+
+#openshift_master_api_port=8443
+#openshift_master_console_port=8443
+
 openshift_master_cluster_method=native
-openshift_master_cluster_hostname=openshift.example.com
+openshift_master_cluster_hostname=master0.example.com
 openshift_master_cluster_public_hostname=openshift.example.com
+
 openshift_master_default_subdomain=apps.example.com
 openshift_master_identity_providers=[{'name': 'allow_all', 'login': 'true', 'challenge': 'true', 'kind': 'AllowAllPasswordIdentityProvider'}]
 
@@ -62,7 +65,7 @@ openshift_cloudprovider_openstack_blockstorage_version=v2
 openshift_hosted_registry_storage_kind=openstack
 openshift_hosted_registry_storage_access_modes=['ReadWriteOnce']
 openshift_hosted_registry_storage_openstack_filesystem=ext4
-openshift_hosted_registry_storage_openstack_volumeID=7468e961-0c69-4fe5-b1ca-8b99aecd8119
+openshift_hosted_registry_storage_openstack_volumeID=91819908-27ef-4eeb-8682-0385882b0185
 openshift_hosted_registry_storage_volume_size=50Gi
 
 openshift_debug_level="{{ debug_level }}"
@@ -70,15 +73,25 @@ openshift_node_debug_level="{{ node_debug_level | default(debug_level, true) }}"
 openshift_master_debug_level="{{ master_debug_level | default(debug_level, true) }}"
 
 [masters]
-master[0:2].example.com
+master0.example.com
 
 [etcd]
-master[0:2].example.com
+master0.example.com
 
 [lb]
 haproxy.example.com
 
 [nodes]
-master[0:2].example.com openshift_node_labels="{'zone': 'default'}"
+master0.example.com
 infra0.example.com openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
-app0.example.com openshift_node_labels="{'zone': 'default'}"
+infra1.example.com openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
+app0.example.com openshift_node_labels="{'region': 'primary', 'zone': 'default'}"
+app1.example.com openshift_node_labels="{'region': 'primary', 'zone': 'default'}"
+
+Failure summary:
+
+
+  1. Hosts:    app0.example.com, app1.example.com, infra0.example.com, infra1.example.com, master0.example.com
+     Play:     Configure nodes
+     Task:     restart node
+     Message:  Unable to restart service origin-node: Job for origin-node.service failed because the control process exited with error code. See "systemctl status origin-node.service" and "journalctl -xe" for details.

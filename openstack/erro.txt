@@ -1,0 +1,40 @@
+Boa noite.
+
+Eu tentei novamente recriando as instâncias, rodando o playbook de pré-requisitos e mudando alguns parâmetros.
+
+Comentei a parte do Flannel:
+
+#openshift_use_openshift_sdn=false
+#openshift_use_flannel=true
+#flannel_interface=br-ex
+
+Tentei usar:
+
+os_sdn_network_plugin_name='redhat/openshift-ovs-networkpolicy'
+
+também tentei depois usando:
+
+os_sdn_network_plugin_name='redhat/openshift-ovs-subnet'
+
+Mas obtive o erro (Unable to restart service origin-node):
+
+https://pastebin.com/raw/g2bgSeUa
+
+Conectando em uma das instâncias e executando o journalctl -xe duas linhas me chamaram atenção mas não consegui encontrar algo específico do OpenShift:
+
+- Unable to update cni config: No networks found in /etc/cni/net.d
+- Container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:docker: network plugin is not ready: cni config uninitialized
+
+Log completo do journalctl -xe:
+
+https://pastebin.com/raw/A6gbHCVU
+
+Log do systemctl status:
+
+https://pastebin.com/raw/QammusQ8
+
+Encontrei essa thread sobre erro parecido mas usando Kubernetes "puro" na qual, entre outras coisas, alguém sugere um teste colocando o SELinux como "permissive" (setenforce 0):
+
+https://github.com/kubernetes/kubernetes/issues/48798
+
+Fiz o teste mas sem sucesso :(
