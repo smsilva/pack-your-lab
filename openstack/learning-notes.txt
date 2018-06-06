@@ -1,5 +1,34 @@
 openstack volume show openshift-registry -c id -f value
 
+cat <<EOT >> hosts
+app0.example.com
+app1.example.com
+infra0.example.com
+infra1.example.com
+master0.example.com
+haproxy.example.com
+EOT
+
+echo 192.168.1.6 > hosts
+
+ansible 192.168.1.6 -b -i hosts -m ping
+
+ansible 192.168.1.6 -b -i hosts -m command -a "ls /etc/yum.repos.d/"
+
+ansible 192.168.1.6 -b -i hosts -m command -a "ls /etc/pki/rpm-gpg/"
+
+ansible 192.168.1.6 -b -i hosts -m file -a "path='/etc/yum.repos.d/' state='absent'"
+
+ansible 192.168.1.6 -b -i hosts -m file -a "path='/etc/pki/rpm-gpg/' state='absent'"
+
+ansible 192.168.1.6 -b -i hosts -m copy -a "src='/etc/yum.repos.d/' dest='/etc/yum.repos.d/'"
+
+ansible 192.168.1.6 -b -i hosts -m copy -a "src='/etc/pki/rpm-gpg/' dest='/etc/pki/rpm-gpg/'"
+
+ansible 192.168.1.6 -b -i hosts -m command -a "yum repolist"
+
+ansible 192.168.1.6 -b -i hosts -m yum -a "name='*' state='latest'"
+
 ssh -A centos@192.168.1.6
 
 sudo su -
@@ -13,7 +42,23 @@ master0.example.com
 haproxy.example.com
 EOT
 
-ansible all -b -i ~/hosts -m ping
+ansible all -b -i hosts -m command -a "ls /etc/yum.repos.d/"
+
+ansible all -b -i hosts -m command -a "ls /etc/pki/rpm-gpg/"
+
+ansible all -b -i hosts -m file -a "path='/etc/yum.repos.d/' state='absent'"
+
+ansible all -b -i hosts -m file -a "path='/etc/pki/rpm-gpg/' state='absent'"
+
+ansible all -b -i hosts -m copy -a "src='/etc/yum.repos.d/' dest='/etc/yum.repos.d/'"
+
+ansible all -b -i hosts -m copy -a "src='/etc/pki/rpm-gpg/' dest='/etc/pki/rpm-gpg/'"
+
+ansible all -b -i hosts -m command -a "yum repolist"
+
+ansible all -b -i hosts -m yum -a "name='*' state='latest'"
+
+ansible all -b -i hosts -m ping
 
 ansible all -b -i ~/hosts -m command -a "systemctl status firewalld" | grep "Active:"
 
@@ -24,6 +69,8 @@ ansible all -b -i ~/hosts -m yum -a "name='*' state=latest"
 ansible all -b -i ~/hosts -m yum -a "name='epel-release' state=latest"
 
 ansible all -b -i ~/hosts -m command -a "yum repolist"
+
+ansible all -b -i ~/hosts -m yum -a "name='net-tools' state=latest"
 
 ansible all -b -i ~/hosts -m yum -a "name='*' state=latest"
 
@@ -373,8 +420,6 @@ do
 done
 
 cd ~
-
-openstack server list -c Networks -f value | cut -d " " -f 2 | sort > hosts
 
 #DNS
 
