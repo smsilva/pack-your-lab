@@ -1,3 +1,9 @@
+[root@ocp-master ~]# htpasswd -c /etc/origin/master/htpasswd admin
+
+oc adm policy add-cluster-role-to-user cluster-admin admin
+
+oc login
+
 openstack volume show openshift-registry -c id -f value
 
 cat <<EOT >> hosts

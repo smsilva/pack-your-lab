@@ -1,0 +1,89 @@
+---
+- hosts: all
+  name: OpenShift 3.9 Hosts
+
+  tasks:
+  
+  - name: Download OpenShift Ansible Repository
+  - git:
+      repo: "https://github.com/openshift/openshift-ansible"
+      dest: "~/"
+      version: "release-3.9"
+
+  - name: insert a line in /etc/hosts for master if needed
+    lineinfile:
+      dest: /etc/hosts
+      regexp: "^192.168.1.102"
+      line: "192.168.1.102 master console ocp-master.example.com"
+
+  - name: insert a line in /etc/hosts for node-01 if needed
+    lineinfile:
+      dest: /etc/hosts
+      regexp: "^192.168.1.103"
+      line: "192.168.1.103 node-01 ocp-node-01.example.com"
+
+  - name: epel-release
+    yum:
+     name: epel-release
+     state: present
+
+  - name: disable repo epel
+    replace:
+     path: "/etc/yum.repos.d/epel.repo"
+     regexp: "^enabled=1"
+     replace: "enabled=0"
+
+  - name: Install Packages
+    yum:
+      enablerepo: epel
+      name: "{{ item }}"
+      state: latest
+    with_items:
+      - wget
+      - git
+      - zile
+      - vim
+      - net-tools
+      - docker-1.13.1
+      - bind-utils
+      - iptables-services
+      - bridge-utils
+      - bash-completion
+      - kexec-tools
+      - sos
+      - psacct
+      - openssl-devel
+      - httpd-tools
+      - NetworkManager
+      - python-cryptography
+      - python2-pip
+      - python-devel
+      - python-passlib
+      - java-1.8.0-openjdk-headless
+      - "@Development Tools"
+
+  - name: enable NetworkManager
+    systemd:
+      name: NetworkManager
+      state: started
+      enabled: yes
+
+  - name: install pyOpenSSL
+    yum:
+      enablerepo: epel
+      name: "{{ item }}"
+      state: latest
+    with_items:
+      - pyOpenSSL
+  
+  - name: disable firewall
+    systemd:
+      name: firewalld
+      state: stopped
+      enabled: no
+  
+  - name: restart Docker service
+    systemd:
+      name: docker
+      state: restarted
+      enabled: yes
