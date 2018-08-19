@@ -6,4 +6,4 @@
 - import_playbook: config/lab.yml
 - import_playbook: config/security-groups.yml
 - import_playbook: config/volumes.yml
-- import_playbook: config/lab-servers.yml
+#- import_playbook: config/lab-servers.yml

@@ -4,8 +4,6 @@
 
   tasks:
   
-    - import_tasks: ~/pack-your-lab/nexus/client/configuration.yml
-
     - name: create resource folder
       file:
         path: "{{ osp.resource_path }}"
@@ -43,16 +41,6 @@
     - name: update python pip
       shell: >
         pip install --upgrade pip
-        
-    - name: configure bash completion for openstack commands
-      shell: >
-        openstack complete | sudo tee /etc/bash_completion.d/osc.bash_completion > /dev/null
-
-    - name: download images
-      get_url:
-        url: "{{ item.value.remote_path }}/{{ item.value.file_name }}"
-        dest: "{{ osp.resource_path }}/{{ item.value.file_name }}"
-      with_dict: "{{ osp.images }}"
 
     - name: disable NetworkManager and Firewall
       systemd:

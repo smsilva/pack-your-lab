@@ -1,3 +1,90 @@
+USB Boot Pendrive using RUFUS
+
+Bios Setup boot order
+
+Select Time Zone
+
+Language (add Portuguese/Brazil)
+
+Network Device Connectivity
+
+Disk Setup
+
+/boot 256 MiB
+/boot/efi 256 MiB
+/swap 16 GiB
+/home 20 GiB ext4
+/ 900 GiB
+
+root password (keep it)
+
+reboot
+
+log in as root
+
+lsblk
+
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sda      8:0    0 978.1G  0 disk
++-sda1   8:1    0   256M  0 part /boot/efi
++-sda2   8:2    0   256M  0 part /boot
++-sda3   8:3    0 943.1G  0 part /
++-sda4   8:4    0    20G  0 part /home
++-sda5   8:5    0  14.5G  0 part [SWAP]
+
+localectl
+
+localectl list-locales
+
+localectl set-locale LANG=pt_BR.utf8
+
+localectl list-keymaps
+
+localectl set-keymap
+
+yum update -y
+
+hostnamectl set-hostname openstack.example.com
+
+reboot
+
+ssh-copy-id root@ip_address
+
+yum install vim -y
+
+vim /etc/sysconfig/network-scripts/ifcfg-eno1
+
+BOOTPROTO=static
+IPADDR=192.168.1.101
+NETMASK=255.255.255.0
+GATEWAY=192.168.1.1
+DNS1=192.168.1.1
+DNS2=1.1.1.1
+DNS3=8.8.8.8
+
+yum install epel-release -y
+
+yum install ansible -y
+
+scp -r ./osp/ root@192.168.1.101:~
+
+cd /root/pack-your-lab/openstack
+
+ansible.cfg
+callback_whitelist = profile_tasks, timer
+
+ansible -i hosts.yml -m ping osp
+
+openstack.example.com | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+
+# Prepara o NUC para Instalar o OpenStack usando o PackStack
+ansible-playbook -i hosts.yml install.yml
+
+##########################################################################################################################################################################################
+
 [root@ocp-master ~]# htpasswd -c /etc/origin/master/htpasswd admin
 
 oc adm policy add-cluster-role-to-user cluster-admin admin

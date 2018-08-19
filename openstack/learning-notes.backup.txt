@@ -1,3 +1,67 @@
+yum install -y qemu-kvm qemu-img virt-manager libvirt libvirt-python libvirt-client virt-install virt-viewer
+
+1. Create a VirtualBox Machine
+
+CPU............: 2
+Memory.........: 4 GB
+Disk (VDI).....: 15 GB
+ISO............: CentOS-7-x86_64-Minimal-1804.iso
+Network Bridge.: Internet Access
+Partition......: /
+Partition size.: 15 GB
+Partition type.: xfs
+Keyboard.......: pt_br, us
+Time zone......: -03:00 GMT
+Network........: Enable
+
+yum -y update && \
+yum -y install acpid && \
+systemctl enable acpid && \
+yum -y install cloud-init && \
+yum -y install cloud-utils-growpart && \
+systemctl stop firewalld && \
+systemctl disable firewalld && \
+echo "NOZEROCONF=yes" >> /etc/sysconfig/network && \
+sed -i 's/rhgb quiet/console=tty0 console=ttyS0,115200n8/g' /etc/default/grub && \
+grub2-mkconfig -o /boot/grub2/grub.cfg && \
+sed -i '/^UUID/d' /etc/sysconfig/network-scripts/ifcfg-enp0s3 && \
+yum clean all && \
+rm -rf /var/cache/yum
+
+poweroff
+
+#copy to nuc
+
+scp centos7.vdi root@192.168.1.101:/tmp/
+
+qemu-img convert -f vdi centos7.vdi -O qcow2 centos7.qcow2
+
+openstack image create \
+  --public \
+  --disk-format qcow2 \
+  --min-disk 15 \
+  --min-ram 512 \
+  --file centos7.qcow2 \
+  centos7
+  
+rm -rf ~/.ssh/known_hosts
+
+openstack server delete sftp
+  
+network_id=$(openstack network show lab_network -f value -c id) && \
+security_group_id=$(openstack security group list --project lab | grep "Default security group" | cut -d " " -f 2) && \
+openstack server create \
+  --image centos7 \
+  --flavor m1.small \
+  --key-name server \
+  --nic net-id=$network_id \
+  --security-group=$security_group_id \
+  --wait \
+  sftp
+
+openstack server add floating ip sftp 192.168.1.41
+
+##########################################
 vim /etc/ansible/ansible.cfg
 
 callback_whitelist = profile_tasks, timer
@@ -432,61 +496,6 @@ checkmodule: writing binary representation (version 17) to mkhomedir.mod
 [root@www ~]# semodule -i mkhomedir.pp 
 
 ########################################################################################################
-
-1. Create a VirtualBox Machine
-
-CPU............: 2
-Memory.........: 4 GB
-Disk (VDI).....: 15 GB
-ISO............: CentOS-7-x86_64-Minimal-1804.iso
-Network Bridge.: Internet Access
-
-yum -y update && \
-yum -y install acpid && \
-systemctl enable acpid && \
-yum -y install cloud-init && \
-yum -y install cloud-utils-growpart && \
-systemctl stop firewalld && \
-systemctl disable firewalld && \
-echo "NOZEROCONF=yes" >> /etc/sysconfig/network && \
-sed -i 's/rhgb quiet/console=tty0 console=ttyS0,115200n8/g' /etc/default/grub && \
-grub2-mkconfig -o /boot/grub2/grub.cfg && \
-sed -i '/^UUID/d' /etc/sysconfig/network-scripts/ifcfg-enp0s3 && \
-yum clean all && \
-rm -rf /var/cache/yum
-
-poweroff
-
-#copy to nuc
-
-qemu-img convert -f vdi centos7.vdi -O qcow2 centos7.qcow2
-
-openstack image create \
-  --public \
-  --disk-format qcow2 \
-  --min-disk 15 \
-  --min-ram 512 \
-  --file centos7.qcow2 \
-  centos7
-  
-rm -rf ~/.ssh/known_hosts
-
-openstack server delete sftp
-  
-network_id=$(openstack network show lab_network -f value -c id) && \
-security_group_id=$(openstack security group list --project lab | grep "Default security group" | cut -d " " -f 2) && \
-openstack server create \
-  --image centos7 \
-  --flavor m1.small \
-  --key-name server \
-  --nic net-id=$network_id \
-  --security-group=$security_group_id \
-  --wait \
-  sftp
-
-openstack server add floating ip sftp 192.168.1.40
-
-##########################################
 
 vim keystonerc_admin
 
