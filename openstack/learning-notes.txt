@@ -66,11 +66,12 @@ yum install epel-release -y
 
 yum install ansible -y
 
-scp -r ./osp/ root@192.168.1.101:~
+scp -r ./pack-your-lab/ root@192.168.1.101:~
 
 cd /root/pack-your-lab/openstack
 
-ansible.cfg
+vim /etc/ansible/ansible.cfg
+
 callback_whitelist = profile_tasks, timer
 
 ansible -i hosts.yml -m ping osp
