@@ -10,11 +10,11 @@ Network Device Connectivity
 
 Disk Setup
 
-/boot 256 MiB
-/boot/efi 256 MiB
-/swap 16 GiB
-/home 20 GiB ext4
-/ 900 GiB
+/boot     xfs  256 MiB
+/boot/efi xfs  256 MiB
+/swap     swap  16 GiB
+/home     ext4  40 GiB
+/         ext4 900 GiB
 
 root password (keep it)
 
@@ -22,33 +22,23 @@ reboot
 
 log in as root
 
-lsblk
+sed -i 's/#UseDNS yes/UseDNS no/g' /etc/ssh/sshd_config
 
-NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
-sda      8:0    0 978.1G  0 disk
-+-sda1   8:1    0   256M  0 part /boot/efi
-+-sda2   8:2    0   256M  0 part /boot
-+-sda3   8:3    0 943.1G  0 part /
-+-sda4   8:4    0    20G  0 part /home
-+-sda5   8:5    0  14.5G  0 part [SWAP]
+lsblk -f
 
-localectl
-
-localectl list-locales
-
-localectl set-locale LANG=pt_BR.utf8
-
-localectl list-keymaps
-
-localectl set-keymap
+NAME   FSTYPE LABEL UUID                                 MOUNTPOINT
+sda
++-sda1 vfat         2E4A-211F                            /boot/efi
++-sda2 xfs          95bf2d5e-7431-4ae2-a645-fe2593b69d1f /boot
++-sda3 ext4         aab61d69-3722-4ab0-be02-7e5d0d591a5c /
++-sda4 ext4         02acfdbd-40db-4ce1-a4bd-58153f566742 /home
++-sda5 swap         b3067b68-03ca-4bc2-a3d1-ddab75fc2073 [SWAP]
 
 yum update -y
 
 hostnamectl set-hostname openstack.example.com
 
-reboot
-
-ssh-copy-id root@ip_address
+ssh-copy-id root@192.168.1.101
 
 yum install vim -y
 
@@ -59,14 +49,18 @@ IPADDR=192.168.1.101
 NETMASK=255.255.255.0
 GATEWAY=192.168.1.1
 DNS1=192.168.1.1
-DNS2=1.1.1.1
-DNS3=8.8.8.8
+DNS2=8.8.8.8
+DNS3=1.1.1.1
+
+reboot
 
 yum install epel-release -y
 
-yum install ansible -y
+yum install git ansible -y
 
 scp -r ./pack-your-lab/ root@192.168.1.101:~
+
+git clone https://github.com/smsilva/pack-your-lab.git
 
 cd /root/pack-your-lab/openstack
 
@@ -817,6 +811,8 @@ Disk (VDI).....: 15 GB
 ISO............: CentOS-7-x86_64-Minimal-1804.iso
 Network Bridge.: Internet Access
 
+/ ext4 ?
+
 yum -y update && \
 yum -y install vim telnet bind-utils && \
 yum -y install acpid && \
@@ -954,3 +950,15 @@ openstack server create \
 echo 192.168.1.70 > hosts
 
 ansible 192.168.1.70 -b -i hosts -m ping
+
+sed -i 's/#volume_clear_size=0/volume_clear_size=50/g' /etc/cinder/cinder.conf
+
+localectl
+
+localectl list-locales
+
+localectl set-locale LANG=pt_BR.utf8
+
+localectl list-keymaps
+
+localectl set-keymap
