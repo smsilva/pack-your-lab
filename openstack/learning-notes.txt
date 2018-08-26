@@ -45,6 +45,7 @@ yum install vim -y
 vim /etc/sysconfig/network-scripts/ifcfg-eno1
 
 BOOTPROTO=static
+
 IPADDR=192.168.1.101
 NETMASK=255.255.255.0
 GATEWAY=192.168.1.1
@@ -58,15 +59,13 @@ yum install epel-release -y
 
 yum install git ansible -y
 
-scp -r ./pack-your-lab/ root@192.168.1.101:~
+sed -i 's/#callback_whitelist = timer, mail/callback_whitelist = profile_tasks, timer/g' /etc/ansible/ansible.cfg
+
+scp -r ./pack-your-lab/ root@192.168.1.101:/osp/
 
 git clone https://github.com/smsilva/pack-your-lab.git
 
 cd /root/pack-your-lab/openstack
-
-vim /etc/ansible/ansible.cfg
-
-callback_whitelist = profile_tasks, timer
 
 ansible -i hosts.yml -m ping osp
 
@@ -348,51 +347,7 @@ admin.example.com. 16 28800 3600 604800 86400
 
 openstack floating ip list -c "Floating IP Address" -c "Fixed IP Address" -c Port --sort-column "Floating IP Address"
 
-+---------------------+------------------+--------------------------------------+
-| Floating IP Address | Fixed IP Address | Port                                 |
-+---------------------+------------------+--------------------------------------+
-| 192.168.1.2         | 10.0.0.2         | 2ce06fee-c986-4b45-b71f-1a3764ee3b0a |
-| 192.168.1.30        | None             | None                                 |
-| 192.168.1.31        | None             | None                                 |
-| 192.168.1.32        | None             | None                                 |
-| 192.168.1.40        | 10.0.0.40        | f3cbd883-a881-49e6-b26e-916ff1d2fef7 |
-| 192.168.1.41        | 10.0.0.41        | 75d5d028-31e2-4f3a-b4cc-6bcd79a123ce |
-| 192.168.1.5         | 10.0.0.5         | 67a1f3cb-c057-4ead-b2f3-83ec981a4868 |
-| 192.168.1.50        | None             | None                                 |
-| 192.168.1.51        | None             | None                                 |
-| 192.168.1.6         | 10.0.0.6         | 89cde14b-c541-49ea-9dd8-e7f3ad4e28d0 |
-+---------------------+------------------+--------------------------------------+
-
 openstack port list -c ID -c Name -c Status -c "Fixed IP Addresses" --sort-column "Fixed IP Addresses"
-
-+--------------------------------------+--------------+--------+-----------------------------------------------------------------------------+
-| ID                                   | Name         | Status | Fixed IP Addresses                                                          |
-+--------------------------------------+--------------+--------+-----------------------------------------------------------------------------+
-| 642e7700-459f-4581-9b65-4d74a5132e98 |              | ACTIVE | ip_address='10.0.0.1', subnet_id='1106bb24-7d19-4e3b-bc14-866c82659d2a'     |
-| 39aac3f1-06bf-47f9-afe5-be5b44682ab9 |              | ACTIVE | ip_address='10.0.0.10', subnet_id='1106bb24-7d19-4e3b-bc14-866c82659d2a'    |
-| 2ce06fee-c986-4b45-b71f-1a3764ee3b0a | dns-port     | DOWN   | ip_address='10.0.0.2', subnet_id='1106bb24-7d19-4e3b-bc14-866c82659d2a'     |
-| 8c088d51-ae3b-4a42-916e-24d7540490fe | master0-port | DOWN   | ip_address='10.0.0.30', subnet_id='1106bb24-7d19-4e3b-bc14-866c82659d2a'    |
-| b68e1096-58ad-4616-9581-ed07bd8181d2 | master1-port | DOWN   | ip_address='10.0.0.31', subnet_id='1106bb24-7d19-4e3b-bc14-866c82659d2a'    |
-| 17dcfc6c-01bd-4cc9-baf4-9ad96d66d50f | master2-port | DOWN   | ip_address='10.0.0.32', subnet_id='1106bb24-7d19-4e3b-bc14-866c82659d2a'    |
-| f3cbd883-a881-49e6-b26e-916ff1d2fef7 | infra0-port  | DOWN   | ip_address='10.0.0.40', subnet_id='1106bb24-7d19-4e3b-bc14-866c82659d2a'    |
-| 75d5d028-31e2-4f3a-b4cc-6bcd79a123ce | infra1-port  | DOWN   | ip_address='10.0.0.41', subnet_id='1106bb24-7d19-4e3b-bc14-866c82659d2a'    |
-| 67a1f3cb-c057-4ead-b2f3-83ec981a4868 | haproxy-port | DOWN   | ip_address='10.0.0.5', subnet_id='1106bb24-7d19-4e3b-bc14-866c82659d2a'     |
-| 8e56e100-9c59-4723-b908-cec04e3d1907 | app0-port    | DOWN   | ip_address='10.0.0.50', subnet_id='1106bb24-7d19-4e3b-bc14-866c82659d2a'    |
-| cedd57da-5639-4892-8053-3e5175ad6f06 | app1-port    | DOWN   | ip_address='10.0.0.51', subnet_id='1106bb24-7d19-4e3b-bc14-866c82659d2a'    |
-| 89cde14b-c541-49ea-9dd8-e7f3ad4e28d0 | bastion-port | DOWN   | ip_address='10.0.0.6', subnet_id='1106bb24-7d19-4e3b-bc14-866c82659d2a'     |
-| a3d992df-b7a6-4244-a2dc-5501efa33919 |              | N/A    | ip_address='192.168.1.2', subnet_id='1dbc195d-0d07-499e-86a5-6c8d8267d4f2'  |
-| 0b01e3c3-8475-415c-a34b-448f050ddc47 |              | ACTIVE | ip_address='192.168.1.20', subnet_id='1dbc195d-0d07-499e-86a5-6c8d8267d4f2' |
-| e1365b2d-1d10-4fb7-bd59-6979f39a2d93 |              | ACTIVE | ip_address='192.168.1.29', subnet_id='1dbc195d-0d07-499e-86a5-6c8d8267d4f2' |
-| 8c7893db-d699-4723-98e5-fee8a6cbf557 |              | N/A    | ip_address='192.168.1.30', subnet_id='1dbc195d-0d07-499e-86a5-6c8d8267d4f2' |
-| e4899ce0-ba21-4141-90ff-b93302ef90ae |              | N/A    | ip_address='192.168.1.31', subnet_id='1dbc195d-0d07-499e-86a5-6c8d8267d4f2' |
-| 6a655d40-82c2-4c45-b743-3ecbf5de101a |              | N/A    | ip_address='192.168.1.32', subnet_id='1dbc195d-0d07-499e-86a5-6c8d8267d4f2' |
-| 4f984c89-fb29-4f34-811f-57dd571b63d0 |              | N/A    | ip_address='192.168.1.40', subnet_id='1dbc195d-0d07-499e-86a5-6c8d8267d4f2' |
-| 180a35e1-3f35-47da-af4e-041588f9054d |              | N/A    | ip_address='192.168.1.41', subnet_id='1dbc195d-0d07-499e-86a5-6c8d8267d4f2' |
-| 70905ffc-c1fa-4ca8-a049-b17c2026a87f |              | N/A    | ip_address='192.168.1.5', subnet_id='1dbc195d-0d07-499e-86a5-6c8d8267d4f2'  |
-| 7afacdb9-c6d0-4d6a-9492-f4175b673490 |              | N/A    | ip_address='192.168.1.50', subnet_id='1dbc195d-0d07-499e-86a5-6c8d8267d4f2' |
-| 4714f438-a1f0-45b7-aae5-3dad3c58df31 |              | N/A    | ip_address='192.168.1.51', subnet_id='1dbc195d-0d07-499e-86a5-6c8d8267d4f2' |
-| 81de9555-00ea-4448-b4b9-89c0190ba2d2 |              | N/A    | ip_address='192.168.1.6', subnet_id='1dbc195d-0d07-499e-86a5-6c8d8267d4f2'  |
-+--------------------------------------+--------------+--------+-----------------------------------------------------------------------------+
 
 for instance_number in {0..2};
 do
@@ -814,7 +769,7 @@ Network Bridge.: Internet Access
 / ext4 ?
 
 yum -y update && \
-yum -y install vim telnet bind-utils && \
+yum -y install vim && \
 yum -y install acpid && \
 systemctl enable acpid && \
 yum -y install cloud-init && \
