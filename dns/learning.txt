@@ -3,15 +3,15 @@ export OS_PROJECT_NAME=lab
 openstack security group create dns-security-group
 
 openstack security group rule create \
-	--ingress \
-	--protocol icmp \
-	dns-security-group
+--ingress \
+--protocol icmp \
+dns-security-group
 	
 openstack security group rule create \
-    --ingress \
-    --protocol tcp \
-    --dst-port 22 \
-    dns-security-group
+--ingress \
+--protocol tcp \
+--dst-port 22 \
+dns-security-group
 
 for PROTO in udp tcp;
 do
@@ -25,12 +25,12 @@ done
 network_id=$(openstack network show lab_network -f value -c id)
 
 openstack server create \
-  --nic net-id=$workshop_network_id \
-  --security-group=dns-security-group \
-  --flavor ocp.node \
-  --image centos \
-  --key-name server \
-  osp-dns.example.org
+--nic net-id=$workshop_network_id \
+--security-group=dns-security-group \
+--flavor ocp.node \
+--image centos \
+--key-name server \
+osp-dns.example.org
 
 openstack server add floating ip osp-dns.example.org 192.168.1.2
 
@@ -38,18 +38,30 @@ ssh centos@192.168.1.2
 
 sudo hostnamectl set-hostname osp-dns.example.org
 
-sudo yum install -y vim firewalld python-firewall bind-utils bind
+sudo yum install -y \
+vim \
+firewalld \
+python-firewall \
+bind-utils \
+bind
 
-sudo systemctl enable firewalld && sudo systemctl start firewalld
+sudo systemctl enable firewalld && \
+sudo systemctl start firewalld
 
-sudo firewall-cmd --zone public --add-service dns
+sudo firewall-cmd \
+--zone public \
+--add-service dns
 
-sudo firewall-cmd --zone public --add-service dns --permanent
+sudo firewall-cmd \
+--zone public \
+--add-service dns \
+--permanent
 
 sudo cp /etc/named.conf{,.orig}
 
-sudo vim /etc/named.conf
+sudo su -
 
+cat <<EOF > /etc/named.conf
 //
 // named.conf
 //
@@ -79,7 +91,7 @@ options {
         */
         // recursion yes;
         forward only;
-        forwarders { 192.168.15.1 ; 8.8.8.8 ; };
+        forwarders { 192.168.1.1 ; };
 
         // dnssec-enable yes;
         // dnssec-validation yes;
@@ -111,19 +123,17 @@ zone "." IN {
 include "/etc/named.rfc1912.zones";
 include "/etc/named.root.key";
 include "/etc/named/zones.conf";
+EOF
 
-sudo vim /etc/named/zones.conf
-
+cat <<EOF > /etc/named/zones.conf
 include "/etc/named/update.key" ;
 
-zone example.org {
+zone example.com {
   type master ;
   file "/var/named/dynamic/zone.db" ;
   allow-update { key update-key ; } ;
 };
-
-sudo vim /var/named/dynamic/zone.db
-
+EOF
 ###########################################################[ DNS Example ]######################################
 
 ; zone file fragment for example.com 
@@ -147,21 +157,24 @@ ns     IN      A   192.168.2.1
 ; an A RRs is not required (and will be rejected if present)
 ###########################################################[ end of DNS example ] ##############################
 
-$TTL 5m ; 5 minutes
-$ORIGIN example.org.
-@       IN     SOA   ns.example.org. dnsadmin (
+cat <<EOF > /var/named/dynamic/zone.db
+\$TTL 5m ; 5 minutes
+\$ORIGIN example.com.
+@       IN     SOA   ns.example.com. dnsadmin (
                2018050100 ; serial
                8h         ; refresh (8 hours)
                1h         ; retry (1 hour)
                1W         ; expire (1 week)
                1d         ; minimum (1 day)
                )
-        IN     NS    ns.example.org.
+        IN     NS    ns.example.com.
         IN     NS    ns.example.net. ; out-of-zone
 
-ns             A     192.168.1.2
-dns            A     192.168.1.2
-bastion        A     192.168.1.31
+ns             A     192.168.1.253
+dns            A     192.168.1.253
+EOF
+
+cat /var/named/dynamic/zone.db
 
 sudo rndc-confgen -a -c /etc/named/update.key -k update-key -r /dev/urandom
 
@@ -169,11 +182,10 @@ sudo chown root.named /etc/named/update.key
 
 sudo chmod 640 /etc/named/update.key
 
-sudo systemctl enable named --now
-
+sudo systemctl enable named --now && \
 sudo systemctl status named
 
-dig @192.168.1.2 example.org axfr
+dig @192.168.1.253 example.com axfr
 
 ###################################[ test ] ########
 

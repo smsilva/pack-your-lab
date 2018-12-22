@@ -1,10 +1,92 @@
 Recommended amount of ram: 4GB
 Used: 3GB
-Hostname: nexus.example.org
+Hostname: nexus.example.com
+
+#nexus host
+hostnamectl set-hostname nexus.example.com
+
+#view Nexus Server IP address
+ip -4 a | grep inet
+
+#copy ansible files to Ansible Host:
+scp -r nexus/ root@ansible_ip_address:~
+
+#copy install files to root@ansible_ip_address:~/nexus/server/install/
+scp jdk-8u181-linux-x64.rpm nexus-3.14.0-04-unix.tar.gz root@192.168.1.110:~/nexus/server/install/
+
+#ansible host
+
+hostnamectl set-hostname ansible.example.com
+
+yum -y update
+
+yum -y install epel-release
+
+yum -y install vim wget ansible
+
+ansible --version
+
+#output:
+ansible 2.7.5
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = [u'/root/.ansible/plugins/modules', u'/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python2.7/site-packages/ansible
+  executable location = /usr/bin/ansible
+  python version = 2.7.5 (default, Oct 30 2018, 23:45:53) [GCC 4.8.5 20150623 (Red Hat 4.8.5-36)]
+  
+#enable profile_tasks on Ansible to view how long each task takes
+sed -i 's/#callback_whitelist = timer, mail/callback_whitelist = profile_tasks, timer, mail/g' /etc/ansible/ansible.cfg
+
+ssh-keygen
+
+ssh-copy-id root@new_nexus_server_ip_address
+
+#update nexus/hosts.yml with Nexus Server IP at "ansible_host" variable
+
+find nexus/
+
+#output:
+nexus/
+nexus/server
+nexus/server/install.yml
+nexus/server/hosts.yml
+nexus/server/install
+nexus/server/install/jdk-8u181-linux-x64.rpm
+nexus/server/install/nexus-3.14.0-04-unix.tar.gz
+nexus/server/install/nexus.service
+nexus/client
+nexus/client/nexus-epel-testing.repo
+nexus/client/configuration.yml
+nexus/client/nexus.repo
+nexus/client/rpm-gpg
+nexus/client/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Virtualization
+nexus/client/rpm-gpg/RPM-GPG-KEY-CentOS-7
+nexus/client/rpm-gpg/RPM-GPG-KEY-CentOS-Debug-7
+nexus/client/rpm-gpg/RPM-GPG-KEY-CentOS-Docker-CE
+nexus/client/rpm-gpg/RPM-GPG-KEY-EPEL-7
+nexus/client/rpm-gpg/RPM-GPG-KEY-CentOS-Testing-7
+nexus/client/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
+nexus/client/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Cloud
+nexus/client/nexus-docker-ce.repo
+
+#access Nexus Directory
+cd nexus/server/
+
+#test ansible connectivity
+ansible -i hosts.yml all -m ping
+
+#output:
+nexus | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+
+#execute Playbook
+ansible-playbook -i hosts.yml install.yml -v
 
 tail -f /opt/sonatype-work/nexus3/log/nexus.log
 
-CTRL+ C after:
+CTRL + C after:
 
 -------------------------------------------------
 

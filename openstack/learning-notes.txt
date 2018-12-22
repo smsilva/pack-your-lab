@@ -1,3 +1,45 @@
+########################################################################################################
+
+1. Create a VirtualBox Machine
+
+Memory.........: 4 GB
+Disk (VDI).....: 15 GB
+CPU............: 2
+ISO............: CentOS-7-x86_64-Minimal-1804.iso
+Network........: Bridge with Internet Access
+Partitions.....: / ext4
+
+yum -y update && \
+yum -y install vim && \
+yum -y install acpid && \
+systemctl enable acpid && \
+yum -y install cloud-init && \
+yum -y install cloud-utils-growpart && \
+systemctl stop firewalld && \
+systemctl disable firewalld && \
+echo "NOZEROCONF=yes" >> /etc/sysconfig/network && \
+sed -i 's/rhgb quiet/console=tty0 console=ttyS0,115200n8/g' /etc/default/grub && \
+grub2-mkconfig -o /boot/grub2/grub.cfg && \
+sed -i '/^UUID/d' /etc/sysconfig/network-scripts/ifcfg-enp0s3 && \
+yum clean all && \
+rm -rf /var/cache/yum
+
+poweroff
+
+scp centos7.vdi root@192.168.1.101:/osp/images
+
+qemu-img convert -f vdi centos7.vdi -O qcow2 centos7.qcow2
+
+openstack image create \
+--public \
+--disk-format qcow2 \
+--min-disk 15 \
+--min-ram 512 \
+--file centos7.qcow2 \
+centos7
+
+########################################################################################################
+
 USB Boot Pendrive using RUFUS
 
 Bios Setup boot order
@@ -14,7 +56,8 @@ Disk Setup
 /boot/efi xfs  256 MiB
 /swap     swap  16 GiB
 /home     ext4  40 GiB
-/         ext4 900 GiB
+/         ext4 500 GiB
+/osp      ext4 100 GiB
 
 root password (keep it)
 
@@ -50,8 +93,6 @@ IPADDR=192.168.1.101
 NETMASK=255.255.255.0
 GATEWAY=192.168.1.1
 DNS1=192.168.1.1
-DNS2=8.8.8.8
-DNS3=1.1.1.1
 
 reboot
 
@@ -65,7 +106,7 @@ scp -r ./pack-your-lab/ root@192.168.1.101:/osp/
 
 git clone https://github.com/smsilva/pack-your-lab.git
 
-cd /root/pack-your-lab/openstack
+cd /osp/pack-your-lab/openstack
 
 ansible -i hosts.yml -m ping osp
 
@@ -756,47 +797,6 @@ checkmodule: writing binary representation (version 17) to mkhomedir.mod
 
 [root@www ~]# semodule -i mkhomedir.pp 
 
-########################################################################################################
-
-1. Create a VirtualBox Machine
-
-CPU............: 2
-Memory.........: 4 GB
-Disk (VDI).....: 15 GB
-ISO............: CentOS-7-x86_64-Minimal-1804.iso
-Network Bridge.: Internet Access
-
-/ ext4 ?
-
-yum -y update && \
-yum -y install vim && \
-yum -y install acpid && \
-systemctl enable acpid && \
-yum -y install cloud-init && \
-yum -y install cloud-utils-growpart && \
-systemctl stop firewalld && \
-systemctl disable firewalld && \
-echo "NOZEROCONF=yes" >> /etc/sysconfig/network && \
-sed -i 's/rhgb quiet/console=tty0 console=ttyS0,115200n8/g' /etc/default/grub && \
-grub2-mkconfig -o /boot/grub2/grub.cfg && \
-sed -i '/^UUID/d' /etc/sysconfig/network-scripts/ifcfg-enp0s3 && \
-yum clean all && \
-rm -rf /var/cache/yum
-
-poweroff
-
-#copy to nuc
-
-qemu-img convert -f vdi centos7.vdi -O qcow2 centos7.qcow2
-
-openstack image create \
-  --public \
-  --disk-format qcow2 \
-  --min-disk 15 \
-  --min-ram 512 \
-  --file centos7.qcow2 \
-  centos
-  
 rm -rf ~/.ssh/known_hosts
 
 openstack server delete sftp
